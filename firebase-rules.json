@@ -1,0 +1,49 @@
+{
+  "rules": {
+    "rooms": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["hasGuest"]
+    },
+
+    "players": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$deviceId": {
+        ".read": true,
+        ".write": "auth == null && $deviceId.length <= 20",
+        ".validate": "newData.hasChildren(['lastSeen', 'platform', 'isMobile'])"
+      }
+    },
+
+    "visits": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$deviceId": {
+        ".read": "auth != null",
+        ".write": "auth == null && $deviceId.length <= 20",
+        ".validate": "newData.hasChildren(['timestamp', 'platform', 'isMobile', 'screenWidth', 'screenHeight'])",
+        "$timestamp": {
+          ".validate": "$timestamp.length <= 20 && newData.isNumber() || newData.hasChildren(['timestamp'])"
+        }
+      }
+    },
+
+    "gameSessions": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$deviceId": {
+        ".read": "auth != null",
+        ".write": "auth == null && $deviceId.length <= 20",
+        "$sessionId": {
+          ".validate": "newData.hasChildren(['gameMode', 'startedAt']) || newData.hasChildren(['endedAt'])"
+        }
+      }
+    },
+
+    "gameRecords": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { db } from './firebase';
 import chainData from './data/chain_dictionary.json';
 import { getDeviceId, getDeviceInfo } from './deviceId';
 import { startSession, logWord, endSession } from './gameAnalytics';
+import { checkRateLimit, detectBot } from './security';
 
 // ==================== 类型 ====================
 interface ChainWord {
@@ -402,6 +403,18 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
 
   // ==================== 房间操作 ====================
   const createRoom = async (level: number, duration: number) => {
+    // 安全检查：频率限制（10秒内最多创建1个房间）
+    if (!checkRateLimit('createRoom', 1, 10000)) {
+      setError('创建房间太频繁，请稍后再试');
+      return;
+    }
+    // 安全检查：bot 检测
+    const botCheck = detectBot();
+    if (botCheck.isBot) {
+      setError('检测到异常行为，无法创建房间');
+      return;
+    }
+
     const newRoomId = generateRoomId();
     const deviceId = getDeviceId();
     const deviceInfo = getDeviceInfo();
@@ -465,6 +478,12 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
   };
 
   const joinRoom = async () => {
+    // 安全检查：频率限制（10秒内最多加入1个房间）
+    if (!checkRateLimit('joinRoom', 1, 10000)) {
+      setError('操作太频繁，请稍后再试');
+      return;
+    }
+
     const roomCode = joinRoomId.trim().toUpperCase();
     if (!roomCode) {
       setError('请输入房间号');

@@ -1,6 +1,7 @@
 import { ref, push } from 'firebase/database';
 import { db } from './firebase';
 import { getDeviceId, getDeviceInfo } from './deviceId';
+import { checkRateLimit } from './security';
 
 // ==================== Session Manager ====================
 
@@ -9,6 +10,9 @@ let gameStartTime: number = 0;
 let wordLog: Array<{ word: string; correct: boolean; timestamp: number; pinyin?: string; meaning?: string }> = [];
 
 export function startSession(gameMode: string, extra?: Record<string, any>) {
+  // 防刷：每个用户每分钟最多创建 10 个 session
+  if (!checkRateLimit('startSession', 10, 60000)) return;
+
   currentSessionId = `sess_${Date.now()}`;
   gameStartTime = Date.now();
   wordLog = [];
@@ -35,6 +39,9 @@ export function startSession(gameMode: string, extra?: Record<string, any>) {
 
 export function logWord(word: string, correct: boolean, pinyin?: string, meaning?: string) {
   if (!currentSessionId) return;
+
+  // 防刷：每秒最多记录 30 个词（正常人类打字速度上限）
+  if (!checkRateLimit('logWord', 30, 1000)) return;
 
   const entry = { word, correct, timestamp: Date.now(), pinyin, meaning };
   wordLog.push(entry);
