@@ -1,0 +1,25 @@
+{
+  "rules": {
+    "rooms": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["hasGuest"]
+    },
+    "players": {
+      ".read": true,
+      ".write": true
+    },
+    "visits": {
+      ".read": true,
+      ".write": true
+    },
+    "gameSessions": {
+      ".read": true,
+      ".write": true
+    },
+    "gameRecords": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}

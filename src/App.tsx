@@ -40,8 +40,8 @@ function App() {
           isMobile: info.isMobile,
           lastVisitPlatform: info.platform,
         });
-      } catch (e) {
-        console.log('Visit recording failed:', e);
+      } catch (e: any) {
+        console.warn('[App] Visit recording failed:', e?.message);
       }
     };
 
