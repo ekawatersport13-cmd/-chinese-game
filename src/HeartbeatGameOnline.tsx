@@ -1,22 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set, onValue, onDisconnect, remove } from 'firebase/database';
+import { ref, set, onValue, onDisconnect, remove, update, increment, serverTimestamp } from 'firebase/database';
+import { db } from './firebase';
 import chainData from './data/chain_dictionary.json';
-
-// ==================== Firebase 配置 ====================
-const firebaseConfig = {
-  apiKey: "AIzaSyCyUnzm946N9ammDgXWNdRo7SZNz5XRnTw",
-  authDomain: "chinesegame-4317f.firebaseapp.com",
-  databaseURL: "https://chinesegame-4317f-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "chinesegame-4317f",
-  storageBucket: "chinesegame-4317f.firebasestorage.app",
-  messagingSenderId: "843830906860",
-  appId: "1:843830906860:web:52d63501637773539b3ac9",
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+import { getDeviceId, getDeviceInfo } from './deviceId';
 
 // ==================== 类型 ====================
 interface ChainWord {
@@ -141,7 +128,6 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
 
   // Refs
   const roomRef = useRef<any>(null);
-  const userId = useRef(`user_${Math.random().toString(36).substr(2, 9)}`);
   const frameRef = useRef<number>(0);
   const lastSpawnRef = useRef(0);
   const stoneIdRef = useRef(0);
@@ -415,12 +401,14 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
   // ==================== 房间操作 ====================
   const createRoom = async (level: number, duration: number) => {
     const newRoomId = generateRoomId();
+    const deviceId = getDeviceId();
+    const deviceInfo = getDeviceInfo();
     const roomData = {
-      hostId: userId.current,
+      hostId: deviceId,
       hostKicked: false,
       hasGuest: false,
       guestId: null,
-      guestInput: '',
+      guestName: null,
       difficultyLevel: level,
       gameDuration: duration,
       createdAt: Date.now(),
@@ -441,6 +429,25 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
 
     await set(ref(db, `rooms/${newRoomId}`), roomData);
     roomRef.current = ref(db, `rooms/${newRoomId}`);
+
+    // 记录玩家到 /players/{deviceId}
+    await set(ref(db, `players/${deviceId}`), {
+      deviceId,
+      lastActive: Date.now(),
+      platform: deviceInfo.platform,
+      language: deviceInfo.language,
+      isMobile: deviceInfo.isMobile,
+      lastRoom: newRoomId,
+      roomsHosted: 1,
+      gamesPlayed: 1,
+    });
+
+    // 记录这次访问到 /visits/{deviceId}/{timestamp}
+    await set(ref(db, `visits/${deviceId}/${Date.now()}`), {
+      roomId: newRoomId,
+      role: 'host',
+      timestamp: serverTimestamp(),
+    });
 
     onValue(ref(db, `rooms/${newRoomId}/hasGuest`), (snap) => {
       setHasGuest(snap.val() === true);
@@ -476,8 +483,31 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
       return;
     }
 
-    await set(ref(db, `rooms/${roomCode}/guestId`), userId.current);
+    const deviceId = getDeviceId();
+    const deviceInfo = getDeviceInfo();
+
+    await set(ref(db, `rooms/${roomCode}/guestId`), deviceId);
+    await set(ref(db, `rooms/${roomCode}/guestName`), deviceInfo.platform); // 暂时用 platform 作为标识
     await set(ref(db, `rooms/${roomCode}/hasGuest`), true);
+
+    // 记录玩家到 /players/{deviceId}
+    await set(ref(db, `players/${deviceId}`), {
+      deviceId,
+      lastActive: serverTimestamp(),
+      platform: deviceInfo.platform,
+      language: deviceInfo.language,
+      isMobile: deviceInfo.isMobile,
+      lastRoom: roomCode,
+      lastRole: 'guest',
+      gamesPlayed: serverTimestamp(),
+    });
+
+    // 记录这次访问到 /visits/{deviceId}/{timestamp}
+    await set(ref(db, `visits/${deviceId}/${Date.now()}`), {
+      roomId: roomCode,
+      role: 'guest',
+      timestamp: serverTimestamp(),
+    });
 
     roomRef.current = ref(db, `rooms/${roomCode}`);
 
@@ -565,6 +595,27 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
     if (st.hostScore > st.guestScore) winner = 'host';
     else if (st.guestScore > st.hostScore) winner = 'guest';
     else winner = 'tie';
+
+    // 记录分数到 /players/{deviceId}
+    const deviceId = getDeviceId();
+    const playerRef = ref(db, `players/${deviceId}`);
+    update(playerRef, {
+      lastActive: serverTimestamp(),
+      lastRoom: roomId,
+      lastScore: role === 'host' ? st.hostScore : st.guestScore,
+      totalGames: increment(1),
+      totalScore: increment(role === 'host' ? st.hostScore : st.guestScore),
+    }).catch(() => {});
+
+    // 记录到 /gameRecords/{roomId}
+    const recordKey = `game_${Date.now()}`;
+    set(ref(db, `gameRecords/${roomId}/${recordKey}`), {
+      roomId,
+      hostScore: st.hostScore,
+      guestScore: st.guestScore,
+      winner,
+      endedAt: serverTimestamp(),
+    }).catch(() => {});
 
     // 同步最终状态（带 winner）
     if (roomRef.current && role === 'host') {
