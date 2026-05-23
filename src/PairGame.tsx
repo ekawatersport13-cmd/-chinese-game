@@ -113,9 +113,28 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
 
   // ========== 选择卡片 ==========
   const selectCard = useCallback((card: CardItem) => {
-    if (feedback !== 'idle') return;
     if (card.matched) return;
-    if (selectedCards.some((c) => c.id === card.id)) return;
+
+    // 如果点击的是已选中的卡片，取消选择
+    if (card.selected) {
+      setSelectedCards((prev) => prev.filter((c) => c.id !== card.id));
+      setCards((prev) =>
+        prev.map((c) => (c.id === card.id ? { ...c, selected: false } : c))
+      );
+      return;
+    }
+
+    // 如果正在显示错误反馈，先清除反馈和之前的选择
+    if (feedback === 'wrong') {
+      if (feedbackTimerRef.current) clearTimeout(feedbackTimerRef.current);
+      setCards((prev) =>
+        prev.map((c) => ({ ...c, selected: false }))
+      );
+      setSelectedCards([]);
+      setFeedback('idle');
+    }
+
+    if (feedback !== 'idle') return;
     if (selectedCards.length >= 3) return;
 
     const newSelected = [...selectedCards, card];
@@ -498,7 +517,7 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
         <div className={`grid ${getGridCols()} gap-2 sm:gap-3 max-w-4xl mx-auto`}>
           {cards.map((card, idx) => {
             const isSelected = card.selected;
-            const canClick = feedback === 'idle' && !card.matched && !isSelected;
+            const canClick = !card.matched;
 
             return (
               <motion.button
