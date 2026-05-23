@@ -48,6 +48,7 @@ interface DodgeEvent {
 interface LaneHint {
   word: string;
   pinyin: string;
+  meaning: string;
 }
 
 // ==================== 常量 ====================
@@ -215,6 +216,7 @@ export default function HeartbeatGame({ onExit }: { onExit: () => void }) {
         const hint: LaneHint = {
           word: word.word,
           pinyin: word.pinyin,
+          meaning: word.meaning,
         };
         setLaneHints(prev => ({ ...prev, [lane]: hint }));
       }
@@ -373,6 +375,7 @@ export default function HeartbeatGame({ onExit }: { onExit: () => void }) {
         [matchedLane]: {
           word: newWord.word,
           pinyin: newWord.pinyin,
+          meaning: newWord.meaning,
         }
       }));
     }
@@ -409,7 +412,7 @@ export default function HeartbeatGame({ onExit }: { onExit: () => void }) {
         const word = getUnusedWord(lvl);
         setLaneHints(prev => ({
           ...prev,
-          [lane]: { word: word.word, pinyin: word.pinyin }
+          [lane]: { word: word.word, pinyin: word.pinyin, meaning: word.meaning }
         }));
       }, i * 100);
     });
@@ -782,9 +785,8 @@ export default function HeartbeatGame({ onExit }: { onExit: () => void }) {
           }`}>你</div>
         </motion.div>
 
-        {/* Lane labels + hints at bottom */}
+        {/* Lane labels at bottom */}
         {LANES_ARR.map((lane, i) => {
-          const hint = laneHints[lane];
           const colors = LANE_COLORS[lane];
           return (
             <div
@@ -797,21 +799,6 @@ export default function HeartbeatGame({ onExit }: { onExit: () => void }) {
                 width: STONE_W - 10,
               }}
             >
-              {/* 提示词（只显示拼音） */}
-              {hint && (
-                <div className={`text-center text-[10px] leading-tight mb-0.5 px-1 py-0.5 rounded ${
-                  lane === 'left' ? 'bg-cyan-900/60 text-cyan-200' :
-                  lane === 'center' ? 'bg-amber-900/60 text-amber-200' :
-                  'bg-rose-900/60 text-rose-200'
-                }`}>
-                  <div className="font-bold">
-                    {hint.pinyin}
-                  </div>
-                  <div className="opacity-60 text-[9px]">
-                    拼音
-                  </div>
-                </div>
-              )}
               {/* L/C/R 标签 */}
               <div className={`text-xs font-black opacity-40 ${
                 lane === 'left' ? 'text-cyan-400' : lane === 'center' ? 'text-amber-400' : 'text-rose-400'
@@ -823,8 +810,46 @@ export default function HeartbeatGame({ onExit }: { onExit: () => void }) {
         })}
       </motion.div>
 
+      {/* Lane Hints - 输入框上方显示拼音+印尼语 */}
+      <div className="w-full max-w-md mt-2 px-1">
+        <div className="flex justify-center gap-2">
+          {LANES_ARR.map((lane) => {
+            const hint = laneHints[lane];
+            return (
+              <div
+                key={lane}
+                className={`flex-1 rounded-lg border-2 px-2 py-1.5 text-center min-h-[48px] flex flex-col justify-center ${
+                  lane === 'left'
+                    ? 'border-cyan-500/60 bg-cyan-950/40'
+                    : lane === 'center'
+                    ? 'border-amber-500/60 bg-amber-950/40'
+                    : 'border-rose-500/60 bg-rose-950/40'
+                }`}
+              >
+                {hint ? (
+                  <>
+                    <div className={`text-xs font-bold leading-tight ${
+                      lane === 'left' ? 'text-cyan-200' : lane === 'center' ? 'text-amber-200' : 'text-rose-200'
+                    }`}>
+                      {hint.pinyin}
+                    </div>
+                    <div className={`text-[10px] leading-tight opacity-80 ${
+                      lane === 'left' ? 'text-cyan-300' : lane === 'center' ? 'text-amber-300' : 'text-rose-300'
+                    }`}>
+                      {hint.meaning}
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-gray-600 text-xs">...</div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Single Input Area */}
-      <div className="w-full max-w-md mt-3 px-1">
+      <div className="w-full max-w-md mt-2 px-1">
         <div className="relative">
           <div className="text-white text-xs font-bold mb-1 flex items-center gap-1">
             <span>⌨️</span> 输入汉字移动角色
@@ -854,7 +879,7 @@ export default function HeartbeatGame({ onExit }: { onExit: () => void }) {
       {/* Progress hint */}
       <div className="w-full max-w-md mt-2 px-1">
         <div className="flex justify-between text-xs text-gray-600 mb-1">
-          <span>💡 提示：看底部 L/C/R 的拼音/意思 → 打出对应汉字 → 角色移动躲避（+{50 * difficulty}分）</span>
+          <span>💡 提示：看上方三个框的拼音+印尼语 → 打出对应汉字 → 角色移动躲避（+{50 * difficulty}分）</span>
           <span>ESC退出</span>
         </div>
       </div>

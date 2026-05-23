@@ -166,12 +166,22 @@ const isValidChainWord = (word: string): boolean => {
 };
 
 const getRandomStarter = (): ChainWord => {
-  const starters: ChainWord[] = (chainData as any).starters || [];
+  const starters: string[] = (chainData as any).starters || [];
   if (starters.length === 0) {
     return { word: '音乐', pinyin: 'yīnyuè', meaning: 'musik', hsk: 1 };
   }
   const idx = Math.floor(Math.random() * starters.length);
-  return starters[idx];
+  const starterChar = starters[idx];
+  // 从 chains 中找一个以该字开头的词作为起始词
+  const chains = (chainData as any).chains || {};
+  const options: string[] = chains[starterChar] || [];
+  if (options.length > 0) {
+    const word = options[Math.floor(Math.random() * options.length)];
+    const info = getWordInfo(word);
+    return { word, pinyin: info.pinyin, meaning: info.meaning, hsk: info.hsk };
+  }
+  // fallback
+  return { word: '音乐', pinyin: 'yīnyuè', meaning: 'musik', hsk: 1 };
 };
 
 const getMissingComponent = (word: VocabWord, knownComps: string[]): string => {
