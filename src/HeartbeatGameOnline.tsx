@@ -32,6 +32,7 @@ interface Stone {
   y: number;
   word: string;
   pinyin: string;
+  meaning: string;
   speed: number;
   alive: boolean;
 }
@@ -214,6 +215,7 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
       y: -STONE_H,
       word: word.word,
       pinyin: word.pinyin,
+      meaning: word.meaning,
       speed: 0.8 + Math.random() * 0.4,
       alive: true,
     };
@@ -884,6 +886,22 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
   const seconds = timeLeft % 60;
   const timeStr = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
+  // 响应式缩放
+  const [scale, setScale] = useState(1);
+  useEffect(() => {
+    const updateScale = () => {
+      const availableWidth = window.innerWidth - 16; // 减去padding
+      if (availableWidth < GAME_W) {
+        setScale(availableWidth / GAME_W);
+      } else {
+        setScale(1);
+      }
+    };
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-indigo-950/60 to-gray-900 flex flex-col items-center justify-center p-2">
       {/* HUD */}
@@ -925,9 +943,10 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
         </div>
       </div>
 
-      {/* Game Area */}
+      {/* Game Area - 响应式缩放 */}
       <div className="relative overflow-hidden rounded-2xl border-2 border-indigo-900/60 bg-gray-900/80 shadow-2xl"
-        style={{ width: GAME_W, height: GAME_H }}>
+        style={{ width: GAME_W * scale, height: GAME_H * scale }}>
+        <div style={{ transform: `scale(${scale})`, transformOrigin: 'top left', width: GAME_W, height: GAME_H }}>
 
         {/* Lane guides */}
         {Array.from({ length: NUM_LANES }).map((_, i) => (
@@ -958,8 +977,8 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
                 <div className={`text-[10px] font-bold ${colors.text} leading-tight text-center px-1`}>
                   {s.pinyin}
                 </div>
-                <div className="text-[8px] opacity-60 text-white mt-0.5">
-                  拼音
+                <div className="text-[8px] opacity-80 text-white mt-0.5 leading-tight text-center px-0.5">
+                  {s.meaning}
                 </div>
               </motion.div>
             );
@@ -991,6 +1010,7 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
           <div className="text-xl">👥</div>
           <div className="text-[9px] font-bold text-cyan-100">观众</div>
         </motion.div>
+        </div>{/* end scale wrapper */}
       </div>
 
       {/* Input Area */}
