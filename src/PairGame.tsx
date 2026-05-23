@@ -18,12 +18,7 @@ interface CardItem {
   value: string;
   word: string; // 关联的词（用于配对验证）
   matched: boolean;
-  flipped: boolean;
-}
-
-interface PairSet {
-  word: VocabWord;
-  cards: CardItem[];
+  selected: boolean;
 }
 
 // ==================== 数据工具 ===================
@@ -45,20 +40,21 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
   const [gameStarted, setGameStarted] = useState(false);
 
   // 游戏状态
-  const [sets, setSets] = useState<PairSet[]>([]);
-  const [currentSetIndex, setCurrentSetIndex] = useState(0);
   const [cards, setCards] = useState<CardItem[]>([]);
   const [selectedCards, setSelectedCards] = useState<CardItem[]>([]);
-  const [setResult, setSetResult] = useState<'idle' | 'correct' | 'wrong'>('idle');
+  const [matchedCount, setMatchedCount] = useState(0);
   const [score, setScore] = useState(0);
-  const [correctSets, setCorrectSets] = useState(0);
-  const [wrongSets, setWrongSets] = useState(0);
+  const [correctMatches, setCorrectMatches] = useState(0);
+  const [wrongAttempts, setWrongAttempts] = useState(0);
   const [timer, setTimer] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
   const [combo, setCombo] = useState(0);
+  const [feedback, setFeedback] = useState<'idle' | 'correct' | 'wrong'>('idle');
+  const [totalSets, setTotalSets] = useState(0);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const feedbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 可用的 HSK 级别
   const availableLevels = [1, 2, 3, 4, 5, 6].filter(
@@ -71,27 +67,29 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
     const words = getWordsByLevel(hskLevel, setCount);
     if (words.length === 0) return;
 
-    const gameSets: PairSet[] = words.map((word, idx) => {
-      const cards: CardItem[] = [
-        { id: `p-${idx}`, type: 'pinyin', value: word.pinyin, word: word.word, matched: false, flipped: false },
-        { id: `h-${idx}`, type: 'hanzi', value: word.word, word: word.word, matched: false, flipped: false },
-        { id: `i-${idx}`, type: 'indonesian', value: word.indonesian, word: word.word, matched: false, flipped: false },
-      ];
-      return { word, cards };
+    // 生成所有卡片：每套3张（拼音、汉字、印尼语），全部打乱
+    const allCards: CardItem[] = [];
+    words.forEach((word, idx) => {
+      allCards.push({ id: `p-${idx}`, type: 'pinyin', value: word.pinyin, word: word.word, matched: false, selected: false });
+      allCards.push({ id: `h-${idx}`, type: 'hanzi', value: word.word, word: word.word, matched: false, selected: false });
+      allCards.push({ id: `i-${idx}`, type: 'indonesian', value: word.indonesian, word: word.word, matched: false, selected: false });
     });
 
-    setSets(gameSets);
-    setCurrentSetIndex(0);
-    setCards([...gameSets[0].cards].sort(() => Math.random() - 0.5));
+    // 打乱顺序
+    const shuffled = [...allCards].sort(() => Math.random() - 0.5);
+
+    setCards(shuffled);
     setSelectedCards([]);
-    setSetResult('idle');
+    setMatchedCount(0);
     setScore(0);
-    setCorrectSets(0);
-    setWrongSets(0);
+    setCorrectMatches(0);
+    setWrongAttempts(0);
     setTimer(0);
     setTimerRunning(true);
     setGameFinished(false);
     setCombo(0);
+    setFeedback('idle');
+    setTotalSets(words.length);
     setGameStarted(true);
   }, []);
 
@@ -115,7 +113,7 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
 
   // ========== 选择卡片 ==========
   const selectCard = useCallback((card: CardItem) => {
-    if (setResult !== 'idle') return;
+    if (feedback !== 'idle') return;
     if (card.matched) return;
     if (selectedCards.some((c) => c.id === card.id)) return;
     if (selectedCards.length >= 3) return;
@@ -123,9 +121,9 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
     const newSelected = [...selectedCards, card];
     setSelectedCards(newSelected);
 
-    // 翻转动画
+    // 标记选中状态
     setCards((prev) =>
-      prev.map((c) => (c.id === card.id ? { ...c, flipped: true } : c))
+      prev.map((c) => (c.id === card.id ? { ...c, selected: true } : c))
     );
 
     // 选满3张时检查
@@ -134,57 +132,61 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
       const allDifferentTypes = new Set(newSelected.map((c) => c.type)).size === 3;
       const isCorrect = allSameWord && allDifferentTypes;
 
-      setTimeout(() => {
-        if (isCorrect) {
-          // 正确：标记为已匹配
-          setCards((prev) =>
-            prev.map((c) =>
-              newSelected.some((s) => s.id === c.id) ? { ...c, matched: true } : c
-            )
-          );
-          const bonus = Math.min(combo, 5) * 2;
-          setScore((prev) => prev + 10 + bonus);
-          setCorrectSets((prev) => prev + 1);
-          setCombo((prev) => prev + 1);
-          setSetResult('correct');
-          logWord(newSelected[0].word, true, newSelected[0].value, newSelected[2].value);
+      if (isCorrect) {
+        // 正确：标记为已匹配，清除选中
+        setCards((prev) =>
+          prev.map((c) =>
+            newSelected.some((s) => s.id === c.id) ? { ...c, matched: true, selected: false } : c
+          )
+        );
+        const bonus = Math.min(combo, 5) * 2;
+        setScore((prev) => prev + 10 + bonus);
+        setCorrectMatches((prev) => prev + 1);
+        setCombo((prev) => prev + 1);
+        setMatchedCount((prev) => prev + 1);
+        setFeedback('correct');
+        logWord(newSelected[0].word, true, newSelected[0].value, newSelected[2].value);
+
+        // 检查是否全部配对完成
+        const newMatchedCount = matchedCount + 1;
+        if (newMatchedCount >= totalSets) {
+          setTimeout(() => {
+            setTimerRunning(false);
+            endSession({
+              score: score + 10 + bonus,
+              correct: correctMatches + 1,
+              wrong: wrongAttempts,
+              extra: { totalSets, timeSeconds: timer },
+            });
+            setGameFinished(true);
+          }, 800);
         } else {
-          // 错误：翻回去
+          // 清除反馈
+          feedbackTimerRef.current = setTimeout(() => {
+            setFeedback('idle');
+            setSelectedCards([]);
+          }, 1200);
+        }
+      } else {
+        // 错误：清除选中状态
+        setWrongAttempts((prev) => prev + 1);
+        setCombo(0);
+        setFeedback('wrong');
+        logWord(newSelected[0].word, false);
+
+        // 延迟后翻回
+        feedbackTimerRef.current = setTimeout(() => {
           setCards((prev) =>
             prev.map((c) =>
-              newSelected.some((s) => s.id === c.id) ? { ...c, flipped: false } : c
+              newSelected.some((s) => s.id === c.id) ? { ...c, selected: false } : c
             )
           );
-          setWrongSets((prev) => prev + 1);
-          setCombo(0);
-          setSetResult('wrong');
-          logWord(newSelected[0].word, false);
-        }
-      }, 600);
+          setFeedback('idle');
+          setSelectedCards([]);
+        }, 1000);
+      }
     }
-  }, [selectedCards, setResult, combo]);
-
-  // ========== 下一套 ==========
-  const nextSet = useCallback(() => {
-    const nextIndex = currentSetIndex + 1;
-    if (nextIndex >= sets.length) {
-      // 游戏结束
-      setTimerRunning(false);
-      endSession({
-        score,
-        correct: correctSets + (setResult === 'correct' ? 1 : 0),
-        wrong: wrongSets + (setResult === 'wrong' ? 1 : 0),
-        extra: { totalSets: sets.length, timeSeconds: timer },
-      });
-      setGameFinished(true);
-      return;
-    }
-
-    setCurrentSetIndex(nextIndex);
-    setCards([...sets[nextIndex].cards].sort(() => Math.random() - 0.5));
-    setSelectedCards([]);
-    setSetResult('idle');
-  }, [currentSetIndex, sets, score, correctSets, wrongSets, setResult, timer]);
+  }, [selectedCards, feedback, combo, matchedCount, totalSets, score, correctMatches, wrongAttempts, timer]);
 
   // ========== 播放发音 ==========
   const playSound = useCallback((text: string) => {
@@ -196,6 +198,13 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
       u.pitch = 1.1;
       window.speechSynthesis.speak(u);
     }
+  }, []);
+
+  // 清理定时器
+  useEffect(() => {
+    return () => {
+      if (feedbackTimerRef.current) clearTimeout(feedbackTimerRef.current);
+    };
   }, []);
 
   // ==================== 配置界面 ====================
@@ -225,7 +234,7 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
           {/* HSK 级别选择 */}
           <div className="mb-6">
             <p className="text-center text-sm text-gray-600 mb-3 font-medium">选择 HSK 级别</p>
-            <div className="grid grid-cols-3 sm:grid-cols-3 gap-2 sm:gap-3">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
               {availableLevels.map((lv) => (
                 <motion.button
                   key={lv}
@@ -298,19 +307,23 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
             <ul className="text-xs sm:text-sm text-gray-600 space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-green-500">✓</span>
-                每套包含 3 张卡片：拼音、汉字、印尼语
+                选择 HSK 级别和套数（如 10 套 = 30 张卡片）
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500">✓</span>
-                点击翻开卡片，找出属于同一汉字的 3 张
+                所有卡片打乱显示在网格中
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500">✓</span>
-                3 张全部配对正确才能进入下一套
+                点击翻开卡片，找出同一汉字的拼音+汉字+印尼语
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500">✓</span>
-                配对错误会翻回，连续正确有连击加分
+                3 张全部配对正确才能消除，全部消除后游戏结束
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-500">✓</span>
+                配对错误卡片会翻回，连续正确有连击加分
               </li>
             </ul>
           </div>
@@ -321,8 +334,8 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
 
   // ==================== 游戏结束 ====================
   if (gameFinished) {
-    const total = correctSets + wrongSets;
-    const accuracy = total > 0 ? Math.round((correctSets / total) * 100) : 0;
+    const totalAttempts = correctMatches + wrongAttempts;
+    const accuracy = totalAttempts > 0 ? Math.round((correctMatches / totalAttempts) * 100) : 0;
     const rating = accuracy >= 90 ? '🌟' : accuracy >= 70 ? '👍' : accuracy >= 50 ? '💪' : '📚';
 
     return (
@@ -350,11 +363,11 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
               <div className="text-xs text-gray-500">得分</div>
             </div>
             <div className="bg-green-50 rounded-xl p-4">
-              <div className="text-2xl sm:text-3xl font-bold text-green-600">{correctSets}</div>
+              <div className="text-2xl sm:text-3xl font-bold text-green-600">{correctMatches}</div>
               <div className="text-xs text-gray-500">配对成功</div>
             </div>
             <div className="bg-red-50 rounded-xl p-4">
-              <div className="text-2xl sm:text-3xl font-bold text-red-600">{wrongSets}</div>
+              <div className="text-2xl sm:text-3xl font-bold text-red-600">{wrongAttempts}</div>
               <div className="text-xs text-gray-500">配对失败</div>
             </div>
             <div className="bg-purple-50 rounded-xl p-4">
@@ -399,7 +412,16 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
   }
 
   // ==================== 游戏中 ====================
-  const progress = sets.length > 0 ? ((currentSetIndex) / sets.length) * 100 : 0;
+  const progress = totalSets > 0 ? (matchedCount / totalSets) * 100 : 0;
+  const remainingCards = cards.filter((c) => !c.matched).length;
+
+  // 根据卡片数量决定网格列数
+  const getGridCols = () => {
+    if (totalSets <= 5) return 'grid-cols-3 sm:grid-cols-5';
+    if (totalSets <= 8) return 'grid-cols-4 sm:grid-cols-6';
+    if (totalSets <= 12) return 'grid-cols-4 sm:grid-cols-6';
+    return 'grid-cols-4 sm:grid-cols-6 lg:grid-cols-8';
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-rose-900 via-pink-900 to-purple-900 flex flex-col p-3 sm:p-4">
@@ -413,9 +435,7 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
           <span className="text-xs sm:text-sm font-medium">HSK {config?.hskLevel}</span>
         </div>
         <div className="flex gap-2 sm:gap-3 text-xs sm:text-sm">
-          <span>
-            🔢 {currentSetIndex + 1}/{sets.length}
-          </span>
+          <span>🔢 {matchedCount}/{totalSets}</span>
           <span>⭐ {score}</span>
           {combo > 1 && (
             <span className="text-yellow-400 animate-pulse">🔥{combo}</span>
@@ -438,16 +458,16 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
         />
       </div>
 
-      {/* 当前套提示 */}
+      {/* 提示 */}
       <div className="text-center mb-3 sm:mb-4">
         <p className="text-white/60 text-xs sm:text-sm">
-          找出属于同一个汉字的 3 张卡片
+          从 {remainingCards} 张卡片中找出同一汉字的拼音、汉字、印尼语
         </p>
       </div>
 
       {/* 结果提示 */}
       <AnimatePresence>
-        {setResult === 'correct' && (
+        {feedback === 'correct' && (
           <motion.div
             initial={{ opacity: 0, y: -20, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -459,7 +479,7 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
             </div>
           </motion.div>
         )}
-        {setResult === 'wrong' && (
+        {feedback === 'wrong' && (
           <motion.div
             initial={{ opacity: 0, y: -20, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -473,97 +493,81 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
         )}
       </AnimatePresence>
 
-      {/* 卡片网格 */}
-      <div className="flex-1 flex items-center justify-center">
-        <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-sm sm:max-w-md w-full">
+      {/* 卡片网格 - 所有卡片一起显示 */}
+      <div className="flex-1 overflow-y-auto">
+        <div className={`grid ${getGridCols()} gap-2 sm:gap-3 max-w-4xl mx-auto`}>
           {cards.map((card, idx) => {
-            const isSelected = selectedCards.some((c) => c.id === card.id);
-            const canClick = setResult === 'idle' && !card.matched && !isSelected;
+            const isSelected = card.selected;
+            const canClick = feedback === 'idle' && !card.matched && !isSelected;
 
             return (
               <motion.button
                 key={card.id}
-                initial={{ opacity: 0, rotateY: 180, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.5 }}
                 animate={{
-                  opacity: 1,
-                  rotateY: card.flipped || card.matched ? 0 : 180,
-                  scale: card.matched ? 0.95 : 1,
+                  opacity: card.matched ? 0.3 : 1,
+                  scale: card.matched ? 0.9 : 1,
                 }}
-                transition={{ delay: idx * 0.1, duration: 0.4 }}
-                whileHover={canClick ? { scale: 1.05 } : {}}
-                whileTap={canClick ? { scale: 0.95 } : {}}
+                transition={{ delay: idx * 0.02, duration: 0.3 }}
+                whileHover={canClick ? { scale: 1.08 } : {}}
+                whileTap={canClick ? { scale: 0.92 } : {}}
                 onClick={() => canClick && selectCard(card)}
                 disabled={!canClick}
                 className={`relative aspect-square rounded-xl sm:rounded-2xl font-bold shadow-lg transition-all duration-300 ${
                   card.matched
-                    ? 'bg-green-500 text-white ring-2 ring-green-300'
+                    ? 'bg-green-500/30 text-white/50'
                     : isSelected
-                    ? 'bg-rose-400 text-white'
-                    : card.flipped
-                    ? 'bg-white text-gray-800'
-                    : 'bg-gradient-to-br from-rose-400 to-purple-500 text-white hover:from-rose-500 hover:to-purple-600'
+                    ? 'bg-rose-400 text-white ring-2 ring-rose-300'
+                    : 'bg-white text-gray-800 hover:bg-rose-50 hover:shadow-xl cursor-pointer'
                 } ${canClick ? 'cursor-pointer' : 'cursor-default'}`}
-                style={{ perspective: '1000px' }}
               >
-                {/* 卡片正面内容 */}
+                {/* 卡片内容 */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-1 sm:p-2">
-                  {card.flipped || card.matched ? (
-                    <>
-                      <span
-                        className={`font-bold leading-tight ${
-                          card.type === 'hanzi'
-                            ? 'text-2xl sm:text-4xl'
-                            : 'text-xs sm:text-sm'
-                        }`}
-                      >
-                        {card.value}
-                      </span>
-                      <span className="text-[10px] sm:text-xs opacity-60 mt-1">
-                        {card.type === 'pinyin'
-                          ? '拼音'
-                          : card.type === 'hanzi'
-                          ? '汉字'
-                          : '印尼语'}
-                      </span>
-                      {card.type === 'hanzi' && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            playSound(card.value);
-                          }}
-                          className="mt-1 text-[10px] sm:text-xs bg-white/20 px-1.5 py-0.5 rounded-full hover:bg-white/30"
-                        >
-                          🔊
-                        </button>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      <span className="text-lg sm:text-2xl">?</span>
-                      <span className="text-[10px] sm:text-xs opacity-80 mt-1">点击翻开</span>
-                    </>
+                  <span
+                    className={`font-bold leading-tight text-center break-words ${
+                      card.type === 'hanzi'
+                        ? 'text-xl sm:text-3xl'
+                        : card.type === 'pinyin'
+                        ? 'text-xs sm:text-sm'
+                        : 'text-[10px] sm:text-xs'
+                    }`}
+                  >
+                    {card.value}
+                  </span>
+                  <span className="text-[8px] sm:text-[10px] opacity-50 mt-0.5 sm:mt-1">
+                    {card.type === 'pinyin'
+                      ? '拼音'
+                      : card.type === 'hanzi'
+                      ? '汉字'
+                      : '印尼语'}
+                  </span>
+                  {card.type === 'hanzi' && !card.matched && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        playSound(card.value);
+                      }}
+                      className="mt-0.5 sm:mt-1 text-[8px] sm:text-[10px] bg-rose-100 text-rose-600 px-1 py-0.5 rounded-full hover:bg-rose-200"
+                    >
+                      🔊
+                    </button>
                   )}
                 </div>
+
+                {/* 已匹配标记 */}
+                {card.matched && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-2xl sm:text-4xl opacity-30">✓</span>
+                  </div>
+                )}
               </motion.button>
             );
           })}
         </div>
       </div>
 
-      {/* 下一套按钮 */}
-      {setResult === 'correct' && (
-        <motion.button
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          onClick={nextSet}
-          className="w-full py-3 sm:py-4 mt-3 sm:mt-4 bg-gradient-to-r from-rose-500 to-purple-500 text-white rounded-xl font-bold text-base sm:text-lg shadow-lg hover:from-rose-600 hover:to-purple-600 transition-all"
-        >
-          {currentSetIndex >= sets.length - 1 ? '🎉 查看结果' : '下一套 →'}
-        </motion.button>
-      )}
-
       {/* 已选提示 */}
-      {setResult === 'idle' && selectedCards.length > 0 && (
+      {feedback === 'idle' && selectedCards.length > 0 && (
         <div className="text-center mt-2 sm:mt-3">
           <p className="text-white/50 text-xs sm:text-sm">
             已选 {selectedCards.length}/3 张卡片
@@ -573,7 +577,7 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
 
       {/* 底部提示 */}
       <div className="mt-2 sm:mt-4 text-center text-white/30 text-[10px] sm:text-xs">
-        点击卡片翻开，找出拼音、汉字、印尼语三合一
+        点击卡片选择，找出拼音、汉字、印尼语三合一
       </div>
     </div>
   );
