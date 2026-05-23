@@ -545,15 +545,15 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
                   <span
                     className={`font-bold leading-tight text-center break-words ${
                       card.type === 'hanzi'
-                        ? 'text-xl sm:text-3xl'
+                        ? 'text-2xl sm:text-3xl'
                         : card.type === 'pinyin'
-                        ? 'text-xs sm:text-sm'
-                        : 'text-[10px] sm:text-xs'
+                        ? 'text-sm sm:text-base'
+                        : 'text-xs sm:text-sm'
                     }`}
                   >
                     {card.value}
                   </span>
-                  <span className="text-[8px] sm:text-[10px] opacity-50 mt-0.5 sm:mt-1">
+                  <span className="text-[9px] sm:text-xs opacity-50 mt-0.5 sm:mt-1">
                     {card.type === 'pinyin'
                       ? '拼音'
                       : card.type === 'hanzi'
@@ -566,7 +566,7 @@ export default function PairGame({ onExit }: { onExit: () => void }) {
                         e.stopPropagation();
                         playSound(card.value);
                       }}
-                      className="mt-0.5 sm:mt-1 text-[8px] sm:text-[10px] bg-rose-100 text-rose-600 px-1 py-0.5 rounded-full hover:bg-rose-200"
+                      className="mt-0.5 sm:mt-1 text-[9px] sm:text-xs bg-rose-100 text-rose-600 px-1.5 py-0.5 rounded-full hover:bg-rose-200"
                     >
                       🔊
                     </button>

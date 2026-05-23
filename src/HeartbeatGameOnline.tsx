@@ -5,7 +5,7 @@ import { db } from './firebase';
 import chainData from './data/chain_dictionary.json';
 import { getDeviceId, getDeviceInfo } from './deviceId';
 import { startSession, logWord, endSession } from './gameAnalytics';
-import { checkRateLimit, detectBot } from './security';
+import { checkRateLimit } from './security';
 
 // ==================== 类型 ====================
 interface ChainWord {
@@ -395,6 +395,31 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
     return () => unsub();
   }, [role, roomId]);
 
+  // ==================== 观众端监听房间关闭/被踢 ====================
+  useEffect(() => {
+    if (role !== 'guest' || !roomId) return;
+
+    const unsubRoom = onValue(ref(db, `rooms/${roomId}`), (snap) => {
+      const data = snap.val();
+      if (!data) {
+        // 房间已被删除（主播断线/关闭）
+        setPhase('kicked');
+        setHasGuest(false);
+      } else if (data.hostKicked) {
+        // 被主播踢出
+        setPhase('kicked');
+      } else if (!data.hasGuest) {
+        // 检查 guestId 是否还是自己（可能被其他人挤掉）
+        const myId = getDeviceId();
+        if (data.guestId && data.guestId !== myId) {
+          setPhase('kicked');
+        }
+      }
+    });
+
+    return () => unsubRoom();
+  }, [role, roomId]);
+
   // ==================== 观众端发送输入 ====================
   const sendGuestInput = useCallback((val: string) => {
     if (!roomId) return;
@@ -403,15 +428,11 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
 
   // ==================== 房间操作 ====================
   const createRoom = async (level: number, duration: number) => {
+    setError('');
+
     // 安全检查：频率限制（10秒内最多创建1个房间）
     if (!checkRateLimit('createRoom', 1, 10000)) {
       setError('创建房间太频繁，请稍后再试');
-      return;
-    }
-    // 安全检查：bot 检测
-    const botCheck = detectBot();
-    if (botCheck.isBot) {
-      setError('检测到异常行为，无法创建房间');
       return;
     }
 
@@ -442,11 +463,18 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
       }
     };
 
-    await set(ref(db, `rooms/${newRoomId}`), roomData);
+    try {
+      await set(ref(db, `rooms/${newRoomId}`), roomData);
+    } catch (err: any) {
+      console.error('创建房间失败:', err);
+      setError(`创建房间失败: ${err.message || '网络错误，请重试'}`);
+      return;
+    }
+
     roomRef.current = ref(db, `rooms/${newRoomId}`);
 
     // 记录玩家到 /players/{deviceId}
-    await set(ref(db, `players/${deviceId}`), {
+    set(ref(db, `players/${deviceId}`), {
       deviceId,
       lastActive: Date.now(),
       platform: deviceInfo.platform,
@@ -455,14 +483,14 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
       lastRoom: newRoomId,
       roomsHosted: 1,
       gamesPlayed: 1,
-    });
+    }).catch(err => console.warn('写入玩家记录失败:', err));
 
     // 记录这次访问到 /visits/{deviceId}/{timestamp}
-    await set(ref(db, `visits/${deviceId}/${Date.now()}`), {
+    set(ref(db, `visits/${deviceId}/${Date.now()}`), {
       roomId: newRoomId,
       role: 'host',
       timestamp: serverTimestamp(),
-    });
+    }).catch(err => console.warn('写入访问记录失败:', err));
 
     onValue(ref(db, `rooms/${newRoomId}/hasGuest`), (snap) => {
       setHasGuest(snap.val() === true);
@@ -478,6 +506,8 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
   };
 
   const joinRoom = async () => {
+    setError('');
+
     // 安全检查：频率限制（10秒内最多加入1个房间）
     if (!checkRateLimit('joinRoom', 1, 10000)) {
       setError('操作太频繁，请稍后再试');
@@ -490,9 +520,19 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
       return;
     }
 
-    const roomSnapshot = await new Promise<any>((resolve) => {
-      onValue(ref(db, `rooms/${roomCode}`), (snap) => resolve(snap.val()), { onlyOnce: true });
-    });
+    let roomSnapshot: any;
+    try {
+      roomSnapshot = await new Promise<any>((resolve, reject) => {
+        const timer = setTimeout(() => reject(new Error('连接超时')), 10000);
+        onValue(ref(db, `rooms/${roomCode}`), (snap) => {
+          clearTimeout(timer);
+          resolve(snap.val());
+        }, { onlyOnce: true });
+      });
+    } catch (err: any) {
+      setError('连接服务器失败，请检查网络');
+      return;
+    }
 
     if (!roomSnapshot) {
       setError('房间不存在');
@@ -504,15 +544,26 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
       return;
     }
 
+    // 检查房间是否已被主机关闭
+    if (roomSnapshot.hostKicked) {
+      setError('房间已关闭');
+      return;
+    }
+
     const deviceId = getDeviceId();
     const deviceInfo = getDeviceInfo();
 
-    await set(ref(db, `rooms/${roomCode}/guestId`), deviceId);
-    await set(ref(db, `rooms/${roomCode}/guestName`), deviceInfo.platform); // 暂时用 platform 作为标识
-    await set(ref(db, `rooms/${roomCode}/hasGuest`), true);
+    try {
+      await set(ref(db, `rooms/${roomCode}/guestId`), deviceId);
+      await set(ref(db, `rooms/${roomCode}/guestName`), deviceInfo.platform);
+      await set(ref(db, `rooms/${roomCode}/hasGuest`), true);
+    } catch (err: any) {
+      setError('加入房间失败，请重试');
+      return;
+    }
 
     // 记录玩家到 /players/{deviceId}
-    await set(ref(db, `players/${deviceId}`), {
+    set(ref(db, `players/${deviceId}`), {
       deviceId,
       lastActive: serverTimestamp(),
       platform: deviceInfo.platform,
@@ -521,14 +572,14 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
       lastRoom: roomCode,
       lastRole: 'guest',
       gamesPlayed: serverTimestamp(),
-    });
+    }).catch(err => console.warn('写入玩家记录失败:', err));
 
     // 记录这次访问到 /visits/{deviceId}/{timestamp}
-    await set(ref(db, `visits/${deviceId}/${Date.now()}`), {
+    set(ref(db, `visits/${deviceId}/${Date.now()}`), {
       roomId: roomCode,
       role: 'guest',
       timestamp: serverTimestamp(),
-    });
+    }).catch(err => console.warn('写入访问记录失败:', err));
 
     roomRef.current = ref(db, `rooms/${roomCode}`);
 
@@ -551,10 +602,10 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
   const leaveRoom = async () => {
     if (roomId) {
       if (role === 'host') {
-        await remove(ref(db, `rooms/${roomId}`));
+        await remove(ref(db, `rooms/${roomId}`)).catch(err => console.warn('删除房间失败:', err));
       } else {
-        await set(ref(db, `rooms/${roomId}/hasGuest`), false);
-        await set(ref(db, `rooms/${roomId}/guestId`), null);
+        await set(ref(db, `rooms/${roomId}/hasGuest`), false).catch(err => console.warn('离开房间失败:', err));
+        await set(ref(db, `rooms/${roomId}/guestId`), null).catch(err => console.warn('离开房间失败:', err));
       }
     }
     roomRef.current = null;
