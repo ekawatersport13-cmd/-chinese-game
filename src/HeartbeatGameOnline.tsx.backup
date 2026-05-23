@@ -1,0 +1,1268 @@
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, set, onValue, onDisconnect, remove } from 'firebase/database';
+import chainData from './data/chain_dictionary.json';
+
+// ==================== Firebase 配置 ====================
+const firebaseConfig = {
+  apiKey: "AIzaSyCyUnzm946N9ammDgXWNdRo7SZNz5XRnTw",
+  authDomain: "chinesegame-4317f.firebaseapp.com",
+  databaseURL: "https://chinesegame-4317f-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "chinesegame-4317f",
+  storageBucket: "chinesegame-4317f.firebasestorage.app",
+  messagingSenderId: "843830906860",
+  appId: "1:843830906860:web:52d63501637773539b3ac9",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// ==================== 类型 ====================
+interface ChainWord {
+  word: string;
+  pinyin: string;
+  meaning: string;
+  hsk?: number;
+}
+
+interface Stone {
+  id: number;
+  lane: 'left' | 'center' | 'right';
+  x: number;
+  y: number;
+  speed: number;
+  wobble: number;
+  wobbleSpeed: number;
+  wobblePhase: number;
+  alive: boolean;
+}
+
+interface LaneHint {
+  word: string;
+  pinyin: string;
+  meaning: string;
+  showPinyin: boolean;
+}
+
+interface RoomState {
+  phase: 'waiting' | 'playing' | 'gameover';
+  score: number;
+  lives: number;
+  difficulty: number;
+  playerLane: number;
+  stones: Stone[];
+  laneHints: Record<string, LaneHint | null>;
+  guestInput: string;
+  hostKicked: boolean;
+  difficultyLevel?: number;
+  combo?: number;
+  maxCombo?: number;
+}
+
+// ==================== 常量 ====================
+const GAME_H = 520;
+const GAME_W = 380;
+const PLAYER_H = 56;
+const PLAYER_W = 48;
+const PLAYER_Y = GAME_H - PLAYER_H - 10;
+const STONE_W = 100;
+const STONE_H = 58;
+
+const LANES = [
+  35,
+  (GAME_W - STONE_W) / 2,
+  GAME_W - STONE_W - 35,
+];
+
+const LANE_COLORS = {
+  left:   { bg: 'from-cyan-600 to-blue-700',   border: 'border-cyan-400/60',   text: 'text-cyan-200/80',   glow: '#22d3ee',   label: '← 左', short: 'L' },
+  center: { bg: 'from-amber-600 to-orange-700', border: 'border-amber-400/60',  text: 'text-amber-200/80',  glow: '#fbbf24',   label: '中',  short: 'C' },
+  right:  { bg: 'from-rose-600 to-pink-700',   border: 'border-rose-400/60',   text: 'text-rose-200/80',   glow: '#fb7185',   label: '右 →', short: 'R' },
+};
+
+const LANES_ARR: ('left' | 'center' | 'right')[] = ['left', 'center', 'right'];
+
+const LEFT_WORDS: ChainWord[] = (chainData as any).words
+  ? Object.entries((chainData as any).words)
+      .filter(([w]: [string, any]) => w.length >= 2 && w.length <= 4)
+      .map(([word, entry]: [string, any]) => ({
+        word, pinyin: entry.pinyin || '', meaning: entry.meaning || '', hsk: entry.hsk || 1
+      }))
+  : [];
+
+const getWordsByLevel = (maxLevel: number): ChainWord[] => {
+  return LEFT_WORDS.filter(w => w.hsk !== undefined && w.hsk <= maxLevel);
+};
+
+const getRandomWord = (difficulty: number): ChainWord => {
+  const pool = getWordsByLevel(Math.min(difficulty, 11));
+  if (pool.length === 0) return LEFT_WORDS[Math.floor(Math.random() * LEFT_WORDS.length)] || { word: '漂亮', pinyin: 'piàoliang', meaning: 'cantik', hsk: 1 };
+  return pool[Math.floor(Math.random() * pool.length)];
+};
+
+// ==================== 生成房间ID ====================
+const generateRoomId = (): string => {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let result = '';
+  for (let i = 0; i < 6; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+};
+
+// ==================== 主组件 ====================
+export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) {
+  // 角色：host（主播）或 guest（观众）
+  const [role, setRole] = useState<'host' | 'guest' | null>(null);
+  const [roomId, setRoomId] = useState('');
+  const [joinRoomId, setJoinRoomId] = useState('');
+  const [input, setInput] = useState('');
+  const [error, setError] = useState('');
+  const [hasGuest, setHasGuest] = useState(false);
+  const [particles, setParticles] = useState<{id:number,x:number,y:number,vx:number,vy:number,color:string,life:number,size:number}[]>([]);
+  const [dodgeEvents, setDodgeEvents] = useState<{id:number,lane:'left'|'center'|'right',x:number,y:number,time:number}[]>([]);
+  const [shake, setShake] = useState(false);
+  const [flashRed, setFlashRed] = useState(false);
+  const [lastDodge, setLastDodge] = useState<'left' | 'center' | 'right' | null>(null);
+  const [dodgeScoreAnim, setDodgeScoreAnim] = useState<{val:number,x:number,y:number,time:number}|null>(null);
+
+  // Firebase refs
+  const roomRef = useRef<any>(null);
+  const myUserRef = useRef<any>(null);
+  const userId = useRef(`user_${Math.random().toString(36).substr(2, 9)}`);
+
+  // 游戏状态（主播端本地计算）
+  const [phase, setPhase] = useState<'menu' | 'playing' | 'gameover' | 'waiting' | 'kicked'>('menu');
+  const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(() => parseInt(localStorage.getItem('heartbeat_hs_online') || '0'));
+  const [lives, setLives] = useState(3);
+  const [difficulty, setDifficulty] = useState(1);
+  const [playerLane, setPlayerLane] = useState<0 | 1 | 2>(1);
+  const [stones, setStones] = useState<Stone[]>([]);
+  const [laneHints, setLaneHints] = useState<Record<string, LaneHint | null>>({ left: null, center: null, right: null });
+  const [combo, setCombo] = useState(0);
+  const [maxCombo, setMaxCombo] = useState(0);
+
+  // Refs
+  const frameRef = useRef<number>(0);
+  const lastSpawnRef = useRef(0);
+  const stoneIdRef = useRef(0);
+  const particleIdRef = useRef(0);
+  const dodgeIdRef = useRef(0);
+  const inputRef = useRef('');
+  const hintsRef = useRef(laneHints);
+  const guestInputRef = useRef('');
+  const animRef = useRef({ stones: [] as Stone[], playerLane: 1 as 0|1|2 });
+  const phaseRef = useRef(phase);
+  const scoreRef = useRef(score);
+  const livesRef = useRef(lives);
+  const comboRef = useRef(combo);
+  const maxComboRef = useRef(maxCombo);
+  const difficultyRef = useRef(difficulty);
+  const syncToFirebaseRef = useRef<() => void>(() => {});
+
+  useEffect(() => { inputRef.current = input; }, [input]);
+  useEffect(() => { hintsRef.current = laneHints; }, [laneHints]);
+  useEffect(() => { guestInputRef.current = input; }, [input]);
+  useEffect(() => { phaseRef.current = phase; }, [phase]);
+  useEffect(() => { scoreRef.current = score; }, [score]);
+  useEffect(() => { livesRef.current = lives; }, [lives]);
+  useEffect(() => { comboRef.current = combo; }, [combo]);
+  useEffect(() => { maxComboRef.current = maxCombo; }, [maxCombo]);
+  useEffect(() => { difficultyRef.current = difficulty; }, [difficulty]);
+
+  // ==================== 粒子效果 ====================
+  const spawnParticles = useCallback((x: number, y: number, color: string, count: number) => {
+    const newParts: typeof particles = [];
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count + Math.random() * 0.5;
+      const speed = 2 + Math.random() * 4;
+      newParts.push({
+        id: particleIdRef.current++,
+        x: x + PLAYER_W / 2,
+        y: y + PLAYER_H / 2,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 2,
+        color,
+        life: 1,
+        size: 3 + Math.random() * 4,
+      });
+    }
+    setParticles(prev => [...prev.slice(-30), ...newParts]);
+  }, []);
+
+  const spawnDodgeText = useCallback((lane: 'left' | 'center' | 'right', x: number) => {
+    setDodgeEvents(prev => [...prev.slice(-5), {
+      id: dodgeIdRef.current++,
+      lane,
+      x: x + PLAYER_W / 2,
+      y: PLAYER_Y - 20,
+      time: Date.now(),
+    }]);
+  }, []);
+
+  // ==================== 观众匹配逻辑（主播端） ====================
+  const checkInputForGuest = useCallback((val: string) => {
+    if (phaseRef.current !== 'playing') return;
+    const trimmed = val.trim();
+    if (trimmed.length === 0) return;
+
+    let matchedLane: 'left' | 'center' | 'right' | null = null;
+    for (const lane of LANES_ARR) {
+      const hint = hintsRef.current[lane];
+      if (hint && hint.word === trimmed) {
+        matchedLane = lane;
+        break;
+      }
+    }
+
+    if (matchedLane) {
+      const laneIdx = LANES_ARR.indexOf(matchedLane);
+      animRef.current.playerLane = laneIdx as 0 | 1 | 2;
+      setPlayerLane(laneIdx as 0 | 1 | 2);
+
+      let killed = 0;
+      animRef.current.stones = animRef.current.stones.map(s => {
+        if (s.alive && s.lane === matchedLane) {
+          killed++;
+          return { ...s, alive: false };
+        }
+        return s;
+      });
+
+      const color = LANE_COLORS[matchedLane].glow;
+      const laneX = LANES[laneIdx];
+      spawnParticles(laneX, PLAYER_Y, color, 14);
+      spawnDodgeText(matchedLane, laneX);
+      setLastDodge(matchedLane);
+      setTimeout(() => setLastDodge(null), 300);
+
+      // 清空观众输入
+      if (roomRef.current) {
+        set(ref(db, `rooms/${roomId}/guestInput`), '');
+      }
+
+      const pts = 50 * difficulty * Math.max(killed, 1);
+      setScore(prev => prev + pts);
+      setDodgeScoreAnim({ val: pts, x: laneX + STONE_W/2, y: PLAYER_Y - 30, time: Date.now() });
+
+      // 生成新提示
+      const newWord = getRandomWord(difficulty);
+      const showPinyin = Math.random() < 0.5;
+      const newHint: LaneHint = { word: newWord.word, pinyin: newWord.pinyin, meaning: newWord.meaning, showPinyin };
+      setLaneHints(prev => ({ ...prev, [matchedLane]: newHint }));
+      hintsRef.current = { ...hintsRef.current, [matchedLane]: newHint };
+
+      // 同步状态到 Firebase
+      syncToFirebaseRef.current();
+    }
+  }, [difficulty, roomId, spawnParticles, spawnDodgeText]);
+
+  // ==================== 观众输入处理（主播端） ====================
+  useEffect(() => {
+    if (role !== 'host' || !roomRef.current) return;
+
+    const unsub = onValue(ref(db, `rooms/${roomId}/guestInput`), (snap) => {
+      const guestVal = snap.val();
+      if (guestVal && guestVal !== guestInputRef.current) {
+        guestInputRef.current = guestVal;
+        // 观众输入了，尝试匹配
+        checkInputForGuest(guestVal);
+      }
+    });
+
+    return () => unsub();
+  }, [role, roomId, difficulty, checkInputForGuest]);
+
+  // ==================== 同步状态到 Firebase ====================
+  const syncToFirebase = useCallback(() => {
+    if (!roomRef.current || role !== 'host') return;
+    set(ref(db, `rooms/${roomId}/state`), {
+      phase: phaseRef.current,
+      score: scoreRef.current,
+      lives: livesRef.current,
+      difficulty: difficultyRef.current,
+      playerLane: animRef.current.playerLane,
+      combo: comboRef.current,
+      maxCombo: maxComboRef.current,
+      laneHints: hintsRef.current,
+      stones: animRef.current.stones.map(s => ({ ...s, wobble: 0 })), // 不同步 wobble
+      lastUpdate: Date.now(),
+    });
+  }, [role, roomId]);
+
+  useEffect(() => { syncToFirebaseRef.current = syncToFirebase; }, [syncToFirebase]);
+
+  // ==================== 游戏循环（主播端） ====================
+  const gameLoop = useCallback((ts: number) => {
+    if (phaseRef.current !== 'playing') return;
+
+    const state = animRef.current;
+    const diff = difficultyRef.current;
+    const speedMultiplier = 1 + (diff - 1) * 0.08;
+    const baseSpeed = 1.0 * speedMultiplier;
+    const spawnInterval = Math.max(2200 - (diff - 1) * 100, 1000);
+
+    // 生成石头
+    if (ts - lastSpawnRef.current > spawnInterval) {
+      lastSpawnRef.current = ts;
+      const laneIdx = Math.floor(Math.random() * 3);
+      const lane = LANES_ARR[laneIdx];
+      const newStone: Stone = {
+        id: stoneIdRef.current++,
+        lane,
+        x: LANES[laneIdx],
+        y: -STONE_H,
+        speed: baseSpeed,
+        wobble: 0,
+        wobbleSpeed: 2 + Math.random() * 2,
+        wobblePhase: Math.random() * Math.PI * 2,
+        alive: true,
+      };
+      state.stones = [...state.stones, newStone];
+    }
+
+    // 更新石头
+    let hit = false;
+    let dodgedCount = 0;
+    state.stones = state.stones
+      .map(s => {
+        if (!s.alive) return s;
+        const newY = s.y + s.speed;
+        const wobble = Math.sin(s.wobblePhase + ts * 0.003 * s.wobbleSpeed) * 3;
+        const stoneBottom = newY + STONE_H;
+        const playerTop = PLAYER_Y;
+        const stoneLaneIdx = LANES_ARR.indexOf(s.lane);
+
+        if (stoneBottom >= playerTop && stoneBottom <= playerTop + PLAYER_H + 10) {
+          if (stoneLaneIdx === state.playerLane) {
+            hit = true;
+            return { ...s, alive: false, y: newY, wobble };
+          }
+        }
+        if (newY > PLAYER_Y + PLAYER_H && s.alive) {
+          dodgedCount++;
+          return { ...s, alive: false, y: newY, wobble };
+        }
+        return { ...s, y: newY, wobble };
+      })
+      .filter(s => s.y < GAME_H + 50 && s.alive);
+
+    if (hit) {
+      setLives(prev => {
+        const next = prev - 1;
+        if (next <= 0) {
+          setPhase('gameover');
+          setHighScore(hs => {
+            const newHs = Math.max(hs, scoreRef.current);
+            localStorage.setItem('heartbeat_hs_online', String(newHs));
+            return newHs;
+          });
+        }
+        return next;
+      });
+      setShake(true);
+      setFlashRed(true);
+      setTimeout(() => setShake(false), 300);
+      setTimeout(() => setFlashRed(false), 200);
+      setCombo(0);
+      state.stones = [];
+    }
+
+    if (dodgedCount > 0) {
+      const pts = dodgedCount * 10 * diff;
+      setScore(prev => prev + pts);
+      setCombo(prev => {
+        const c = prev + dodgedCount;
+        setMaxCombo(mc => Math.max(mc, c));
+        return c;
+      });
+      setScore(prev => {
+        const newLvl = Math.floor(prev / 500) + 1;
+        setDifficulty(d => Math.min(d + (newLvl > d ? 1 : 0), 11));
+        return prev;
+      });
+    }
+
+    setStones([...state.stones]);
+    syncToFirebaseRef.current();
+
+    frameRef.current = requestAnimationFrame(gameLoop);
+  }, []);
+
+  useEffect(() => {
+    if (phase === 'playing' && role === 'host') {
+      frameRef.current = requestAnimationFrame(gameLoop);
+    }
+    return () => cancelAnimationFrame(frameRef.current);
+  }, [phase, gameLoop, role]);
+
+  // 粒子动画
+  useEffect(() => {
+    if (phase !== 'playing') return;
+    const id = setInterval(() => {
+      setParticles(prev => prev.map(p => ({
+        ...p, x: p.x + p.vx, y: p.y + p.vy, vy: p.vy + 0.15, life: p.life - 0.04
+      })).filter(p => p.life > 0));
+      setDodgeEvents(prev => prev.filter(e => Date.now() - e.time < 800));
+      setDodgeScoreAnim(prev => {
+        if (prev && Date.now() - prev.time > 1200) return null;
+        return prev;
+      });
+    }, 16);
+    return () => clearInterval(id);
+  }, [phase]);
+
+  // ==================== 观众端同步 ====================
+  useEffect(() => {
+    if (role !== 'guest' || !roomId) return;
+
+    const unsub = onValue(ref(db, `rooms/${roomId}/state`), (snap) => {
+      const state = snap.val() as RoomState | null;
+      if (!state) return;
+
+      if (state.hostKicked) {
+        setPhase('kicked');
+        return;
+      }
+
+      setPhase(state.phase as any);
+      setScore(state.score || 0);
+      setLives(state.lives || 3);
+      setDifficulty(state.difficulty || 1);
+      setPlayerLane((state.playerLane || 1) as 0|1|2);
+      setCombo(state.combo || 0);
+      setMaxCombo(state.maxCombo || 0);
+      setStones(state.stones || []);
+      setLaneHints(state.laneHints || { left: null, center: null, right: null });
+      animRef.current = { stones: state.stones || [], playerLane: (state.playerLane || 1) as 0|1|2 };
+    });
+
+    return () => unsub();
+  }, [role, roomId]);
+
+  // 观众端粒子动画
+  useEffect(() => {
+    if (role !== 'guest') return;
+    const id = setInterval(() => {
+      setDodgeEvents(prev => prev.filter(e => Date.now() - e.time < 800));
+    }, 16);
+    return () => clearInterval(id);
+  }, [role]);
+
+  // ==================== 观众端发送输入 ====================
+  useEffect(() => {
+    if (role !== 'guest' || !roomId) return;
+    const unsub = onValue(ref(db, `rooms/${roomId}`), (snap) => {
+      const room = snap.val();
+      if (!room) return;
+      // 检查是否被踢
+      if (room.hostKicked) {
+        setPhase('kicked');
+      }
+    });
+    return () => unsub();
+  }, [role, roomId]);
+
+  const sendGuestInput = useCallback((val: string) => {
+    if (!roomId) return;
+    set(ref(db, `rooms/${roomId}/guestInput`), val);
+  }, [roomId]);
+
+  // ==================== 房间操作 ====================
+  const createRoom = async (level: number) => {
+    const newRoomId = generateRoomId();
+    const roomData = {
+      hostId: userId.current,
+      hostKicked: false,
+      hasGuest: false,
+      guestId: null,
+      guestInput: '',
+      difficultyLevel: level,
+      createdAt: Date.now(),
+      state: {
+        phase: 'waiting',
+        score: 0,
+        lives: 3,
+        difficulty: level,
+        playerLane: 1,
+        stones: [],
+        laneHints: { left: null, center: null, right: null },
+        combo: 0,
+        maxCombo: 0,
+      }
+    };
+
+    await set(ref(db, `rooms/${newRoomId}`), roomData);
+    roomRef.current = ref(db, `rooms/${newRoomId}`);
+
+    // 监听观众加入
+    onValue(ref(db, `rooms/${newRoomId}/hasGuest`), (snap) => {
+      setHasGuest(snap.val() === true);
+    });
+
+    // 主持人离开时自动清理
+    onDisconnect(ref(db, `rooms/${newRoomId}`)).remove();
+
+    setRoomId(newRoomId);
+    setRole('host');
+    setDifficulty(level);
+    setPhase('waiting');
+  };
+
+  const joinRoom = async () => {
+    const roomCode = joinRoomId.trim().toUpperCase();
+    if (!roomCode) {
+      setError('请输入房间号');
+      return;
+    }
+
+    const roomSnapshot = await new Promise<any>((resolve) => {
+      onValue(ref(db, `rooms/${roomCode}`), (snap) => resolve(snap.val()), { onlyOnce: true });
+    });
+
+    if (!roomSnapshot) {
+      setError('房间不存在');
+      return;
+    }
+
+    if (roomSnapshot.hasGuest) {
+      setError('房间已有观众');
+      return;
+    }
+
+    // 加入房间
+    await set(ref(db, `rooms/${roomCode}/guestId`), userId.current);
+    await set(ref(db, `rooms/${roomCode}/hasGuest`), true);
+
+    roomRef.current = ref(db, `rooms/${roomCode}`);
+    myUserRef.current = ref(db, `rooms/${roomCode}/guestId`);
+
+    // 离开时清理
+    onDisconnect(ref(db, `rooms/${roomCode}/hasGuest`)).remove();
+    onDisconnect(ref(db, `rooms/${roomCode}/guestId`)).remove();
+
+    setRoomId(roomCode);
+    setRole('guest');
+    setError('');
+  };
+
+  const kickGuest = async () => {
+    if (!roomId) return;
+    await set(ref(db, `rooms/${roomId}/hostKicked`), true);
+    await set(ref(db, `rooms/${roomId}/hasGuest`), false);
+    await set(ref(db, `rooms/${roomId}/guestId`), null);
+    setHasGuest(false);
+  };
+
+  const leaveRoom = async () => {
+    if (roomId) {
+      if (role === 'host') {
+        await remove(ref(db, `rooms/${roomId}`));
+      } else {
+        await set(ref(db, `rooms/${roomId}/hasGuest`), false);
+        await set(ref(db, `rooms/${roomId}/guestId`), null);
+      }
+    }
+    roomRef.current = null;
+    setRole(null);
+    setRoomId('');
+    setPhase('menu');
+    setHasGuest(false);
+  };
+
+  // ==================== 开始游戏（主播） ====================
+  const startGame = (lvl: number) => {
+    setPhase('playing');
+    setScore(0);
+    setLives(3);
+    setDifficulty(lvl);
+    setCombo(0);
+    setMaxCombo(0);
+    setStones([]);
+    setParticles([]);
+    setDodgeEvents([]);
+    setDodgeScoreAnim(null);
+    setPlayerLane(1);
+    setLaneHints({ left: null, center: null, right: null });
+    animRef.current = { stones: [], playerLane: 1 };
+    guestInputRef.current = '';
+    lastSpawnRef.current = performance.now();
+
+    // 预生成3个提示
+    ['left','center','right'].forEach((lane, i) => {
+      setTimeout(() => {
+        const word = getRandomWord(lvl);
+        const showPinyin = Math.random() < 0.5;
+        const hint: LaneHint = { word: word.word, pinyin: word.pinyin, meaning: word.meaning, showPinyin };
+        setLaneHints(prev => ({ ...prev, [lane]: hint }));
+        hintsRef.current = { ...hintsRef.current, [lane]: hint };
+        syncToFirebaseRef.current();
+      }, i * 100);
+    });
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      if (role === 'host' && phase === 'playing') {
+        const trimmed = inputRef.current.trim();
+        if (!trimmed) return;
+
+        let matchedLane: 'left' | 'center' | 'right' | null = null;
+        for (const lane of LANES_ARR) {
+          const hint = hintsRef.current[lane];
+          if (hint && hint.word === trimmed) {
+            matchedLane = lane;
+            break;
+          }
+        }
+
+        if (matchedLane) {
+          const laneIdx = LANES_ARR.indexOf(matchedLane);
+          animRef.current.playerLane = laneIdx as 0 | 1 | 2;
+          setPlayerLane(laneIdx as 0 | 1 | 2);
+
+          let killed = 0;
+          animRef.current.stones = animRef.current.stones.map(s => {
+            if (s.alive && s.lane === matchedLane) {
+              killed++;
+              return { ...s, alive: false };
+            }
+            return s;
+          });
+
+          const color = LANE_COLORS[matchedLane].glow;
+          const laneX = LANES[laneIdx];
+          spawnParticles(laneX, PLAYER_Y, color, 14);
+          spawnDodgeText(matchedLane, laneX);
+          setLastDodge(matchedLane);
+          setTimeout(() => setLastDodge(null), 300);
+
+          const pts = 50 * difficulty * Math.max(killed, 1);
+          setScore(prev => prev + pts);
+          setDodgeScoreAnim({ val: pts, x: laneX + STONE_W/2, y: PLAYER_Y - 30, time: Date.now() });
+          setCombo(prev => {
+            const c = prev + 1;
+            setMaxCombo(mc => Math.max(mc, c));
+            return c;
+          });
+
+          const newWord = getRandomWord(difficulty);
+          const showPinyin = Math.random() < 0.5;
+          const newHint: LaneHint = { word: newWord.word, pinyin: newWord.pinyin, meaning: newWord.meaning, showPinyin };
+          setLaneHints(prev => ({ ...prev, [matchedLane]: newHint }));
+          hintsRef.current = { ...hintsRef.current, [matchedLane]: newHint };
+
+          syncToFirebaseRef.current();
+        }
+        setInput('');
+      }
+    } else if (e.key === 'Escape') {
+      if (role === 'host') {
+        cancelAnimationFrame(frameRef.current);
+        setPhase('waiting');
+        syncToFirebaseRef.current();
+      }
+    }
+  };
+
+  // 观众发送输入
+  const handleGuestInput = (val: string) => {
+    setInput(val);
+    sendGuestInput(val);
+  };
+
+  // ==================== 渲染 ====================
+
+  // 主菜单 / 角色选择
+  if (phase === 'menu' || !role) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-950 to-gray-900 flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-gray-900/90 rounded-3xl p-8 max-w-md w-full shadow-2xl border border-purple-800/40"
+        >
+          <motion.div
+            className="text-center mb-8"
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <div className="text-6xl mb-3">🎮</div>
+            <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-purple-500">
+              联机模式
+            </h1>
+            <p className="text-purple-300/70 text-sm mt-2">Online Mode</p>
+          </motion.div>
+
+          {role === null ? (
+            <>
+              <p className="text-center text-gray-400 text-sm mb-4">选择你的角色</p>
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setRole('host')}
+                  className="py-6 rounded-2xl bg-gradient-to-br from-purple-600 to-pink-600 text-white shadow-lg border-2 border-purple-400/50"
+                >
+                  <div className="text-4xl mb-2">🎙️</div>
+                  <div className="font-black text-lg">主播</div>
+                  <div className="text-xs opacity-70 mt-1">Host - 创建房间</div>
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setRole('guest')}
+                  className="py-6 rounded-2xl bg-gradient-to-br from-cyan-600 to-blue-600 text-white shadow-lg border-2 border-cyan-400/50"
+                >
+                  <div className="text-4xl mb-2">👥</div>
+                  <div className="font-black text-lg">观众</div>
+                  <div className="text-xs opacity-70 mt-1">Guest - 加入房间</div>
+                </motion.button>
+              </div>
+              <button onClick={onExit} className="w-full py-3 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-xl text-sm transition-all">
+                ← 返回主菜单
+              </button>
+            </>
+          ) : role === 'host' ? (
+            <>
+              <div className="bg-purple-900/30 rounded-2xl p-4 mb-6 border border-purple-700/40">
+                <h3 className="text-purple-300 font-bold text-sm mb-2">🎙️ 主播模式</h3>
+                <p className="text-gray-400 text-xs">1. 创建房间并分享链接</p>
+                <p className="text-gray-400 text-xs">2. 等待观众加入</p>
+                <p className="text-gray-400 text-xs">3. 观众可以帮你打字控制角色！</p>
+                <p className="text-gray-400 text-xs">4. 可随时踢出观众</p>
+              </div>
+              <p className="text-center text-gray-400 text-xs mb-3">选择难度开始创建房间</p>
+              <div className="grid grid-cols-4 gap-2 mb-4">
+                {[1, 2, 3, 4, 5, 6, 7, 8].map(lvl => (
+                  <motion.button
+                    key={lvl}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => createRoom(lvl)}
+                    className="py-2 rounded-lg font-bold text-sm bg-gradient-to-br from-purple-600 to-pink-600 text-white shadow-lg"
+                  >
+                    HSK{lvl}
+                  </motion.button>
+                ))}
+              </div>
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                onClick={() => createRoom(11)}
+                className="w-full py-2 rounded-lg font-bold text-sm bg-gradient-to-r from-red-600 to-pink-600 text-white shadow-lg mb-4"
+              >
+                全部难度
+              </motion.button>
+              <button onClick={() => setRole(null)} className="w-full py-3 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-xl text-sm transition-all">
+                ← 返回
+              </button>
+            </>
+          ) : (
+            <>
+              <div className="bg-cyan-900/30 rounded-2xl p-4 mb-6 border border-cyan-700/40">
+                <h3 className="text-cyan-300 font-bold text-sm mb-2">👥 观众模式</h3>
+                <p className="text-gray-400 text-xs">输入主播分享的房间号</p>
+                <p className="text-gray-400 text-xs">即可加入并帮忙打字！</p>
+              </div>
+              <div className="mb-4">
+                <input
+                  type="text"
+                  value={joinRoomId}
+                  onChange={e => setJoinRoomId(e.target.value.toUpperCase())}
+                  placeholder="输入房间号..."
+                  maxLength={6}
+                  className="w-full bg-gray-800 border-2 border-cyan-700 rounded-xl px-4 py-3 text-white text-center text-2xl font-bold tracking-widest uppercase placeholder-gray-600 outline-none focus:border-cyan-500"
+                />
+                {error && <p className="text-red-400 text-sm text-center mt-2">{error}</p>}
+              </div>
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                onClick={joinRoom}
+                className="w-full py-4 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-xl font-bold text-lg shadow-lg mb-4"
+              >
+                加入房间
+              </motion.button>
+              <button onClick={() => setRole(null)} className="w-full py-3 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-xl text-sm transition-all">
+                ← 返回
+              </button>
+            </>
+          )}
+        </motion.div>
+      </div>
+    );
+  }
+
+  // 等待观众（主播）
+  if (phase === 'waiting' && role === 'host') {
+    const shareUrl = `${window.location.origin}?room=${roomId}`;
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-950 to-gray-900 flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-gray-900/90 rounded-3xl p-8 max-w-md w-full shadow-2xl border border-purple-800/40 text-center"
+        >
+          <div className="text-6xl mb-4">⏳</div>
+          <h2 className="text-2xl font-black text-purple-400 mb-2">等待观众加入...</h2>
+          <p className="text-gray-400 text-sm mb-6">房间号：<span className="text-white font-bold text-xl">{roomId}</span></p>
+
+          <div className="bg-gray-800 rounded-xl p-4 mb-6">
+            <p className="text-gray-400 text-xs mb-2">分享链接给观众：</p>
+            <div className="bg-gray-900 rounded-lg p-2 text-xs text-cyan-400 break-all mb-3 font-mono">
+              {shareUrl}
+            </div>
+            <button
+              onClick={() => navigator.clipboard.writeText(shareUrl)}
+              className="w-full py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-sm font-bold transition-all"
+            >
+              📋 复制链接
+            </button>
+          </div>
+
+          {hasGuest ? (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              className="bg-green-900/30 rounded-xl p-4 mb-6 border border-green-700/40"
+            >
+              <p className="text-green-400 font-bold">✅ 观众已连接！</p>
+            </motion.div>
+          ) : (
+            <div className="bg-yellow-900/30 rounded-xl p-4 mb-6 border border-yellow-700/40">
+              <p className="text-yellow-400 text-sm">等待观众输入房间号加入...</p>
+            </div>
+          )}
+
+          <div className="space-y-3">
+            {hasGuest && (
+              <motion.button
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => startGame(difficulty)}
+                className="w-full py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-bold text-lg shadow-lg"
+              >
+                🎮 开始游戏
+              </motion.button>
+            )}
+            <button
+              onClick={hasGuest ? kickGuest : leaveRoom}
+              className="w-full py-3 bg-gray-700 hover:bg-red-600 text-gray-300 hover:text-white rounded-xl text-sm transition-all"
+            >
+              {hasGuest ? '🚫 踢出观众' : '❌ 离开房间'}
+            </button>
+            <button
+              onClick={leaveRoom}
+              className="w-full py-3 bg-gray-800 hover:bg-gray-700 text-gray-400 rounded-xl text-sm transition-all"
+            >
+              ← 返回主菜单
+            </button>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // 观众等待开始
+  if (phase === 'waiting' && role === 'guest') {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-cyan-950 to-gray-900 flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-gray-900/90 rounded-3xl p-8 max-w-md w-full shadow-2xl border border-cyan-800/40 text-center"
+        >
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+            className="text-6xl mb-4"
+          >
+            🎧
+          </motion.div>
+          <h2 className="text-2xl font-black text-cyan-400 mb-2">已连接房间</h2>
+          <p className="text-gray-400 text-sm mb-6">房间号：<span className="text-white font-bold">{roomId}</span></p>
+
+          <div className="bg-cyan-900/30 rounded-xl p-4 mb-6 border border-cyan-700/40">
+            <p className="text-cyan-300 font-bold">✅ 等待主播开始游戏...</p>
+            <p className="text-gray-400 text-xs mt-2">准备好输入汉字！</p>
+          </div>
+
+          <button
+            onClick={leaveRoom}
+            className="w-full py-3 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-xl text-sm transition-all"
+          >
+            ← 离开房间
+          </button>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // 被踢出
+  if (phase === 'kicked') {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-red-950 to-gray-900 flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-gray-900/90 rounded-3xl p-8 max-w-md w-full shadow-2xl border border-red-800/40 text-center"
+        >
+          <div className="text-7xl mb-4">🚫</div>
+          <h2 className="text-2xl font-black text-red-400 mb-4">你被移出房间</h2>
+          <p className="text-gray-400 text-sm mb-6">主播已将你踢出</p>
+          <button
+            onClick={() => { setRole(null); setPhase('menu'); setRoomId(''); }}
+            className="w-full py-4 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-xl font-bold text-lg shadow-lg"
+          >
+            返回主菜单
+          </button>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // 游戏结束
+  if (phase === 'gameover') {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-red-950 to-gray-900 flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-gray-900/90 rounded-3xl p-8 max-w-sm w-full shadow-2xl border border-red-800/40 text-center"
+        >
+          <motion.div
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 0.5 }}
+            className="text-7xl mb-4"
+          >
+            💀
+          </motion.div>
+          <h2 className="text-2xl font-black text-red-400 mb-2">游戏结束！</h2>
+          <p className="text-gray-400 text-sm mb-6">你被石头砸中了...</p>
+
+          <div className="bg-gray-800/60 rounded-2xl p-4 mb-6 space-y-3">
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-400">分数</span>
+              <span className="text-yellow-400 font-bold text-xl">{score}</span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-400">最高分</span>
+              <span className="text-yellow-300 font-bold">{Math.max(score, highScore)}</span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-400">难度</span>
+              <span className="text-red-400 font-bold">HSK {difficulty}</span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-400">最高连击</span>
+              <span className="text-pink-400 font-bold">x{maxCombo}</span>
+            </div>
+          </div>
+
+          {score >= highScore && score > 0 && (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              className="text-yellow-400 font-black text-lg mb-4"
+            >
+              🎉 新纪录！🎉
+            </motion.div>
+          )}
+
+          {role === 'host' && (
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              onClick={() => startGame(difficulty)}
+              className="w-full py-4 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-xl font-bold text-lg shadow-lg mb-3"
+            >
+              再来一局
+            </motion.button>
+          )}
+
+          <div className="space-y-2">
+            {role === 'host' && (
+              <button
+                onClick={() => { setPhase('waiting'); syncToFirebaseRef.current(); }}
+                className="w-full py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-bold transition-all"
+              >
+                等待观众
+              </button>
+            )}
+            <button
+              onClick={leaveRoom}
+              className="w-full py-3 bg-gray-800 hover:bg-gray-700 text-gray-400 rounded-xl text-sm transition-all"
+            >
+              {role === 'host' ? '解散房间' : '离开房间'}
+            </button>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // 游戏中
+  const activeStones = stones.filter(s => s.alive);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-red-950/60 to-gray-900 flex flex-col items-center justify-center p-2">
+      {/* HUD */}
+      <div className="w-full max-w-md flex justify-between items-center mb-2 px-1">
+        <button
+          onClick={() => {
+            if (role === 'host') {
+              cancelAnimationFrame(frameRef.current);
+              setPhase('waiting');
+              syncToFirebaseRef.current();
+            } else {
+              leaveRoom();
+            }
+          }}
+          className="text-gray-500 hover:text-white text-xs transition-colors"
+        >
+          ✕ {role === 'host' ? '暂停' : '离开'}
+        </button>
+        <div className="flex items-center gap-4">
+          <motion.span
+            key={score}
+            animate={{ scale: [1, 1.2, 1] }}
+            className="text-yellow-400 font-black text-lg"
+          >
+            {score}
+          </motion.span>
+          <span className="text-xs text-gray-500">HSK{difficulty}</span>
+          <div className="flex gap-1">
+            {[...Array(3)].map((_, i) => (
+              <span key={i} className={`text-lg transition-all ${i < lives ? 'opacity-100' : 'opacity-20'}`}>
+                {i < lives ? '❤️' : '🖤'}
+              </span>
+            ))}
+          </div>
+        </div>
+        {role === 'host' && hasGuest && (
+          <span className="text-xs text-green-400">👤观众在线</span>
+        )}
+      </div>
+
+      {/* Combo */}
+      <AnimatePresence>
+        {combo >= 2 && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="text-center mb-1"
+          >
+            <span className="text-pink-400 font-black text-sm">🔥 连击 x{combo}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Game Area */}
+      <motion.div
+        animate={shake ? { x: [-6, 6, -4, 4, 0] } : {}}
+        transition={{ duration: 0.3 }}
+        className={`relative overflow-hidden rounded-2xl border-2 shadow-2xl ${
+          flashRed ? 'border-red-500 bg-red-950/40' : 'border-red-900/60 bg-gray-900/80'
+        }`}
+        style={{ width: GAME_W, height: GAME_H }}
+      >
+        {/* Danger zone */}
+        <div className="absolute left-0 right-0 border-t-2 border-dashed border-red-500/40" style={{ top: PLAYER_Y - 5 }} />
+
+        {/* Lane guides */}
+        {LANES_ARR.map((lane, i) => (
+          <div
+            key={lane}
+            className={`absolute top-0 bottom-0 w-px opacity-10 ${
+              lane === 'left' ? 'bg-cyan-400' : lane === 'center' ? 'bg-amber-400' : 'bg-rose-400'
+            }`}
+            style={{ left: LANES[i] + STONE_W / 2 }}
+          />
+        ))}
+
+        {/* Background particles */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-red-500/20 rounded-full"
+              style={{ left: `${(i * 19 + 5) % 100}%`, top: `${(i * 37 + 10) % 100}%` }}
+              animate={{ opacity: [0.1, 0.4, 0.1], y: [0, -10, 0] }}
+              transition={{ duration: 2 + (i % 3), repeat: Infinity, delay: i * 0.1 }}
+            />
+          ))}
+        </div>
+
+        {/* Falling Stones */}
+        <AnimatePresence>
+          {activeStones.map(s => {
+            const colors = LANE_COLORS[s.lane];
+            return (
+              <motion.div
+                key={s.id}
+                initial={{ opacity: 0, scale: 0.5, y: -20 }}
+                animate={{ opacity: 1, scale: 1, y: s.y, x: s.x + s.wobble }}
+                exit={{ opacity: 0, scale: 0.5 }}
+                transition={{ type: 'linear' }}
+                className={`absolute flex flex-col items-center justify-center rounded-xl shadow-lg font-bold bg-gradient-to-br ${colors.bg} ${colors.border} border-2`}
+                style={{ width: STONE_W, height: STONE_H }}
+              >
+                <div className={`text-sm font-black ${colors.text}`}>{colors.label}</div>
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
+
+        {/* Particles */}
+        {particles.map(p => (
+          <div
+            key={p.id}
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              left: p.x, top: p.y, width: p.size, height: p.size,
+              background: p.color, opacity: p.life,
+              boxShadow: `0 0 ${p.size * 2}px ${p.color}`,
+            }}
+          />
+        ))}
+
+        {/* Dodge text */}
+        {dodgeEvents.map(e => {
+          const age = Date.now() - e.time;
+          const opacity = 1 - age / 800;
+          const yOffset = age * 0.05;
+          const colors = LANE_COLORS[e.lane];
+          return (
+            <div
+              key={e.id}
+              className="absolute pointer-events-none font-black text-lg"
+              style={{
+                left: e.x - 20, top: e.y - yOffset,
+                opacity: Math.max(0, opacity), color: colors.glow,
+                textShadow: `0 0 10px ${colors.glow}`,
+              }}
+            >
+              {e.lane === 'left' ? '← 躲!' : e.lane === 'right' ? '躲 →' : '↑ 躲!'}
+            </div>
+          );
+        })}
+
+        {/* Dodge score popup */}
+        {dodgeScoreAnim && (
+          <motion.div
+            initial={{ opacity: 1, y: 0, scale: 1 }}
+            animate={{ opacity: 0, y: -40, scale: 1.3 }}
+            transition={{ duration: 1 }}
+            className="absolute pointer-events-none font-black text-yellow-400 text-xl"
+            style={{ left: dodgeScoreAnim.x - 15, top: dodgeScoreAnim.y }}
+          >
+            +{dodgeScoreAnim.val}
+          </motion.div>
+        )}
+
+        {/* Player */}
+        <motion.div
+          animate={{
+            x: LANES[playerLane] + (STONE_W - PLAYER_W) / 2,
+            y: PLAYER_Y,
+            scaleX: lastDodge ? 1.15 : 1,
+            scaleY: lastDodge ? 0.85 : 1,
+          }}
+          transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+          className={`absolute flex flex-col items-center justify-center rounded-xl shadow-xl border-2 ${
+            lastDodge === 'left'
+              ? 'bg-gradient-to-br from-cyan-400 to-cyan-600 border-cyan-300'
+              : lastDodge === 'center'
+                ? 'bg-gradient-to-br from-amber-400 to-orange-600 border-amber-300'
+                : lastDodge === 'right'
+                  ? 'bg-gradient-to-br from-rose-400 to-pink-600 border-rose-300'
+                  : 'bg-gradient-to-br from-gray-600 to-gray-800 border-gray-500'
+          }`}
+          style={{ width: PLAYER_W, height: PLAYER_H }}
+        >
+          <div className="text-2xl">{role === 'host' ? '🎙️' : '👤'}</div>
+          <div className={`text-xs font-bold ${
+            lastDodge === 'left' ? 'text-cyan-100' : lastDodge === 'center' ? 'text-amber-100' : lastDodge === 'right' ? 'text-rose-100' : 'text-gray-300'
+          }`}>{role === 'host' ? '主播' : '观众'}</div>
+        </motion.div>
+
+        {/* Lane hints at bottom */}
+        {LANES_ARR.map((lane, i) => {
+          const hint = laneHints[lane];
+          const colors = LANE_COLORS[lane];
+          return (
+            <div
+              key={lane}
+              className="absolute flex flex-col items-center"
+              style={{ bottom: 2, left: LANES[i] + STONE_W / 2, transform: 'translateX(-50%)', width: STONE_W - 10 }}
+            >
+              {hint && (
+                <div className={`text-center text-[10px] leading-tight mb-0.5 px-1 py-0.5 rounded ${
+                  lane === 'left' ? 'bg-cyan-900/60 text-cyan-200' :
+                  lane === 'center' ? 'bg-amber-900/60 text-amber-200' :
+                  'bg-rose-900/60 text-rose-200'
+                }`}>
+                  <div className="font-bold">{hint.showPinyin ? hint.pinyin : hint.meaning}</div>
+                  <div className="opacity-60 text-[9px]">{hint.showPinyin ? '拼音' : 'arti'}</div>
+                </div>
+              )}
+              <div className={`text-xs font-black opacity-40 ${
+                lane === 'left' ? 'text-cyan-400' : lane === 'center' ? 'text-amber-400' : 'text-rose-400'
+              }`}>{colors.short}</div>
+            </div>
+          );
+        })}
+      </motion.div>
+
+      {/* Input Area */}
+      <div className="w-full max-w-md mt-3 px-1">
+        <div className="relative">
+          <div className="text-white text-xs font-bold mb-1 flex items-center gap-1">
+            <span>⌨️</span>
+            {role === 'host' ? (
+              <>输入汉字移动角色 {hasGuest && <span className="text-green-400">(观众也可输入)</span>}</>
+            ) : (
+              <>输入汉字帮助主播躲避！</>
+            )}
+          </div>
+          <div className={`relative rounded-xl border-2 transition-all ${
+            input.length > 0
+              ? 'border-white bg-gray-800 shadow-[0_0_20px_rgba(255,255,255,0.15)]'
+              : 'border-gray-700 bg-gray-800/60'
+          }`}>
+            <input
+              type="text"
+              value={input}
+              onChange={e => role === 'guest' ? handleGuestInput(e.target.value) : setInput(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && role === 'guest') {
+                  const val = (e.target as HTMLInputElement).value;
+                  if (val.trim()) sendGuestInput(val);
+                } else {
+                  handleKeyDown(e);
+                }
+              }}
+              placeholder={role === 'host' ? '在这里打汉字...' : '观众输入汉字帮助主播...'}
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck={false}
+              className="w-full bg-transparent px-3 py-3 text-white text-sm font-bold outline-none placeholder-gray-600 text-center"
+              autoFocus
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Hint */}
+      <div className="w-full max-w-md mt-2 px-1">
+        <div className="flex justify-between text-xs text-gray-600 mb-1">
+          <span>💡 看底部拼音/意思 → 打对应汉字 → 躲避（+{50 * difficulty}分）</span>
+          <span>ESC暂停</span>
+        </div>
+      </div>
+    </div>
+  );
+}

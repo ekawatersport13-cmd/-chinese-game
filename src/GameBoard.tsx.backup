@@ -1,0 +1,833 @@
+import { useState, useCallback, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import hskData from './data/hsk_vocabulary.json';
+import chainData from './data/chain_dictionary.json';
+
+// ==================== 类型 ====================
+interface VocabWord {
+  word: string;
+  pinyin: string;
+  indonesian: string;
+  components: string[];
+  level?: number;
+}
+
+interface GameState {
+  level: number;
+  words: VocabWord[];
+  currentIndex: number;
+  score: number;
+  correct: number;
+  wrong: number;
+  selectedRadicals: string[];
+  showResult: boolean;
+  isCorrect: boolean | null;
+  combo: number;
+}
+
+type GameMode = 'compose' | 'find' | 'chain';
+
+// ==================== 数据工具 ====================
+// 从 JSON 解析词汇，附带 HSK 级别
+const getAllWords = (): VocabWord[] => {
+  const all: VocabWord[] = [];
+  Object.keys(hskData).forEach((k) => {
+    const m = k.match(/hsk(\d+)/);
+    if (!m) return;
+    const lvl = parseInt(m[1]);
+    (hskData[k as keyof typeof hskData] as any[]).forEach((w: any) => {
+      all.push({ ...w, level: lvl });
+    });
+  });
+  return all;
+};
+
+// 不适合拼字模式的字（components 含自身）
+const COMPOSE_BLACKLIST = new Set([
+  '需', '象', '卖', '制', '及', '弟',
+]);
+
+// 判断一个词是否适合当前模式
+const isValidWord = (w: VocabWord, mode: GameMode = 'compose'): boolean => {
+  const c = w.components || [];
+  if (c.length < 2) return false;
+  if (c.some((x) => x === w.word)) return false;
+  if (mode === 'compose' && COMPOSE_BLACKLIST.has(w.word)) return false;
+  return true;
+};
+
+// 常见偏旁在汉字中的典型位置（用于找字模式布局）
+// 注意：只映射位置相对固定的偏旁；位置不固定的（如丁、一、页）用推断逻辑
+const RADICAL_POSITION: Record<string, 'left' | 'right' | 'top' | 'bottom'> = {
+  // ===== 右偏旁（常出现在汉字右侧）=====
+  '攵': 'right', '刂': 'right', '力': 'right', '卩': 'right',
+  '欠': 'right', '见': 'right', '戈': 'right',
+  '殳': 'right', '斤': 'right', '皮': 'right', '彡': 'right',
+  '隹': 'right', '辛': 'right', '酉': 'right', '贝': 'right',
+  '瓦': 'right', '鬲': 'right',
+
+  // ===== 上偏旁 =====
+  '艹': 'top', '冖': 'top', '雨': 'top', '竹': 'top',
+  '丷': 'top', '亠': 'top', '龶': 'top', '⺌': 'top', '⺐': 'top',
+  '罒': 'top', '穴': 'top', '厂': 'top', '广': 'top',
+
+  // ===== 下偏旁 =====
+  '灬': 'bottom', '夂': 'bottom', '攴': 'bottom',
+  '心': 'bottom', '皿': 'bottom',
+};
+
+// 常见左偏旁集合
+const LEFT_SET = new Set([
+  '亻','氵','扌','讠','忄','纟','阝','钅','衤','虫','犭','礻','饣',
+  '车','口','土','木','禾','王','日','目','山','田','足','子','女',
+  '火','金','文','羊','马','鱼','鸟','石','巾','弓','尸','片','牛'
+]);
+
+// 常见字底部件（如果另一个部件是这些，说明当前component在上面）
+const BOTTOM_SET = new Set([
+  '页','贝','见','瓦','鬲','犬','大','天','夫','太','木','禾','山','石','虫','日'
+]);
+
+// 常见字盖部件（如果另一个部件是这些，说明当前component在下面）
+const TOP_SET = new Set([
+  '艹','宀','冖','亠','龶','⺌','⺐','丷','雨','竹','罒','网','穴','厂','广','人','入','八'
+]);
+
+// 推断component在特定汉字中的布局方向和位置
+const getComponentLayout = (
+  comp: string,
+  otherComp: string | undefined,
+  _word: string
+): { layout: 'left-right' | 'top-bottom'; compPos: 'left' | 'right' | 'top' | 'bottom' } => {
+  // 1. 查映射表
+  const mapped = RADICAL_POSITION[comp];
+  if (mapped === 'left' || mapped === 'right') return { layout: 'left-right', compPos: mapped };
+  if (mapped === 'top' || mapped === 'bottom') return { layout: 'top-bottom', compPos: mapped };
+
+  // 2. 根据另一个部件推断
+  if (otherComp) {
+    const otherMapped = RADICAL_POSITION[otherComp];
+    if (otherMapped === 'right') return { layout: 'left-right', compPos: 'left' };
+    if (otherMapped === 'left') return { layout: 'left-right', compPos: 'right' };
+    if (otherMapped === 'bottom') return { layout: 'top-bottom', compPos: 'top' };
+    if (otherMapped === 'top') return { layout: 'top-bottom', compPos: 'bottom' };
+
+    // 另一个部件是常见字底 → 当前component在上
+    if (BOTTOM_SET.has(otherComp)) return { layout: 'top-bottom', compPos: 'top' };
+    // 另一个部件是常见字盖 → 当前component在下
+    if (TOP_SET.has(otherComp)) return { layout: 'top-bottom', compPos: 'bottom' };
+  }
+
+  // 3. 常见左偏旁
+  if (LEFT_SET.has(comp)) return { layout: 'left-right', compPos: 'left' };
+
+  // 4. 单字符/简单偏旁 + 复杂部件 → 大概率上下（如丁+页=顶）
+  if (comp.length <= 1 && otherComp && otherComp.length > 1) {
+    return { layout: 'top-bottom', compPos: 'top' };
+  }
+
+  // 5. 复合部件 → 上下
+  if (comp.length > 1) return { layout: 'top-bottom', compPos: 'top' };
+
+  // 6. fallback
+  return { layout: 'left-right', compPos: 'left' };
+};
+
+// 找字模式：从词中提取不在 knownComps 中的 component（即玩家要找的那个）
+const getMissingComponent = (word: VocabWord, knownComps: string[]): string => {
+  const missing = word.components.find((c) => !knownComps.includes(c));
+  return missing || word.components[word.components.length - 1] || '?';
+};
+
+// 为当前词选择最佳已知 components（能找出最多干扰项的组合）
+// 返回 {known: 已知components数组, missing: 待选component}
+const getBestKnownComps = (word: VocabWord, pool: VocabWord[]): { known: string[]; missing: string } => {
+  const N = word.components.length;
+
+  // 2-component：选能产生最多干扰项的 component 作为 known
+  if (N === 2) {
+    let bestKnown = word.components[0];
+    let bestMissing = word.components[1];
+    let bestCount = 0;
+    for (const c of word.components) {
+      const cnt = pool.filter((w) => w.word !== word.word && w.components.includes(c)).length;
+      if (cnt > bestCount) {
+        bestCount = cnt;
+        bestKnown = c;
+        bestMissing = word.components.find((x) => x !== c) || word.components[1];
+      }
+    }
+    return { known: [bestKnown], missing: bestMissing };
+  }
+
+  // 3+ components：前 N-1 个作为 known，最后1个作为 missing
+  return { known: word.components.slice(0, N - 1), missing: word.components[N - 1] };
+};
+
+// 检查当前词是否能找出足够干扰项
+const hasEnoughDistractors = (word: VocabWord, pool: VocabWord[], minCount = 3): boolean => {
+  const { known } = getBestKnownComps(word, pool);
+  const candidates = pool.filter((w) => {
+    if (w.word === word.word) return false;
+    return w.components.some((c) => known.includes(c));
+  });
+  // 按 missing component 去重后统计
+  const uniqueMissing = new Set(candidates.map((w) => getMissingComponent(w, known)));
+  return uniqueMissing.size >= minCount;
+};
+
+// 找字模式：干扰项必须含至少一个 knownComp，选项按 missing component 去重
+const generateFindDistractors = (
+  target: VocabWord,
+  pool: VocabWord[],
+  count: number,
+  knownComps: string[]
+): VocabWord[] => {
+  const candidates = pool.filter((w) => {
+    if (w.word === target.word) return false;
+    return w.components.some((c) => knownComps.includes(c));
+  });
+
+  const shuffled = [...candidates].sort(() => Math.random() - 0.5);
+  const result: VocabWord[] = [];
+  const usedMissing = new Set<string>();
+
+  // 答案的 missing component 也要加入 usedMissing，防止干扰项和答案重复
+  const targetMissing = getMissingComponent(target, knownComps);
+  usedMissing.add(targetMissing);
+
+  for (const w of shuffled) {
+    if (result.length >= count) break;
+    const missing = getMissingComponent(w, knownComps);
+    if (!usedMissing.has(missing)) {
+      result.push(w);
+      usedMissing.add(missing);
+    }
+  }
+  return result;
+};
+
+// 拼字模式：从指定 HSK 级别取词
+const getWordsByLevel = (level: number, count = 10): VocabWord[] => {
+  const key = `hsk${level}`;
+  const words = (hskData[key as keyof typeof hskData] || []) as any[];
+  const valid = words
+    .map((w: any) => ({ ...w, level }))
+    .filter((w: VocabWord) => isValidWord(w, 'compose'));
+  if (valid.length === 0) return [];
+  return [...valid].sort(() => Math.random() - 0.5).slice(0, Math.min(count, valid.length));
+};
+
+// 找字模式：从全部 HSK 词汇随机取，不分级别，预过滤掉找不到足够干扰项的词
+const getFindWords = (count = 20): VocabWord[] => {
+  const all = getAllWords().filter((w) => isValidWord(w, 'find'));
+  const valid = all.filter((w) => hasEnoughDistractors(w, all, 3));
+  return [...valid].sort(() => Math.random() - 0.5).slice(0, Math.min(count, valid.length));
+};
+
+
+// ==================== 组件 ====================
+export default function GameBoard() {
+  const [gameState, setGameState] = useState<GameState>({
+    level: 1,
+    words: [],
+    currentIndex: 0,
+    score: 0,
+    correct: 0,
+    wrong: 0,
+    selectedRadicals: [],
+    showResult: false,
+    isCorrect: null,
+    combo: 0,
+  });
+  const [gameStarted, setGameStarted] = useState(false);
+  const [gameMode, setGameMode] = useState<GameMode>('compose');
+  const [showHint, setShowHint] = useState(false);
+  const [radicalOptions, setRadicalOptions] = useState<string[]>([]);
+  const [wordOptions, setWordOptions] = useState<VocabWord[]>([]);
+  const [findKnownComps, setFindKnownComps] = useState<string[]>([]);
+
+  // ========= 接龙模式状态 =========
+  const [chainTimed, setChainTimed] = useState<boolean>(true);
+  const [chainTimeLeft, setChainTimeLeft] = useState<number>(180); // 3分钟 = 180秒
+  const [chainWords, setChainWords] = useState<ChainWord[]>([]);
+  const [chainInput, setChainInput] = useState<string>('');
+  const [chainScore, setChainScore] = useState<number>(0);
+  const [chainLevel, setChainLevel] = useState<number>(1);
+  const [chainActive, setChainActive] = useState<boolean>(false);
+  const [chainFinished, setChainFinished] = useState<boolean>(false);
+  const [chainMessage, setChainMessage] = useState<string>('');
+
+  const currentWord = gameState.words[gameState.currentIndex];
+
+  // ========== 拼字模式：生成偏旁选项 ==========
+  const generateRadicalOptions = useCallback((components: string[]) => {
+    const pool = [
+      '亻','氵','扌','讠','忄','王','木','口','土','纟',
+      '宀','广','日','阝','雨','子','女','心','火','金',
+      '田','钅','足','禾','目','山','衤','虫','文','羊',
+      '一','十','大','小','人','力','又','工','寸','夕',
+      '巾','乞','亡','凡','勺','刃','干',
+    ].filter((r) => !components.includes(r));
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    const fill = shuffled.slice(0, Math.max(2, 8 - components.length));
+    return [...components, ...fill].sort(() => Math.random() - 0.5);
+  }, []);
+
+  // ========== 找字模式：生成汉字选项（返回选项+已知components） ==========
+  const generateWordOptions = useCallback((target: VocabWord): { options: VocabWord[]; knownComps: string[]; missingComp: string } => {
+    const pool = getAllWords().filter((w) => isValidWord(w, 'find'));
+    const { known, missing } = getBestKnownComps(target, pool);
+    const distractors = generateFindDistractors(target, pool, 3, known);
+    return {
+      options: [target, ...distractors].sort(() => Math.random() - 0.5),
+      knownComps: known,
+      missingComp: missing,
+    };
+  }, []);
+
+  // ========== 开始游戏 ==========
+  const startGame = useCallback((level: number) => {
+    if (gameMode === 'compose') {
+      const words = getWordsByLevel(level, 10);
+      if (words.length === 0) return;
+      setGameState({
+        level, words, currentIndex: 0,
+        score: 0, correct: 0, wrong: 0,
+        selectedRadicals: [], showResult: false, isCorrect: null, combo: 0,
+      });
+      setGameStarted(true);
+      setShowHint(false);
+      setRadicalOptions(generateRadicalOptions(words[0].components));
+    } else {
+      const words = getFindWords(20);
+      if (words.length === 0) return;
+      setGameState({
+        level: 0, words, currentIndex: 0,
+        score: 0, correct: 0, wrong: 0,
+        selectedRadicals: [], showResult: false, isCorrect: null, combo: 0,
+      });
+      setGameStarted(true);
+      setShowHint(false);
+      const { options, knownComps } = generateWordOptions(words[0]);
+      setWordOptions(options);
+      setFindKnownComps(knownComps);
+    }
+  }, [gameMode, generateRadicalOptions, generateWordOptions]);
+
+  // ========== 拼字模式：选择偏旁 ==========
+  const selectRadical = useCallback((radical: string) => {
+    if (gameState.showResult) return;
+    if (gameState.selectedRadicals.includes(radical)) return;
+    setGameState((prev) => ({
+      ...prev,
+      selectedRadicals: [...prev.selectedRadicals, radical],
+    }));
+  }, [gameState.showResult, gameState.selectedRadicals]);
+
+  const removeRadical = useCallback((index: number) => {
+    if (gameState.showResult) return;
+    setGameState((prev) => ({
+      ...prev,
+      selectedRadicals: prev.selectedRadicals.filter((_, i) => i !== index),
+    }));
+  }, [gameState.showResult]);
+
+  // ========== 拼字模式：确认答案 ==========
+  const confirmComposeAnswer = useCallback(() => {
+    if (!currentWord || gameState.selectedRadicals.length === 0) return;
+    const selected = [...gameState.selectedRadicals].sort().join('');
+    const correct = [...currentWord.components].sort().join('');
+    const isCorrect = selected === correct;
+    const bonus = isCorrect ? Math.min(gameState.combo, 5) * 2 : 0;
+    setGameState((prev) => ({
+      ...prev,
+      showResult: true,
+      isCorrect,
+      score: isCorrect ? prev.score + 10 + bonus : prev.score,
+      correct: isCorrect ? prev.correct + 1 : prev.correct,
+      wrong: isCorrect ? prev.wrong : prev.wrong + 1,
+      combo: isCorrect ? prev.combo + 1 : 0,
+    }));
+  }, [currentWord, gameState.selectedRadicals, gameState.combo]);
+
+  // ========== 找字模式：选择汉字答案 ==========
+  const selectWordAnswer = useCallback((word: VocabWord) => {
+    if (gameState.showResult) return;
+    const isCorrect = word.word === currentWord?.word;
+    const bonus = isCorrect ? Math.min(gameState.combo, 5) * 2 : 0;
+    setGameState((prev) => ({
+      ...prev,
+      showResult: true,
+      isCorrect,
+      score: isCorrect ? prev.score + 10 + bonus : prev.score,
+      correct: isCorrect ? prev.correct + 1 : prev.correct,
+      wrong: isCorrect ? prev.wrong : prev.wrong + 1,
+      combo: isCorrect ? prev.combo + 1 : 0,
+    }));
+  }, [currentWord, gameState.showResult, gameState.combo]);
+
+  // ========== 下一题 ==========
+  const nextWord = useCallback(() => {
+    if (gameState.currentIndex >= gameState.words.length - 1) {
+      setGameStarted(false);
+      return;
+    }
+    const nextIdx = gameState.currentIndex + 1;
+    const next = gameState.words[nextIdx];
+    setGameState((prev) => ({
+      ...prev,
+      currentIndex: nextIdx,
+      selectedRadicals: [],
+      showResult: false,
+      isCorrect: null,
+    }));
+    setShowHint(false);
+    if (gameMode === 'compose') {
+      setRadicalOptions(generateRadicalOptions(next.components));
+    } else {
+      const { options, knownComps } = generateWordOptions(next);
+      setWordOptions(options);
+      setFindKnownComps(knownComps);
+    }
+  }, [gameState.currentIndex, gameState.words, gameMode, generateRadicalOptions, generateWordOptions]);
+
+  // ========== 播放发音 ==========
+  const playSound = useCallback((text: string) => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'zh-CN';
+      u.rate = 0.8;
+      u.pitch = 1.1;
+      window.speechSynthesis.speak(u);
+    }
+  }, []);
+
+  const restartGame = useCallback(() => {
+    startGame(gameState.level);
+  }, [gameState.level, startGame]);
+
+  // ========== 键盘快捷键 ==========
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (!gameStarted || gameState.showResult) return;
+      if (gameMode === 'compose') {
+        const n = parseInt(e.key);
+        if (n >= 1 && n <= radicalOptions.length) selectRadical(radicalOptions[n - 1]);
+        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); confirmComposeAnswer(); }
+        if (e.key === 'Backspace' || e.key === 'Delete') {
+          if (gameState.selectedRadicals.length > 0) removeRadical(gameState.selectedRadicals.length - 1);
+        }
+      } else {
+        const n = parseInt(e.key);
+        if (n >= 1 && n <= wordOptions.length) selectWordAnswer(wordOptions[n - 1]);
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [gameStarted, gameState.showResult, gameState.selectedRadicals, radicalOptions, wordOptions, gameMode, selectRadical, confirmComposeAnswer, removeRadical, selectWordAnswer]);
+
+  // ==================== 未开始：首页 ====================
+  if (!gameStarted) {
+    const hasLevels = [1,2,3,4,5,6,7,8,9,10,11]
+      .map((lv) => ({
+        level: lv,
+        has: ((hskData[`hsk${lv}` as keyof typeof hskData] as any[]) || []).length > 0,
+      }))
+      .filter((x) => x.has);
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 max-w-lg w-full"
+        >
+          <div className="text-center mb-8">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+              className="text-6xl mb-4"
+            >🔤</motion.div>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+              汉字拼字
+            </h1>
+            <p className="text-gray-500">部首组合练习</p>
+          </div>
+
+          {/* 模式切换 */}
+          <div className="mb-6">
+            <p className="text-center text-sm text-gray-600 mb-3">选择游戏模式</p>
+            <div className="grid grid-cols-2 gap-3">
+              <motion.button
+                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                onClick={() => setGameMode('compose')}
+                className={`py-3 px-4 rounded-xl font-bold transition-all shadow-lg ${
+                  gameMode === 'compose'
+                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                🧩 拼字模式
+                <div className="text-xs font-normal mt-1 opacity-80">给汉字，选偏旁</div>
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                onClick={() => setGameMode('find')}
+                className={`py-3 px-4 rounded-xl font-bold transition-all shadow-lg ${
+                  gameMode === 'find'
+                    ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                🔍 找字模式
+                <div className="text-xs font-normal mt-1 opacity-80">给部首，选汉字</div>
+              </motion.button>
+            </div>
+          </div>
+
+          {/* 拼字模式：选 HSK 级别 */}
+          {gameMode === 'compose' ? (
+            <>
+              <p className="text-center text-sm text-gray-500 mb-3">选择 HSK 级别</p>
+              <div className="grid grid-cols-3 gap-3 mb-6">
+                {hasLevels.map(({ level }) => (
+                  <motion.button
+                    key={level}
+                    whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                    onClick={() => startGame(level)}
+                    className="py-3 px-4 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-bold hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg"
+                  >HSK {level}</motion.button>
+                ))}
+              </div>
+              <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-5">
+                <h3 className="font-bold text-gray-800 mb-3">📖 拼字规则</h3>
+                <ul className="text-sm text-gray-600 space-y-2">
+                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span>上方显示汉字，点击下方偏旁选出它的组成部分</li>
+                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span>点击汉字可听标准发音</li>
+                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span>共 10 题，支持键盘快捷键</li>
+                </ul>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="text-center text-sm text-gray-500 mb-3">从全部 HSK 词汇中随机抽取</p>
+              <motion.button
+                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                onClick={() => startGame(1)}
+                className="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-bold text-lg hover:from-emerald-600 hover:to-teal-600 transition-all shadow-lg mb-4"
+              >🎮 开始挑战</motion.button>
+              <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-5">
+                <h3 className="font-bold text-gray-800 mb-3">📖 找字规则</h3>
+                <ul className="text-sm text-gray-600 space-y-2">
+                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span>上方显示已知偏旁，根据印尼语意思选出缺失的偏旁</li>
+                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span>所有选项都共享已知偏旁，需要靠印尼语推断缺失部分</li>
+                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span>共 20 题，显示 HSK 级别和印尼语意思</li>
+                </ul>
+              </div>
+            </>
+          )}
+        </motion.div>
+      </div>
+    );
+  }
+
+  // ==================== 游戏结束 ====================
+  if (gameState.currentIndex >= gameState.words.length) {
+    const total = gameState.correct + gameState.wrong;
+    const accuracy = total > 0 ? Math.round((gameState.correct / total) * 100) : 0;
+    const rating = accuracy >= 90 ? '🌟' : accuracy >= 70 ? '👍' : accuracy >= 50 ? '💪' : '📚';
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-900 to-cyan-900 flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 max-w-md w-full text-center"
+        >
+          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2, type: 'spring' }} className="text-7xl mb-4">{rating}</motion.div>
+          <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">游戏完成！</h2>
+          <div className="grid grid-cols-3 gap-3 mb-6">
+            <div className="bg-blue-50 rounded-xl p-4"><div className="text-3xl font-bold text-blue-600">{gameState.score}</div><div className="text-xs text-gray-500">得分</div></div>
+            <div className="bg-green-50 rounded-xl p-4"><div className="text-3xl font-bold text-green-600">{gameState.correct}</div><div className="text-xs text-gray-500">正确</div></div>
+            <div className="bg-red-50 rounded-xl p-4"><div className="text-3xl font-bold text-red-600">{gameState.wrong}</div><div className="text-xs text-gray-500">错误</div></div>
+          </div>
+          <div className="mb-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl">
+            <div className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">{accuracy}%</div>
+            <div className="text-gray-500 text-sm">正确率</div>
+          </div>
+          <div className="space-y-3">
+            <button onClick={restartGame} className="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-bold hover:from-emerald-600 hover:to-teal-600 transition-all shadow-lg">再玩一次</button>
+            <button onClick={() => setGameStarted(false)} className="w-full py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-all">返回首页</button>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // ==================== 游戏中 ====================
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 flex flex-col p-4 max-w-lg mx-auto">
+      {/* 顶部栏 */}
+      <div className="flex justify-between items-center mb-3 text-white">
+        <button onClick={() => setGameStarted(false)} className="text-sm opacity-70 hover:opacity-100">← 退出</button>
+        <div className="flex items-center gap-2">
+          <span className={`text-xs px-2 py-1 rounded-full ${
+            gameMode === 'compose' ? 'bg-purple-500/50' : 'bg-emerald-500/50'
+          }`}>
+            {gameMode === 'compose' ? '🧩 拼字' : '🔍 找字'}
+          </span>
+          {gameMode === 'compose' && <span className="text-sm font-medium">HSK {gameState.level}</span>}
+          {gameMode === 'find' && <span className="text-sm font-medium text-emerald-300">全部词汇</span>}
+        </div>
+        <div className="flex gap-3 text-sm">
+          <span>🔢 {gameState.currentIndex + 1}/{gameState.words.length}</span>
+          <span>⭐ {gameState.score}</span>
+          {gameState.combo > 1 && <span className="text-yellow-400 animate-pulse">🔥{gameState.combo}</span>}
+        </div>
+      </div>
+
+      {/* 进度条 */}
+      <div className="h-1.5 bg-white/20 rounded-full mb-5 overflow-hidden">
+        <motion.div
+          className="h-full bg-gradient-to-r from-yellow-400 to-orange-500"
+          initial={{ width: '0%' }}
+          animate={{ width: `${((gameState.currentIndex) / gameState.words.length) * 100}%` }}
+          transition={{ duration: 0.3 }}
+        />
+      </div>
+
+      {/* ========== 拼字模式 ========== */}
+      {gameMode === 'compose' && currentWord && (
+        <>
+          {/* 目标汉字 */}
+          <motion.div
+            key={currentWord.word}
+            initial={{ opacity: 0, x: 50, scale: 0.8 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl p-6 mb-5 text-center"
+          >
+            <button
+              onClick={() => playSound(currentWord.word)}
+              className="text-7xl font-bold text-gray-800 hover:text-blue-600 transition-colors cursor-pointer select-none"
+            >{currentWord.word}</button>
+            <div className="text-gray-400 text-sm mt-2">点击播放发音</div>
+
+            <AnimatePresence>
+              {gameState.showResult && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  className={`mt-4 p-4 rounded-xl ${gameState.isCorrect ? 'bg-green-100' : 'bg-red-100'}`}
+                >
+                  <div className={`text-lg font-medium ${gameState.isCorrect ? 'text-green-600' : 'text-red-600'} mb-1`}>
+                    {gameState.isCorrect ? '✓ 正确！' : '✗ 错误'}
+                  </div>
+                  <div className="text-green-700 font-medium mb-1">🇮🇩 {currentWord.indonesian}</div>
+                  <div className="text-gray-600 text-sm">{currentWord.pinyin}</div>
+                  {currentWord.components && (
+                    <div className="text-xs text-gray-400 mt-2">偏旁：{currentWord.components.join(' + ')}</div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* 已选偏旁 */}
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-5 min-h-[72px] flex items-center justify-center">
+            <div className="flex flex-wrap gap-2 justify-center">
+              <AnimatePresence mode="popLayout">
+                {gameState.selectedRadicals.map((rad, idx) => (
+                  <motion.button
+                    key={`${rad}-${idx}`}
+                    initial={{ scale: 0, rotate: -180 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    exit={{ scale: 0, rotate: 180 }}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+                    onClick={() => removeRadical(idx)}
+                    className="w-14 h-14 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-xl flex items-center justify-center text-2xl font-bold text-white shadow-lg cursor-pointer"
+                  >{rad}</motion.button>
+                ))}
+              </AnimatePresence>
+              {gameState.selectedRadicals.length === 0 && (
+                <div className="text-white/50 text-sm py-2">点击下方偏旁进行选择</div>
+              )}
+            </div>
+          </div>
+
+          {/* 偏旁选项 */}
+          <div className="grid grid-cols-5 gap-2 mb-4">
+            {radicalOptions.map((rad, idx) => {
+              const sel = gameState.selectedRadicals.includes(rad);
+              return (
+                <motion.button
+                  key={`opt-${rad}-${idx}`}
+                  initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.03 }}
+                  whileHover={!sel && !gameState.showResult ? { scale: 1.1 } : {}}
+                  whileTap={!sel && !gameState.showResult ? { scale: 0.9 } : {}}
+                  onClick={() => !sel && !gameState.showResult && selectRadical(rad)}
+                  disabled={sel || gameState.showResult}
+                  className={`h-14 rounded-xl text-xl font-bold shadow-lg transition-all ${
+                    sel ? 'bg-gray-300 text-gray-400 cursor-not-allowed' : 'bg-white/90 text-gray-800 hover:bg-white cursor-pointer'
+                  }`}
+                >{rad}</motion.button>
+              );
+            })}
+          </div>
+
+          {/* 提示 & 按钮 */}
+          {!gameState.showResult && (
+            <>
+              {!showHint ? (
+                <button onClick={() => setShowHint(true)} className="w-full py-2 mb-4 bg-yellow-500/20 text-yellow-300 rounded-xl text-sm">💡 显示提示</button>
+              ) : (
+                <div className="bg-yellow-500/20 text-yellow-300 p-3 rounded-xl text-sm mb-4 text-center">
+                  💡 这个字由 <strong>{currentWord.components.length}</strong> 个偏旁组成
+                </div>
+              )}
+              <div className="space-y-3">
+                <button
+                  onClick={confirmComposeAnswer}
+                  disabled={gameState.selectedRadicals.length === 0}
+                  className={`w-full py-4 rounded-xl font-bold text-lg transition-all shadow-lg ${
+                    gameState.selectedRadicals.length === 0
+                      ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600'
+                  }`}
+                >确认答案</button>
+                <button onClick={() => setGameState((p) => ({ ...p, selectedRadicals: [] }))} className="w-full py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-all">清空选择</button>
+              </div>
+            </>
+          )}
+          {gameState.showResult && (
+            <motion.button
+              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              onClick={nextWord}
+              className="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-bold text-lg shadow-lg"
+            >{gameState.currentIndex >= gameState.words.length - 1 ? '🎉 查看结果' : '下一题 →'}</motion.button>
+          )}
+        </>
+      )}
+
+      {/* ========== 找字模式 ========== */}
+      {gameMode === 'find' && currentWord && (() => {
+        const knownComps = findKnownComps.length > 0 ? findKnownComps : [currentWord.components[0] || ''];
+        const isMulti = knownComps.length > 1;
+
+        return (
+          <>
+            <motion.div
+              key={'find-' + currentWord.word + '-' + gameState.currentIndex}
+              initial={{ opacity: 0, y: 30, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl p-6 mb-5 text-center"
+            >
+              {/* 布局类型标签 */}
+              <div className="text-xs text-gray-400 mb-3 tracking-wide">
+                {isMulti ? '部首组合 · 补全缺失部分' : '偏旁格式 · 补全缺失部分'}
+              </div>
+
+              {/* 偏旁/部首显示区：已知 components + ? */}
+              <div className="flex justify-center items-center gap-2 mb-4 flex-wrap">
+                {knownComps.map((comp, i) => (
+                  <div key={`known-${i}`} className="flex items-center gap-2">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 border-2 border-blue-300 rounded-xl flex items-center justify-center font-bold text-gray-800 text-3xl">
+                      {comp}
+                    </div>
+                    {i < knownComps.length - 1 && (
+                      <span className="text-gray-400 text-xl font-bold">+</span>
+                    )}
+                  </div>
+                ))}
+                <span className="text-gray-400 text-xl font-bold">+</span>
+                <div className="w-16 h-16 border-3 border-dashed border-gray-300 rounded-xl bg-gray-50 flex items-center justify-center text-gray-300 text-3xl">?</div>
+              </div>
+
+              {/* 印尼语提示（可展开） */}
+              {!gameState.showResult && (
+                <div className="mb-2">
+                  {!showHint ? (
+                    <button
+                      onClick={() => setShowHint(true)}
+                      className="text-sm text-blue-500 underline underline-offset-2 hover:text-blue-700"
+                    >显示提示（印尼语意思）</button>
+                  ) : (
+                    <div className="text-lg text-green-700 font-medium">🇮🇩 {currentWord.indonesian}</div>
+                  )}
+                </div>
+              )}
+
+              {/* 结果区 */}
+              <AnimatePresence>
+                {gameState.showResult && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    className={`mt-4 p-5 rounded-2xl border ${
+                      gameState.isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
+                    }`}
+                  >
+                    <div className={`text-lg font-bold mb-2 ${gameState.isCorrect ? 'text-green-600' : 'text-red-600'}`}>
+                      {gameState.isCorrect ? '✓  正确！' : '✗  错误'}
+                    </div>
+                    <div className="text-6xl font-bold text-gray-800 mb-2">{currentWord.word}</div>
+                    <div className="text-green-700 font-medium mb-1">🇮🇩 {currentWord.indonesian}</div>
+                    <div className="text-gray-500 text-sm mb-2">{currentWord.pinyin}</div>
+                    {currentWord.level && (
+                      <div className="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">HSK {currentWord.level}</div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+
+            {/* 汉字选项 2×2 */}
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              {wordOptions.map((w, idx) => {
+                const correct = w.word === currentWord.word;
+                return (
+                  <motion.button
+                    key={`w-${w.word}-${idx}`}
+                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.08 }}
+                    whileHover={!gameState.showResult ? { scale: 1.04 } : {}}
+                    whileTap={!gameState.showResult ? { scale: 0.96 } : {}}
+                    onClick={() => !gameState.showResult && selectWordAnswer(w)}
+                    disabled={gameState.showResult}
+                    className={`py-5 rounded-2xl font-bold text-4xl shadow-lg transition-all duration-200 ${
+                      gameState.showResult && correct
+                        ? 'bg-green-500 text-white scale-105 ring-4 ring-green-300'
+                        : gameState.showResult && !correct
+                          ? 'bg-gray-100 text-gray-300'
+                          : 'bg-white text-gray-800 hover:bg-blue-50 hover:shadow-xl cursor-pointer active:scale-95'
+                    }`}
+                  >{getMissingComponent(w, findKnownComps)}</motion.button>
+                );
+              })}
+            </div>
+
+            {/* 下一题 */}
+            {gameState.showResult && (
+              <motion.button
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                onClick={nextWord}
+                className="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-2xl font-bold text-lg shadow-lg hover:from-emerald-600 hover:to-teal-600 transition-all"
+              >{gameState.currentIndex >= gameState.words.length - 1 ? '🎉  查看结果' : '下一题 →'}</motion.button>
+            )}
+          </>
+        );
+      })()}
+
+      {/* 键盘提示 */}
+      <div className="mt-4 text-center text-white/40 text-xs">
+        {gameMode === 'compose'
+          ? '键盘: 1-9 选偏旁 | 空格确认 | 退格删除'
+          : '键盘: 1-4 选汉字'
+        }
+      </div>
+    </div>
+  );
+}
