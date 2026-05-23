@@ -33,7 +33,7 @@ interface GameState {
   combo: number;
 }
 
-type GameMode = 'compose' | 'find' | 'chain' | 'pair';
+type GameMode = 'compose' | 'find' | 'chain';
 
 // ==================== 数据工具 ===================
 const getAllWords = (): VocabWord[] => {
@@ -645,18 +645,6 @@ export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline, on
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                onClick={() => setGameMode('pair')}
-                className={`py-3 px-4 rounded-xl font-bold transition-all shadow-lg ${
-                  gameMode === 'pair'
-                    ? 'bg-gradient-to-r from-rose-500 to-pink-500 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                🎯 配对模式
-                <div className="text-xs font-normal mt-1 opacity-80">拼音·汉字·印尼语</div>
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
                 onClick={onEnterHeartbeat}
                 className="py-3 px-4 rounded-xl font-bold transition-all shadow-lg bg-gradient-to-r from-red-600 to-pink-600 text-white hover:from-red-700 hover:to-pink-700"
               >
@@ -748,26 +736,7 @@ export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline, on
                 </ul>
               </div>
             </>
-          ) : (
-            /* 配对模式 - 已在独立组件中处理 */
-            <>
-              <p className="text-center text-sm text-gray-500 mb-3">配对模式</p>
-              <motion.button
-                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                onClick={onEnterPair}
-                className="w-full py-4 bg-gradient-to-r from-rose-500 to-pink-500 text-white rounded-xl font-bold text-lg hover:from-rose-600 hover:to-pink-600 transition-all shadow-lg mb-4"
-              >🎯 进入配对模式</motion.button>
-              <div className="bg-gradient-to-r from-rose-50 to-pink-50 rounded-2xl p-5">
-                <h3 className="font-bold text-gray-800 mb-3">📖 配对规则</h3>
-                <ul className="text-sm text-gray-600 space-y-2">
-                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span>选择 HSK 级别和套数</li>
-                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span>每套 3 张卡片：拼音、汉字、印尼语</li>
-                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span>找出属于同一个汉字的 3 张卡片</li>
-                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span>全部配对正确才能进入下一套</li>
-                </ul>
-              </div>
-            </>
-          )}
+          ) : null}
         </motion.div>
       </div>
     );

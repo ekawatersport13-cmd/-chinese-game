@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ref, set, onValue, onDisconnect, remove, update, increment, serverTimestamp } from 'firebase/database';
+import { ref, set, onValue, onDisconnect, remove, update, increment, serverTimestamp, get } from 'firebase/database';
 import { db } from './firebase';
 import chainData from './data/chain_dictionary.json';
 import { getDeviceId, getDeviceInfo } from './deviceId';
@@ -516,8 +516,8 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
   const joinRoom = () => {
     setError('');
 
-    // 安全检查：频率限制（10秒内最多加入3个房间）
-    if (!checkRateLimit('joinRoom', 3, 10000)) {
+    // 安全检查：频率限制（10秒内最多加入5个房间）
+    if (!checkRateLimit('joinRoom', 5, 10000)) {
       setError('操作太频繁，请稍后再试');
       return;
     }
@@ -531,62 +531,43 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
     const deviceId = getDeviceId();
     const deviceInfo = getDeviceInfo();
 
-    // 先读取房间是否存在
-    const timeoutId = setTimeout(() => setError('连接超时，请检查网络'), 10000);
+    // 使用 get() 替代 onValue（返回 Promise，更可靠）
+    get(ref(db, `rooms/${roomCode}`))
+      .then((snap) => {
+        const roomSnapshot = snap.val();
 
-    onValue(ref(db, `rooms/${roomCode}`), (snap) => {
-      clearTimeout(timeoutId);
-      const roomSnapshot = snap.val();
+        if (!roomSnapshot) {
+          setError('房间不存在');
+          return;
+        }
 
-      if (!roomSnapshot) {
-        setError('房间不存在');
-        return;
-      }
+        if (roomSnapshot.hasGuest) {
+          setError('房间已有观众');
+          return;
+        }
 
-      if (roomSnapshot.hasGuest) {
-        setError('房间已有观众');
-        return;
-      }
+        if (roomSnapshot.hostKicked) {
+          setError('房间已关闭');
+          return;
+        }
 
-      if (roomSnapshot.hostKicked) {
-        setError('房间已关闭');
-        return;
-      }
-
-      // 写入观众信息
-      set(ref(db, `rooms/${roomCode}/guestId`), deviceId)
-        .then(() => set(ref(db, `rooms/${roomCode}/guestName`), deviceInfo.platform))
-        .then(() => set(ref(db, `rooms/${roomCode}/hasGuest`), true))
-        .then(() => {
-          roomRef.current = ref(db, `rooms/${roomCode}`);
-          onDisconnect(ref(db, `rooms/${roomCode}/hasGuest`)).remove();
-          onDisconnect(ref(db, `rooms/${roomCode}/guestId`)).remove();
-          setRoomId(roomCode);
-          setRole('guest');
-          setError('');
-        })
-        .catch(() => {
-          setError('加入房间失败，请重试');
-        });
-
-      // 记录玩家（非阻塞）
-      set(ref(db, `players/${deviceId}`), {
-        deviceId,
-        lastActive: serverTimestamp(),
-        platform: deviceInfo.platform,
-        language: deviceInfo.language,
-        isMobile: deviceInfo.isMobile,
-        lastRoom: roomCode,
-        lastRole: 'guest',
-        gamesPlayed: serverTimestamp(),
-      }).catch(err => console.warn('写入玩家记录失败:', err));
-
-      set(ref(db, `visits/${deviceId}/${Date.now()}`), {
-        roomId: roomCode,
-        role: 'guest',
-        timestamp: serverTimestamp(),
-      }).catch(err => console.warn('写入访问记录失败:', err));
-    }, { onlyOnce: true });
+        // 写入观众信息
+        return set(ref(db, `rooms/${roomCode}/guestId`), deviceId)
+          .then(() => set(ref(db, `rooms/${roomCode}/guestName`), deviceInfo.platform))
+          .then(() => set(ref(db, `rooms/${roomCode}/hasGuest`), true))
+          .then(() => {
+            roomRef.current = ref(db, `rooms/${roomCode}`);
+            onDisconnect(ref(db, `rooms/${roomCode}/hasGuest`)).remove();
+            onDisconnect(ref(db, `rooms/${roomCode}/guestId`)).remove();
+            setRoomId(roomCode);
+            setRole('guest');
+            setError('');
+          });
+      })
+      .catch((err) => {
+        console.error('[joinRoom] 失败:', err);
+        setError('连接服务器失败，请检查网络后重试');
+      });
   };
 
   const kickGuest = async () => {
