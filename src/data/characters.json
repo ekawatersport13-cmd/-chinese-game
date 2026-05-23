@@ -1,427 +1,3164 @@
 {
   "characters": {
-    "好": {"pinyin": "hǎo", "indonesian": "baik", "hsk": 1, "components": ["女", "子"]},
-    "你": {"pinyin": "nǐ", "indonesian": "kamu", "hsk": 1, "components": ["亻", "尔"]},
-    "我": {"pinyin": "wǒ", "indonesian": "saya", "hsk": 1, "components": ["戈", "扌"]},
-    "他": {"pinyin": "tā", "indonesian": "dia (laki-laki)", "hsk": 1, "components": ["亻", "也"]},
-    "她": {"pinyin": "tā", "indonesian": "dia (perempuan)", "hsk": 1, "components": ["女", "也"]},
-    "是": {"pinyin": "shì", "indonesian": "adalah", "hsk": 1, "components": ["日", "疋"]},
-    "不": {"pinyin": "bù", "indonesian": "tidak", "hsk": 1, "components": ["一", "丶"]},
-    "了": {"pinyin": "le", "indonesian": "-partikel", "hsk": 1, "components": ["乛"]},
-    "在": {"pinyin": "zài", "indonesian": "di", "hsk": 1, "components": ["𠂉", "土"]},
-    "人": {"pinyin": "rén", "indonesian": "orang", "hsk": 1, "components": ["丿", "乀"]},
-    "有": {"pinyin": "yǒu", "indonesian": "punya", "hsk": 1, "components": ["月", "𠂉"]},
-    "和": {"pinyin": "hé", "indonesian": "dan", "hsk": 1, "components": ["禾", "口"]},
-    "这": {"pinyin": "zhè", "indonesian": "ini", "hsk": 1, "components": ["文", "辶"]},
-    "个": {"pinyin": "gè", "indonesian": "sekian", "hsk": 1, "components": ["亻", "𠂉"]},
-    "们": {"pinyin": "men", "indonesian": "们-plural", "hsk": 1, "components": ["亻", "门"]},
-    "中": {"pinyin": "zhōng", "indonesian": "tengah", "hsk": 1, "components": ["口", "丨"]},
-    "国": {"pinyin": "guó", "indonesian": "negara", "hsk": 1, "components": ["囗", "玉"]},
-    "大": {"pinyin": "dà", "indonesian": "besar", "hsk": 1, "components": ["一", "人"]},
-    "小": {"pinyin": "xiǎo", "indonesian": "kecil", "hsk": 1, "components": ["亅", "丿"]},
-    "多": {"pinyin": "duō", "indonesian": "banyak", "hsk": 1, "components": ["夕", "夕"]},
-    "出": {"pinyin": "chū", "indonesian": "keluar", "hsk": 1, "components": ["凵", "山"]},
-    "对": {"pinyin": "duì", "indonesian": "benar", "hsk": 1, "components": ["又", "寸"]},
-    "学": {"pinyin": "xué", "indonesian": "belajar", "hsk": 1, "components": ["冖", "子"]},
-    "习": {"pinyin": "xí", "indonesian": "latihan", "hsk": 1, "components": ["丶", "冋"]},
-    "汉": {"pinyin": "hàn", "indonesian": "Tionghoa", "hsk": 1, "components": ["氵", "又"]},
-    "字": {"pinyin": "zì", "indonesian": "karakter", "hsk": 1, "components": ["冖", "子"]},
-    "文": {"pinyin": "wén", "indonesian": "teks", "hsk": 1, "components": ["丶", "一"]},
-    "本": {"pinyin": "běn", "indonesian": "asli", "hsk": 1, "components": ["木", "一"]},
-    "时": {"pinyin": "shí", "indonesian": "waktu", "hsk": 1, "components": ["日", "寸"]},
-    "去": {"pinyin": "qù", "indonesian": "pergi", "hsk": 1, "components": ["土", "厶"]},
-    "来": {"pinyin": "lái", "indonesian": "datang", "hsk": 1, "components": ["木", "丿"]},
-    "为": {"pinyin": "wèi", "indonesian": "untuk", "hsk": 1, "components": ["丶", "力"]},
-    "很": {"pinyin": "hěn", "indonesian": "sangat", "hsk": 2, "components": ["彳", "艮"]},
-    "都": {"pinyin": "dōu", "indonesian": "semua", "hsk": 2, "components": ["者", "阝"]},
-    "能": {"pinyin": "néng", "indonesian": "bisa", "hsk": 2, "components": ["月", "匕"]},
-    "见": {"pinyin": "jiàn", "indonesian": "melihat", "hsk": 2, "components": ["儿", "目"]},
-    "会": {"pinyin": "huì", "indonesian": "bisa/pertemuan", "hsk": 2, "components": ["人", "云"]},
-    "说": {"pinyin": "shuō", "indonesian": "bilang", "hsk": 2, "components": ["讠", "兌"]},
-    "现": {"pinyin": "xiàn", "indonesian": "sekarang", "hsk": 2, "components": ["王", "见"]},
-    "想": {"pinyin": "xiǎng", "indonesian": "ingin", "hsk": 2, "components": ["木", "目"]},
-    "知": {"pinyin": "zhī", "indonesian": "tahu", "hsk": 2, "components": ["矢", "口"]},
-    "道": {"pinyin": "dào", "indonesian": "jalan", "hsk": 2, "components": ["辶", "首"]},
-    "经": {"pinyin": "jīng", "indonesian": "melewati", "hsk": 2, "components": ["纟", "巛"]},
-    "意": {"pinyin": "yì", "indonesian": "arti", "hsk": 2, "components": ["立", "日"]},
-    "加": {"pinyin": "jiā", "indonesian": "tambah", "hsk": 2, "components": ["力", "口"]},
-    "可": {"pinyin": "kě", "indonesian": "bisa", "hsk": 2, "components": ["口", "亅"]},
-    "家": {"pinyin": "jiā", "indonesian": "rumah", "hsk": 2, "components": ["宀", "豕"]},
-    "那": {"pinyin": "nà", "indonesian": "itu", "hsk": 2, "components": ["阝", "𠂉"]},
-    "把": {"pinyin": "bǎ", "indonesian": "pegang", "hsk": 2, "components": ["扌", "巴"]},
-    "打": {"pinyin": "dǎ", "indonesian": "pukul", "hsk": 2, "components": ["扌", "丁"]},
-    "机": {"pinyin": "jī", "indonesian": "mesin", "hsk": 2, "components": ["木", "几"]},
-    "当": {"pinyin": "dāng", "indonesian": "saat", "hsk": 2, "components": ["⺐", "彐"]},
-    "看": {"pinyin": "kàn", "indonesian": "lihat", "hsk": 2, "components": ["龶", "目"]},
-    "听": {"pinyin": "tīng", "indonesian": "dengar", "hsk": 2, "components": ["口", "王"]},
-    "回": {"pinyin": "huí", "indonesian": "kembali", "hsk": 2, "components": ["囗", "口"]},
-    "但": {"pinyin": "dàn", "indonesian": "tapi", "hsk": 2, "components": ["亻", "日"]},
-    "还": {"pinyin": "hái", "indonesian": "masih", "hsk": 2, "components": ["辶", "不"]},
-    "从": {"pinyin": "cóng", "indonesian": "dari", "hsk": 2, "components": ["人", "人"]},
-    "得": {"pinyin": "dé", "indonesian": "dapat", "hsk": 2, "components": ["彳", "日"]},
-    "弟": {"pinyin": "dì", "indonesian": "adik", "hsk": 2, "components": ["丷", "弟"]},
-    "哥": {"pinyin": "gē", "indonesian": "kakak", "hsk": 2, "components": ["可", "可"]},
-    "开": {"pinyin": "kāi", "indonesian": "buka", "hsk": 2, "components": ["一", "廾"]},
-    "关": {"pinyin": "guān", "indonesian": "tutup", "hsk": 2, "components": ["丷", "天"]},
-    "点": {"pinyin": "diǎn", "indonesian": "titik", "hsk": 2, "components": ["占", "灬"]},
-    "象": {"pinyin": "xiàng", "indonesian": "gajah", "hsk": 3, "components": ["⺁", "象"]},
-    "像": {"pinyin": "xiàng", "indonesian": "seperti", "hsk": 3, "components": ["亻", "象"]},
-    "情": {"pinyin": "qíng", "indonesian": "perasaan", "hsk": 3, "components": ["忄", "青"]},
-    "请": {"pinyin": "qǐng", "indonesian": "minta", "hsk": 3, "components": ["讠", "青"]},
-    "城": {"pinyin": "chéng", "indonesian": "kota", "hsk": 3, "components": ["土", "成"]},
-    "程": {"pinyin": "chéng", "indonesian": "proses", "hsk": 3, "components": ["禾", "呈"]},
-    "成": {"pinyin": "chéng", "indonesian": "jadi", "hsk": 3, "components": ["戈", "一"]},
-    "政": {"pinyin": "zhèng", "indonesian": "politik", "hsk": 3, "components": ["攵", "正"]},
-    "正": {"pinyin": "zhèng", "indonesian": "benar", "hsk": 3, "components": ["一", "止"]},
-    "新": {"pinyin": "xīn", "indonesian": "baru", "hsk": 3, "components": ["木", "亲"]},
-    "方": {"pinyin": "fāng", "indonesian": "arah", "hsk": 3, "components": ["方"]},
-    "京": {"pinyin": "jīng", "indonesian": "ibukota", "hsk": 3, "components": ["亠", "小"]},
-    "就": {"pinyin": "jiù", "indonesian": "langsung", "hsk": 3, "components": ["亰", "尤"]},
-    "高": {"pinyin": "gāo", "indonesian": "tinggi", "hsk": 3, "components": ["冂", "口"]},
-    "区": {"pinyin": "qū", "indonesian": "daerah", "hsk": 3, "components": ["匚", "乂"]},
-    "车": {"pinyin": "chē", "indonesian": "mobil", "hsk": 3, "components": ["车"]},
-    "转": {"pinyin": "zhuǎn", "indonesian": "putar", "hsk": 3, "components": ["车", "专"]},
-    "东": {"pinyin": "dōng", "indonesian": "timur", "hsk": 3, "components": ["一", "日"]},
-    "远": {"pinyin": "yuǎn", "indonesian": "jauh", "hsk": 3, "components": ["辶", "元"]},
-    "连": {"pinyin": "lián", "indonesian": "hubungkan", "hsk": 3, "components": ["辶", "车"]},
-    "进": {"pinyin": "jìn", "indonesian": "masuk", "hsk": 3, "components": ["辶", "井"]},
-    "通": {"pinyin": "tōng", "indonesian": "lewat", "hsk": 3, "components": ["辶", "甬"]},
-    "送": {"pinyin": "sòng", "indonesian": "kirim", "hsk": 3, "components": ["辶", "关"]},
-    "造": {"pinyin": "zào", "indonesian": "buat", "hsk": 3, "components": ["辶", "告"]},
-    "运": {"pinyin": "yùn", "indonesian": "运-angkut", "hsk": 3, "components": ["辶", "云"]},
-    "近": {"pinyin": "jìn", "indonesian": "dekat", "hsk": 3, "components": ["辶", "斤"]},
-    "返": {"pinyin": "fǎn", "indonesian": "kembali", "hsk": 3, "components": ["辶", "反"]},
-    "还": {"pinyin": "huán", "indonesian": "kembalikan", "hsk": 3, "components": ["辶", "不"]},
-    "这": {"pinyin": "zhè", "indonesian": "ini", "hsk": 3, "components": ["辶", "文"]},
-    "迷": {"pinyin": "mí", "indonesian": "bingung", "hsk": 3, "components": ["辶", "米"]},
-    "退": {"pinyin": "tuì", "indonesian": "mundur", "hsk": 3, "components": ["辶", "艮"]},
-    "速": {"pinyin": "sù", "indonesian": "cepat", "hsk": 3, "components": ["辶", "束"]},
-    "游": {"pinyin": "yóu", "indonesian": "berenang", "hsk": 4, "components": ["氵", "攸"]},
-    "深": {"pinyin": "shēn", "indonesian": "dalam", "hsk": 4, "components": ["氵", "冟"]},
-    "清": {"pinyin": "qīng", "indonesian": "jernih", "hsk": 4, "components": ["氵", "青"]},
-    "温": {"pinyin": "wēn", "indonesian": "hangat", "hsk": 4, "components": ["氵", "昷"]},
-    "满": {"pinyin": "mǎn", "indonesian": "penuh", "hsk": 4, "components": ["氵", "艹"]},
-    "没": {"pinyin": "méi", "indonesian": "tidak ada", "hsk": 4, "components": ["氵", "殳"]},
-    "海": {"pinyin": "hǎi", "indonesian": "laut", "hsk": 4, "components": ["氵", "毎"]},
-    "演": {"pinyin": "yǎn", "indonesian": "pertunjukan", "hsk": 4, "components": ["氵", "寅"]},
-    "渐": {"pinyin": "jiàn", "indonesian": "pelan-pelan", "hsk": 4, "components": ["氵", "斩"]},
-    "河": {"pinyin": "hé", "indonesian": "sungai", "hsk": 4, "components": ["氵", "可"]},
-    "流": {"pinyin": "liú", "indonesian": "alir", "hsk": 4, "components": ["氵", "㐬"]},
-    "济": {"pinyin": "jì", "indonesian": "tolong", "hsk": 4, "components": ["氵", "齐"]},
-    "济": {"pinyin": "jì", "indonesian": "-tolong", "hsk": 4, "components": ["氵", "齐"]},
-    "浪": {"pinyin": "làng", "indonesian": "gelombang", "hsk": 4, "components": ["氵", "良"]},
-    "涌": {"pinyin": "yǒng", "indonesian": "meluap", "hsk": 4, "components": ["氵", "甬"]},
-    "火": {"pinyin": "huǒ", "indonesian": "api", "hsk": 4, "components": ["火"]},
-    "灯": {"pinyin": "dēng", "indonesian": "lampu", "hsk": 4, "components": ["火", "丁"]},
-    "热": {"pinyin": "rè", "indonesian": "panas", "hsk": 4, "components": ["灬", "埶"]},
-    "然": {"pinyin": "rán", "indonesian": "tentu", "hsk": 4, "components": ["月", "犬"]},
-    "照": {"pinyin": "zhào", "indonesian": "terang", "hsk": 4, "components": ["灬", "昭"]},
-    "熟": {"pinyin": "shú", "indonesian": "matang", "hsk": 4, "components": ["灬", "孰"]},
-    "爱": {"pinyin": "ài", "indonesian": "cinta", "hsk": 4, "components": ["爫", "冖"]},
-    "受": {"pinyin": "shòu", "indonesian": "terima", "hsk": 4, "components": ["爫", "冖"]},
-    "觉": {"pinyin": "jué", "indonesian": "merasa", "hsk": 4, "components": ["冖", "见"]},
-    "买": {"pinyin": "mǎi", "indonesian": "beli", "hsk": 4, "components": ["冖", "头"]},
-    "卖": {"pinyin": "mài", "indonesian": "jual", "hsk": 4, "components": ["十", "卖"]},
-    "存": {"pinyin": "cún", "indonesian": "simpan", "hsk": 4, "components": ["子", "𠂉"]},
-    "孙": {"pinyin": "sūn", "indonesian": "cucu", "hsk": 4, "components": ["子", "小"]},
-    "季": {"pinyin": "jì", "indonesian": "musim", "hsk": 4, "components": ["禾", "子"]},
-    "委": {"pinyin": "wěi", "indonesian": "serahkan", "hsk": 4, "components": ["禾", "女"]},
-    "孤": {"pinyin": "gū", "indonesian": "yatim", "hsk": 4, "components": ["子", "瓜"]},
-    "孩": {"pinyin": "hái", "indonesian": "anak", "hsk": 4, "components": ["子", "亥"]},
-    "学": {"pinyin": "xué", "indonesian": "belajar", "hsk": 4, "components": ["冖", "子"]},
-    "安": {"pinyin": "ān", "indonesian": "damai", "hsk": 4, "components": ["宀", "女"]},
-    "完": {"pinyin": "wán", "indonesian": "selesai", "hsk": 4, "components": ["宀", "元"]},
-    "定": {"pinyin": "dìng", "indonesian": "tentu", "hsk": 4, "components": ["宀", "疋"]},
-    "宝": {"pinyin": "bǎo", "indonesian": "harta", "hsk": 4, "components": ["宀", "玉"]},
-    "客": {"pinyin": "kè", "indonesian": "tamu", "hsk": 4, "components": ["宀", "各"]},
-    "害": {"pinyin": "hài", "indonesian": "bahaya", "hsk": 4, "components": ["宀", "丰"]},
-    "容": {"pinyin": "róng", "indonesian": "muat", "hsk": 4, "components": ["宀", "谷"]},
-    "寒": {"pinyin": "hán", "indonesian": "dingin", "hsk": 4, "components": ["宀", "共"]},
-    "审": {"pinyin": "shěn", "indonesian": "periksa", "hsk": 4, "components": ["宀", "申"]},
-    "宫": {"pinyin": "gōng", "indonesian": "istana", "hsk": 4, "components": ["宀", "吕"]},
-    "宣": {"pinyin": "xuān", "indonesian": "proklamasi", "hsk": 4, "components": ["宀", "亘"]},
-    "室": {"pinyin": "shì", "indonesian": "ruang", "hsk": 4, "components": ["宀", "至"]},
-    "家": {"pinyin": "jiā", "indonesian": "rumah", "hsk": 4, "components": ["宀", "豕"]},
-    "宾": {"pinyin": "bīn", "indonesian": "tamu", "hsk": 4, "components": ["宀", "兵"]},
-    "密": {"pinyin": "mì", "indonesian": "rahasia", "hsk": 4, "components": ["宀", "秘"]},
-    "宁": {"pinyin": "níng", "indonesian": "tenang", "hsk": 4, "components": ["宀", "丁"]},
-    "写": {"pinyin": "xiě", "indonesian": "tulis", "hsk": 4, "components": ["冖", "与"]},
-    "军": {"pinyin": "jūn", "indonesian": "tentara", "hsk": 4, "components": ["冖", "车"]},
-    "农": {"pinyin": "nóng", "indonesian": "petani", "hsk": 4, "components": ["冖", "凶"]},
-    "冤": {"pinyin": "yuān", "indonesian": "dosa", "hsk": 5, "components": ["冖", "兔"]},
-    "击": {"pinyin": "jī", "indonesian": "pukul", "hsk": 5, "components": ["凵", "击"]},
-    "出": {"pinyin": "chū", "indonesian": "keluar", "hsk": 5, "components": ["凵", "山"]},
-    "凶": {"pinyin": "xiōng", "indonesian": "sial", "hsk": 5, "components": ["凵", "乩"]},
-    "凹": {"pinyin": "āo", "indonesian": "cekung", "hsk": 5, "components": ["凵", "凹"]},
-    "凸": {"pinyin": "tū", "indonesian": "cembung", "hsk": 5, "components": ["凵", "凸"]},
-    "函": {"pinyin": "hán", "indonesian": "surat", "hsk": 5, "components": ["凵", "函"]},
-    "刀": {"pinyin": "dāo", "indonesian": "pisau", "hsk": 5, "components": ["刀"]},
-    "刃": {"pinyin": "rèn", "indonesian": "pisau", "hsk": 5, "components": ["刀", "丶"]},
-    "切": {"pinyin": "qiē", "indonesian": "potong", "hsk": 5, "components": ["刀", "七"]},
-    "分": {"pinyin": "fēn", "indonesian": "bagi", "hsk": 5, "components": ["刀", "八"]},
-    "初": {"pinyin": "chū", "indonesian": "awal", "hsk": 5, "components": ["刀", "衣"]},
-    "券": {"pinyin": "quàn", "indonesian": "kupon", "hsk": 5, "components": ["刀", "𥝝"]},
-    "刹": {"pinyin": "shā", "indonesian": "rem", "hsk": 5, "components": ["刀", "杀"]},
-    "刺": {"pinyin": "cì", "indonesian": "tusuk", "hsk": 5, "components": ["刀", "束"]},
-    "刮": {"pinyin": "guā", "indonesian": "gores", "hsk": 5, "components": ["刀", "舌"]},
-    "制": {"pinyin": "zhì", "indonesian": "buat", "hsk": 5, "components": ["刀", "制"]},
-    "剁": {"pinyin": "duò", "indonesian": "potong", "hsk": 5, "components": ["刀", "朵"]},
-    "剂": {"pinyin": "jì", "indonesian": "dosis", "hsk": 5, "components": ["刀", "齐"]},
-    "刻": {"pinyin": "kè", "indonesian": "ukir", "hsk": 5, "components": ["刀", "亥"]},
-    "剃": {"pinyin": "tì", "indonesian": "cukur", "hsk": 5, "components": ["刀", "弟"]},
-    "削": {"pinyin": "xuē", "indonesian": "ketam", "hsk": 5, "components": ["刀", "肖"]},
-    "剥": {"pinyin": "bō", "indonesian": "kupas", "hsk": 5, "components": ["刀", "录"]},
-    "剧": {"pinyin": "jù", "indonesian": "drama", "hsk": 5, "components": ["刀", "居"]},
-    "剑": {"pinyin": "jiàn", "indonesian": "pedang", "hsk": 5, "components": ["刀", "佥"]},
-    "劈": {"pinyin": "pī", "indonesian": "belah", "hsk": 5, "components": ["刀", "辟"]},
-    "力": {"pinyin": "lì", "indonesian": "kekuatan", "hsk": 5, "components": ["力"]},
-    "办": {"pinyin": "bàn", "indonesian": "kerjakan", "hsk": 5, "components": ["力", "八"]},
-    "劝": {"pinyin": "quàn", "indonesian": "劝-saran", "hsk": 5, "components": ["劝", "力"]},
-    "功": {"pinyin": "gōng", "indonesian": "hasil", "hsk": 5, "components": ["工", "力"]},
-    "加": {"pinyin": "jiā", "indonesian": "tambah", "hsk": 5, "components": ["力", "口"]},
-    "务": {"pinyin": "wù", "indonesian": "pekerjaan", "hsk": 5, "components": ["力", "夨"]},
-    "劣": {"pinyin": "liè", "indonesian": "buruk", "hsk": 5, "components": ["力", "少"]},
-    "动": {"pinyin": "dòng", "indonesian": "bergerak", "hsk": 5, "components": ["力", "云"]},
-    "助": {"pinyin": "zhù", "indonesian": "bantu", "hsk": 5, "components": ["且", "力"]},
-    "努": {"pinyin": "nǔ", "indonesian": "berusaha", "hsk": 5, "components": ["力", "奴"]},
-    "劫": {"pinyin": "jié", "indonesian": "rampok", "hsk": 5, "components": ["力", "去"]},
-    "励": {"pinyin": "lì", "indonesian": "mendorong", "hsk": 5, "components": ["力", "厉"]},
-    "劲": {"pinyin": "jìn", "indonesian": "kekuatan", "hsk": 5, "components": ["力", "圣"]},
-    "劳": {"pinyin": "láo", "indonesian": "kerja", "hsk": 5, "components": ["力", "艹"]},
-    "势": {"pinyin": "shì", "indonesian": "situasi", "hsk": 5, "components": ["力", "执"]},
-    "勃": {"pinyin": "bó", "indonesian": "giat", "hsk": 5, "components": ["力", "孛"]},
-    "勇": {"pinyin": "yǒng", "indonesian": "berani", "hsk": 5, "components": ["力", "甬"]},
-    "勉": {"pinyin": "miǎn", "indonesian": "mendorong", "hsk": 5, "components": ["力", "免"]},
-    "勒": {"pinyin": "lè", "indonesian": "kekang", "hsk": 5, "components": ["力", "革"]},
-    "勤": {"pinyin": "qín", "indonesian": "rajin", "hsk": 5, "components": ["力", "堇"]},
-    "又": {"pinyin": "yòu", "indonesian": "lagi", "hsk": 5, "components": ["又"]},
-    "叉": {"pinyin": "chā", "indonesian": "garpu", "hsk": 5, "components": ["又", "丿"]},
-    "及": {"pinyin": "jí", "indonesian": "sampai", "hsk": 5, "components": ["及"]},
-    "友": {"pinyin": "yǒu", "indonesian": "teman", "hsk": 5, "components": ["十", "又"]},
-    "反": {"pinyin": "fǎn", "indonesian": "balik", "hsk": 5, "components": ["又", "厂"]},
-    "双": {"pinyin": "shuāng", "indonesian": "dua", "hsk": 5, "components": ["又", "又"]},
-    "发": {"pinyin": "fā", "indonesian": "keluar", "hsk": 5, "components": ["癶", "又"]},
-    "叔": {"pinyin": "shū", "indonesian": "paman", "hsk": 5, "components": ["小", "又"]},
-    "取": {"pinyin": "qǔ", "indonesian": "ambil", "hsk": 5, "components": ["耳", "又"]},
-    "受": {"pinyin": "shòu", "indonesian": "terima", "hsk": 5, "components": ["爫", "又"]},
-    "变": {"pinyin": "biàn", "indonesian": "ubah", "hsk": 5, "components": ["亦", "夂"]},
-    "叙": {"pinyin": "xù", "indonesian": "ceritakan", "hsk": 5, "components": ["余", "又"]},
-    "叛": {"pinyin": "pàn", "indonesian": "murtad", "hsk": 5, "components": ["半", "又"]},
-    "段": {"pinyin": "duàn", "indonesian": "bagian", "hsk": 5, "components": ["段"]},
-    "殷": {"pinyin": "yīn", "indonesian": "banyak", "hsk": 5, "components": ["月", "殳"]},
-    "殳": {"pinyin": "shū", "indonesian": "senjata", "hsk": 5, "components": ["殳"]},
-    "役": {"pinyin": "yì", "indonesian": "perang", "hsk": 5, "components": ["彳", "殳"]},
-    "没": {"pinyin": "méi", "indonesian": "tidak ada", "hsk": 5, "components": ["氵", "殳"]},
-    "般": {"pinyin": "bān", "indonesian": "umum", "hsk": 5, "components": ["舟", "殳"]},
-    "投": {"pinyin": "tóu", "indonesian": "lempar", "hsk": 5, "components": ["扌", "殳"]},
-    "设": {"pinyin": "shè", "indonesian": "atur", "hsk": 5, "components": ["讠", "殳"]},
-    "殻": {"pinyin": "ké", "indonesian": "kulit", "hsk": 5, "components": ["壳"]},
-    "教": {"pinyin": "jiào", "indonesian": "ajar", "hsk": 5, "components": ["孝", "攵"]},
-    "救": {"pinyin": "jiù", "indonesian": "tolong", "hsk": 5, "components": ["求", "攵"]},
-    "败": {"pinyin": "bài", "indonesian": "gagal", "hsk": 5, "components": ["贝", "攵"]},
-    "敏": {"pinyin": "mǐn", "indonesian": "cekat", "hsk": 5, "components": ["每", "攵"]},
-    "敢": {"pinyin": "gǎn", "indonesian": "berani", "hsk": 5, "components": ["耳", "夂"]},
-    "散": {"pinyin": "sàn", "indonesian": "bubarkan", "hsk": 5, "components": ["月", "攵"]},
-    "敬": {"pinyin": "jìng", "indonesian": "hormati", "hsk": 5, "components": ["苟", "攵"]},
-    "数": {"pinyin": "shǔ", "indonesian": "hitung", "hsk": 5, "components": ["娄", "攵"]},
-    "整": {"pinyin": "zhěng", "indonesian": "rapi", "hsk": 5, "components": ["束", "攵"]},
-    "收": {"pinyin": "shōu", "indonesian": "terima", "hsk": 5, "components": ["丩", "攴"]},
-    "改": {"pinyin": "gǎi", "indonesian": "ubah", "hsk": 5, "components": ["己", "攵"]},
-    "攻": {"pinyin": "gōng", "indonesian": "serang", "hsk": 5, "components": ["工", "攵"]},
-    "败": {"pinyin": "bài", "indonesian": "kalah", "hsk": 5, "components": ["贝", "攵"]},
-    "放": {"pinyin": "fàng", "indonesian": "letakkan", "hsk": 5, "components": ["方", "攵"]},
-    "故": {"pinyin": "gù", "indonesian": "sebab", "hsk": 5, "components": ["古", "攵"]},
-    "教": {"pinyin": "jiào", "indonesian": "ajar", "hsk": 5, "components": ["孝", "攵"]},
-    "救": {"pinyin": "jiù", "indonesian": "selamatkan", "hsk": 5, "components": ["求", "攵"]},
-    "敏": {"pinyin": "mǐn", "indonesian": "cekat", "hsk": 5, "components": ["每", "攵"]},
-    "敢": {"pinyin": "gǎn", "indonesian": "berani", "hsk": 5, "components": ["耳", "夂"]},
-    "散": {"pinyin": "sàn", "indonesian": "bubarkan", "hsk": 5, "components": ["月", "攵"]},
-    "敬": {"pinyin": "jìng", "indonesian": "hormati", "hsk": 5, "components": ["苟", "攵"]},
-    "数": {"pinyin": "shǔ", "indonesian": "hitung", "hsk": 5, "components": ["娄", "攵"]},
-    "整": {"pinyin": "zhěng", "indonesian": "rapi", "hsk": 5, "components": ["束", "攵"]},
-    "斗": {"pinyin": "dòu", "indonesian": "pertengkaran", "hsk": 5, "components": ["斗"]},
-    "料": {"pinyin": "liào", "indonesian": "bahan", "hsk": 5, "components": ["米", "斗"]},
-    "斜": {"pinyin": "xié", "indonesian": "miring", "hsk": 5, "components": ["余", "斗"]},
-    "斤": {"pinyin": "jīn", "indonesian": "muatan", "hsk": 5, "components": ["斤"]},
-    "斥": {"pinyin": "chì", "indonesian": "tolak", "hsk": 5, "components": ["斤", "丶"]},
-    "斧": {"pinyin": "fǔ", "indonesian": "kapak", "hsk": 5, "components": ["父", "斤"]},
-    "斩": {"pinyin": "zhǎn", "indonesian": "tebas", "hsk": 5, "components": ["车", "斤"]},
-    "所": {"pinyin": "suǒ", "indonesian": "tempat", "hsk": 5, "components": ["户", "斤"]},
-    "断": {"pinyin": "duàn", "indonesian": "putus", "hsk": 5, "components": ["米", "斤"]},
-    "斯": {"pinyin": "sī", "indonesian": "ini", "hsk": 5, "components": ["其", "斤"]},
-    "新": {"pinyin": "xīn", "indonesian": "baru", "hsk": 5, "components": ["亲", "斤"]},
-    "方": {"pinyin": "fāng", "indonesian": "arah", "hsk": 5, "components": ["方"]},
-    "房": {"pinyin": "fáng", "indonesian": "kamar", "hsk": 5, "components": ["户", "方"]},
-    "防": {"pinyin": "fáng", "indonesian": "cegah", "hsk": 5, "components": ["阝", "方"]},
-    "芳": {"pinyin": "fāng", "indonesian": "wangi", "hsk": 5, "components": ["艹", "方"]},
-    "访": {"pinyin": "fǎng", "indonesian": "kunjungi", "hsk": 5, "components": ["讠", "方"]},
-    "仿": {"pinyin": "fǎng", "indonesian": "tiru", "hsk": 5, "components": ["亻", "方"]},
-    "纺": {"pinyin": "fǎng", "indonesian": "tenun", "hsk": 5, "components": ["纟", "方"]},
-    "放": {"pinyin": "fàng", "indonesian": "letakkan", "hsk": 5, "components": ["方", "攵"]},
-    "坊": {"pinyin": "fāng", "indonesian": "daerah", "hsk": 5, "components": ["土", "方"]},
-    "旁": {"pinyin": "páng", "indonesian": "samping", "hsk": 5, "components": ["立", "冖"]},
-    "旅": {"pinyin": "lǚ", "indonesian": "perjalanan", "hsk": 5, "components": ["方", "攸"]},
-    "旗": {"pinyin": "qí", "indonesian": "bendera", "hsk": 5, "components": ["方", "其"]},
-    "施": {"pinyin": "shī", "indonesian": "terapkan", "hsk": 5, "components": ["方", "也"]},
-    "无": {"pinyin": "wú", "indonesian": "tanpa", "hsk": 5, "components": ["无"]},
-    "既": {"pinyin": "jì", "indonesian": "karena", "hsk": 5, "components": ["无", "艮"]},
-    "日": {"pinyin": "rì", "indonesian": "hari", "hsk": 5, "components": ["日"]},
-    "旦": {"pinyin": "dàn", "indonesian": "fajar", "hsk": 5, "components": ["日", "一"]},
-    "旨": {"pinyin": "zhǐ", "indonesian": "tujuan", "hsk": 5, "components": ["日", "七"]},
-    "早": {"pinyin": "zǎo", "indonesian": "pagi", "hsk": 5, "components": ["日", "十"]},
-    "旬": {"pinyin": "xún", "indonesian": "dasawarsa", "hsk": 5, "components": ["日", "勹"]},
-    "旭": {"pinyin": "xù", "indonesian": "matahari", "hsk": 5, "components": ["日", "九"]},
-    "旱": {"pinyin": "hàn", "indonesian": "kekeringan", "hsk": 5, "components": ["日", "干"]},
-    "时": {"pinyin": "shí", "indonesian": "waktu", "hsk": 5, "components": ["日", "寸"]},
-    "旷": {"pinyin": "kuàng", "indonesian": "lapang", "hsk": 5, "components": ["日", "广"]},
-    "旺": {"pinyin": "wàng", "indonesian": "subur", "hsk": 5, "components": ["日", "王"]},
-    "昔": {"pinyin": "xī", "indonesian": "dulu", "hsk": 5, "components": ["共", "日"]},
-    "昊": {"pinyin": "hào", "indonesian": "langit", "hsk": 5, "components": ["日", "天"]},
-    "昌": {"pinyin": "chāng", "indonesian": "makmur", "hsk": 5, "components": ["日", "日"]},
-    "明": {"pinyin": "míng", "indonesian": "terang", "hsk": 5, "components": ["日", "月"]},
-    "昏": {"pinyin": "hūn", "indonesian": "senja", "hsk": 5, "components": ["日", "氏"]},
-    "易": {"pinyin": "yì", "indonesian": "mudah", "hsk": 5, "components": ["日", "勿"]},
-    "昔": {"pinyin": "xī", "indonesian": "dulu", "hsk": 5, "components": ["日", "艹"]},
-    "服": {"pinyin": "fú", "indonesian": "pakaian", "hsk": 5, "components": ["月", "卩"]},
-    "朋": {"pinyin": "péng", "indonesian": "teman", "hsk": 5, "components": ["月", "月"]},
-    "服": {"pinyin": "fú", "indonesian": "pakai", "hsk": 5, "components": ["月", "卩"]},
-    "望": {"pinyin": "wàng", "indonesian": "harapan", "hsk": 5, "components": ["王", "月"]},
-    "朗": {"pinyin": "lǎng", "indonesian": "cerah", "hsk": 5, "components": ["月", "郎"]},
-    "朝": {"pinyin": "cháo", "indonesian": "pagi", "hsk": 5, "components": ["月", "卓"]},
-    "期": {"pinyin": "qī", "indonesian": "periode", "hsk": 5, "components": ["其", "月"]},
-    "木": {"pinyin": "mù", "indonesian": "kayu", "hsk": 5, "components": ["木"]},
-    "本": {"pinyin": "běn", "indonesian": "asli", "hsk": 5, "components": ["木", "一"]},
-    "术": {"pinyin": "shù", "indonesian": "seni", "hsk": 5, "components": ["木", "丶"]},
-    "札": {"pinyin": "zhá", "indonesian": "surat", "hsk": 5, "components": ["木", "乚"]},
-    "朽": {"pinyin": "xiǔ", "indonesian": "lapuk", "hsk": 5, "components": ["木", "一"]},
-    "朴": {"pinyin": "pǔ", "indonesian": "sederhana", "hsk": 5, "components": ["木", "卜"]},
-    "机": {"pinyin": "jī", "indonesian": "mesin", "hsk": 5, "components": ["木", "几"]},
-    "权": {"pinyin": "quán", "indonesian": "kekuasaan", "hsk": 5, "components": ["木", "又"]},
-    "过": {"pinyin": "guò", "indonesian": "lewat", "hsk": 5, "components": ["辶", "咼"]},
-    "亘": {"pinyin": "gèn", "indonesian": "mencapai", "hsk": 5, "components": ["一", "日"]},
-    "吏": {"pinyin": "lì", "indonesian": "pejabat", "hsk": 5, "components": ["口", "又"]},
-    "协": {"pinyin": "xié", "indonesian": "koordinasi", "hsk": 5, "components": ["十", "办"]},
-    "西": {"pinyin": "xī", "indonesian": "barat", "hsk": 5, "components": ["西"]},
-    "要": {"pinyin": "yào", "indonesian": "mau", "hsk": 5, "components": ["西", "女"]},
-    "覆": {"pinyin": "fù", "indonesian": "tutup", "hsk": 5, "components": ["西", "复"]},
-    "见": {"pinyin": "jiàn", "indonesian": "lihat", "hsk": 5, "components": ["冂", "儿"]},
-    "观": {"pinyin": "guān", "indonesian": "amati", "hsk": 5, "components": ["又", "见"]},
-    "规": {"pinyin": "guī", "indonesian": "aturan", "hsk": 5, "components": ["夫", "见"]},
-    "视": {"pinyin": "shì", "indonesian": "lihat", "hsk": 5, "components": ["礻", "见"]},
-    "觉": {"pinyin": "jué", "indonesian": "merasa", "hsk": 5, "components": ["冖", "见"]},
-    "览": {"pinyin": "lǎn", "indonesian": "teropong", "hsk": 5, "components": ["⺁", "见"]},
-    "亲": {"pinyin": "qīn", "indonesian": "kerabat", "hsk": 5, "components": ["立", "木"]},
-    "童": {"pinyin": "tóng", "indonesian": "anak", "hsk": 5, "components": ["立", "里"]},
-    "音": {"pinyin": "yīn", "indonesian": "suara", "hsk": 5, "components": ["立", "日"]},
-    "竟": {"pinyin": "jìng", "indonesian": "selesai", "hsk": 5, "components": ["立", "竞"]},
-    "章": {"pinyin": "zhāng", "indonesian": "babak", "hsk": 5, "components": ["立", "十"]},
-    "产": {"pinyin": "chǎn", "indonesian": "produksi", "hsk": 5, "components": ["立", "生"]},
-    "刮": {"pinyin": "guā", "indonesian": "kerok", "hsk": 5, "components": ["舌", "刀"]},
-    "敌": {"pinyin": "dí", "indonesian": "musuh", "hsk": 5, "components": ["舌", "攴"]},
-    "适": {"pinyin": "shì", "indonesian": "sesuai", "hsk": 5, "components": ["辶", "舌"]},
-    "甜": {"pinyin": "tián", "indonesian": "manis", "hsk": 5, "components": ["舌", "甘"]},
-    "舒": {"pinyin": "shū", "indonesian": "nyaman", "hsk": 5, "components": ["舍", "予"]},
-    "舍": {"pinyin": "shè", "indonesian": "pondok", "hsk": 5, "components": ["人", "舌"]},
-    "辞": {"pinyin": "cí", "indonesian": "kata", "hsk": 5, "components": ["辛", "舌"]},
-    "页": {"pinyin": "yè", "indonesian": "halaman", "hsk": 5, "components": ["页"]},
-    "顶": {"pinyin": "dǐng", "indonesian": "puncak", "hsk": 5, "components": ["丁", "页"]},
-    "顷": {"pinyin": "qǐng", "indonesian": "sedikit", "hsk": 5, "components": ["匕", "页"]},
-    "项": {"pinyin": "xiàng", "indonesian": "proyek", "hsk": 5, "components": ["工", "页"]},
-    "顺": {"pinyin": "shùn", "indonesian": "lancar", "hsk": 5, "components": ["川", "页"]},
-    "须": {"pinyin": "xū", "indonesian": "harus", "hsk": 5, "components": ["彡", "页"]},
-    "顽": {"pinyin": "wán", "indonesian": "keras kepala", "hsk": 5, "components": ["元", "页"]},
-    "顾": {"pinyin": "gù", "indonesian": "perhatikan", "hsk": 5, "components": ["厄", "页"]},
-    "顿": {"pinyin": "dùn", "indonesian": "berhenti", "hsk": 5, "components": ["屯", "页"]},
-    "预": {"pinyin": "yù", "indonesian": "awal", "hsk": 5, "components": ["予", "页"]},
-    "领": {"pinyin": "lǐng", "indonesian": "pimpin", "hsk": 5, "components": ["令", "页"]},
-    "颈": {"pinyin": "jǐng", "indonesian": "leher", "hsk": 5, "components": ["至", "页"]},
-    "题": {"pinyin": "tí", "indonesian": "topik", "hsk": 5, "components": ["是", "页"]},
-    "颜": {"pinyin": "yán", "indonesian": "wajah", "hsk": 5, "components": ["彦", "页"]},
-    "额": {"pinyin": "é", "indonesian": "dahi", "hsk": 5, "components": ["客", "页"]},
-    "风": {"pinyin": "fēng", "indonesian": "angin", "hsk": 5, "components": ["几", "丿"]},
-    "飞": {"pinyin": "fēi", "indonesian": "terbang", "hsk": 5, "components": ["飞"]},
-    "飑": {"pinyin": "biāo", "indonesian": "badai", "hsk": 5, "components": ["风", "犬"]},
-    "飓": {"pinyin": "jù", "indonesian": "topan", "hsk": 5, "components": ["风", "具"]},
-    "飘": {"pinyin": "piāo", "indonesian": "melayang", "hsk": 5, "components": ["风", "票"]},
-    "飨": {"pinyin": "xiǎng", "indonesian": "jamuan", "hsk": 5, "components": ["丰", "食"]},
-    "饥": {"pinyin": "jī", "indonesian": "lapar", "hsk": 5, "components": ["饣", "几"]},
-    "饭": {"pinyin": "fàn", "indonesian": "nasi", "hsk": 5, "components": ["饣", "反"]},
-    "饰": {"pinyin": "shì", "indonesian": "hiasan", "hsk": 5, "components": ["饣", "巾"]},
-    "饱": {"pinyin": "bǎo", "indonesian": "kenyang", "hsk": 5, "components": ["饣", "包"]},
-    "饲": {"pinyin": "sì", "indonesian": "pakan", "hsk": 5, "components": ["饣", "司"]},
-    "饼": {"pinyin": "bǐng", "indonesian": "kue", "hsk": 5, "components": ["饣", "并"]},
-    "饵": {"pinyin": "ěr", "indonesian": "umpan", "hsk": 5, "components": ["饣", "耳"]},
-    "饶": {"pinyin": "ráo", "indonesian": "melimpah", "hsk": 5, "components": ["饣", "尧"]},
-    "饺": {"pinyin": "jiǎo", "indonesian": "pangsit", "hsk": 5, "components": ["饣", "交"]},
-    "饿": {"pinyin": "è", "indonesian": "lapar", "hsk": 5, "components": ["饣", "我"]},
-    "馆": {"pinyin": "guǎn", "indonesian": "gedung", "hsk": 5, "components": ["饣", "官"]},
-    "首": {"pinyin": "shǒu", "indonesian": "kepala", "hsk": 5, "components": ["首"]},
-    "香": {"pinyin": "xiāng", "indonesian": "wangi", "hsk": 5, "components": ["香"]},
-    "马": {"pinyin": "mǎ", "indonesian": "kuda", "hsk": 5, "components": ["马"]},
-    "驮": {"pinyin": "tuó", "indonesian": "bebani", "hsk": 5, "components": ["马", "大"]},
-    "驯": {"pinyin": "xùn", "indonesian": "jinak", "hsk": 5, "components": ["马", "川"]},
-    "驰": {"pinyin": "chí", "indonesian": "berlari", "hsk": 5, "components": ["马", "也"]},
-    "驳": {"pinyin": "bó", "indonesian": "bantah", "hsk": 5, "components": ["马", "爻"]},
-    "驴": {"pinyin": "lǘ", "indonesian": "keledai", "hsk": 5, "components": ["马", "户"]},
-    "驶": {"pinyin": "shǐ", "indonesian": "kendarai", "hsk": 5, "components": ["马", "史"]},
-    "驹": {"pinyin": "jū", "indonesian": "kuda muda", "hsk": 5, "components": ["马", "句"]},
-    "驻": {"pinyin": "zhù", "indonesian": "bertahan", "hsk": 5, "components": ["马", "主"]},
-    "驼": {"pinyin": "tuó", "indonesian": "unta", "hsk": 5, "components": ["马", "它"]},
-    "驾": {"pinyin": "jià", "indonesian": "kendarai", "hsk": 5, "components": ["马", "加"]},
-    "骁": {"pinyin": "xiāo", "indonesian": "gagah", "hsk": 5, "components": ["马", "尧"]},
-    "验": {"pinyin": "yàn", "indonesian": "periksa", "hsk": 5, "components": ["马", "佥"]},
-    "骏": {"pinyin": "jùn", "indonesian": "kuda bagus", "hsk": 5, "components": ["马", "夋"]},
-    "骑": {"pinyin": "qí", "indonesian": "berkuda", "hsk": 5, "components": ["马", "奇"]},
-    "骨": {"pinyin": "gǔ", "indonesian": "tulang", "hsk": 5, "components": ["骨"]},
-    "高": {"pinyin": "gāo", "indonesian": "tinggi", "hsk": 5, "components": ["高"]},
-    "髟": {"pinyin": "biāo", "indonesian": "rambut panjang", "hsk": 5, "components": ["髟"]},
-    "门": {"pinyin": "mén", "indonesian": "pintu", "hsk": 5, "components": ["门"]},
-    "闪": {"pinyin": "shǎn", "indonesian": "kilat", "hsk": 5, "components": ["门", "人"]},
-    "闭": {"pinyin": "bì", "indonesian": "tutup", "hsk": 5, "components": ["门", "才"]},
-    "问": {"pinyin": "wèn", "indonesian": "tanya", "hsk": 5, "components": ["门", "口"]},
-    "闯": {"pinyin": "chuǎng", "indonesian": "menerobos", "hsk": 5, "components": ["门", "马"]},
-    "闲": {"pinyin": "xián", "indonesian": "senggang", "hsk": 5, "components": ["门", "木"]},
-    "间": {"pinyin": "jiān", "indonesian": "antara", "hsk": 5, "components": ["门", "日"]},
-    "闷": {"pinyin": "mèn", "indonesian": "penat", "hsk": 5, "components": ["门", "心"]},
-    "闸": {"pinyin": "zhá", "indonesian": "gerbang", "hsk": 5, "components": ["门", "甲"]},
-    "闹": {"pinyin": "nào", "indonesian": "ramai", "hsk": 5, "components": ["门", "市"]},
-    "闻": {"pinyin": "wén", "indonesian": "dengar", "hsk": 5, "components": ["门", "耳"]},
-    "闰": {"pinyin": "rùn", "indonesian": "kabisat", "hsk": 5, "components": ["门", "王"]},
-    "闲": {"pinyin": "xián", "indonesian": "senggang", "hsk": 5, "components": ["门", "木"]},
-    "间": {"pinyin": "jiān", "indonesian": "ruang", "hsk": 5, "components": ["门", "日"]},
-    "阔": {"pinyin": "kuò", "indonesian": "lebar", "hsk": 5, "components": ["门", "活"]},
-    "阖": {"pinyin": "hé", "indonesian": "tutup", "hsk": 5, "components": ["门", "盍"]},
-    "阚": {"pinyin": "kàn", "indonesian": "nama keluarga", "hsk": 5, "components": ["门", "敢"]},
-    "队": {"pinyin": "duì", "indonesian": "tim", "hsk": 5, "components": ["阝", "人"]},
-    "阶": {"pinyin": "jiē", "indonesian": "anak tangga", "hsk": 5, "components": ["阝", "介"]},
-    "阱": {"pinyin": "jǐng", "indonesian": "jebakan", "hsk": 5, "components": ["阝", "井"]},
-    "阳": {"pinyin": "yáng", "indonesian": "matahari", "hsk": 5, "components": ["阝", "日"]},
-    "阴": {"pinyin": "yīn", "indonesian": "gelap", "hsk": 5, "components": ["阝", "月"]},
-    "阵": {"pinyin": "zhèn", "indonesian": "barisan", "hsk": 5, "components": ["阝", "车"]},
-    "阶": {"pinyin": "jiē", "indonesian": "tingkat", "hsk": 5, "components": ["阝", "介"]},
-    "阳": {"pinyin": "yáng", "indonesian": "positif", "hsk": 5, "components": ["阝", "日"]},
-    "阴": {"pinyin": "yīn", "indonesian": "negatif", "hsk": 5, "components": ["阝", "月"]},
-    "防": {"pinyin": "fáng", "indonesian": "cegah", "hsk": 5, "components": ["阝", "方"]},
-    "阳": {"pinyin": "yáng", "indonesian": "pria", "hsk": 5, "components": ["阝", "日"]},
-    "阴": {"pinyin": "yīn", "indonesian": "wanita", "hsk": 5, "components": ["阝", "月"]},
-    "阵": {"pinyin": "zhèn", "indonesian": "pertempuran", "hsk": 5, "components": ["阝", "车"]},
-    "阶": {"pinyin": "jiē", "indonesian": "anak tangga", "hsk": 5, "components": ["阝", "介"]},
-    "阳": {"pinyin": "yáng", "indonesian": "matahari", "hsk": 5, "components": ["阝", "日"]},
-    "阴": {"pinyin": "yīn", "indonesian": "awan", "hsk": 5, "components": ["阝", "月"]},
-    "防": {"pinyin": "fáng", "indonesian": "perlindungan", "hsk": 5, "components": ["阝", "方"]},
-    "阳": {"pinyin": "yáng", "indonesian": "siang", "hsk": 5, "components": ["阝", "日"]},
-    "阴": {"pinyin": "yīn", "indonesian": "malam", "hsk": 5, "components": ["阝", "月"]},
-    "阵": {"pinyin": "zhèn", "indonesian": "barisan", "hsk": 5, "components": ["阝", "车"]},
-    "阶": {"pinyin": "jiē", "indonesian": "tingkat", "hsk": 5, "components": ["阝", "介"]},
-    "阳": {"pinyin": "yáng", "indonesian": "positif", "hsk": 5, "components": ["阝", "日"]},
-    "阴": {"pinyin": "yīn", "indonesian": "negatif", "hsk": 5, "components": ["阝", "月"]},
-    "防": {"pinyin": "fáng", "indonesian": "cegah", "hsk": 5, "components": ["阝", "方"]},
-    "阳": {"pinyin": "yáng", "indonesian": "matahari", "hsk": 5, "components": ["阝", "日"]},
-    "阴": {"pinyin": "yīn", "indonesian": "awan", "hsk": 5, "components": ["阝", "月"]},
-    "阵": {"pinyin": "zhèn", "indonesian": "pertempuran", "hsk": 5, "components": ["阝", "车"]},
-    "阶": {"pinyin": "jiē", "indonesian": "tingkat", "hsk": 5, "components": ["阝", "介"]},
-    "阳": {"pinyin": "yáng", "indonesian": "positif", "hsk": 5, "components": ["阝", "日"]},
-    "阴": {"pinyin": "yīn", "indonesian": "negatif", "hsk": 5, "components": ["阝", "月"]},
-    "防": {"pinyin": "fáng", "indonesian": "perlindungan", "hsk": 5, "components": ["阝", "方"]}
+    "好": {
+      "pinyin": "hǎo",
+      "indonesian": "baik",
+      "hsk": 1,
+      "components": [
+        "女",
+        "子"
+      ]
+    },
+    "你": {
+      "pinyin": "nǐ",
+      "indonesian": "kamu",
+      "hsk": 1,
+      "components": [
+        "亻",
+        "尔"
+      ]
+    },
+    "我": {
+      "pinyin": "wǒ",
+      "indonesian": "saya",
+      "hsk": 1,
+      "components": [
+        "戈",
+        "扌"
+      ]
+    },
+    "他": {
+      "pinyin": "tā",
+      "indonesian": "dia (laki-laki)",
+      "hsk": 1,
+      "components": [
+        "亻",
+        "也"
+      ]
+    },
+    "她": {
+      "pinyin": "tā",
+      "indonesian": "dia (perempuan)",
+      "hsk": 1,
+      "components": [
+        "女",
+        "也"
+      ]
+    },
+    "是": {
+      "pinyin": "shì",
+      "indonesian": "adalah",
+      "hsk": 1,
+      "components": [
+        "日",
+        "疋"
+      ]
+    },
+    "不": {
+      "pinyin": "bù",
+      "indonesian": "tidak",
+      "hsk": 1,
+      "components": []
+    },
+    "了": {
+      "pinyin": "le",
+      "indonesian": "-partikel",
+      "hsk": 1,
+      "components": []
+    },
+    "在": {
+      "pinyin": "zài",
+      "indonesian": "di",
+      "hsk": 1,
+      "components": [
+        "𠂉",
+        "土"
+      ]
+    },
+    "人": {
+      "pinyin": "rén",
+      "indonesian": "orang",
+      "hsk": 1,
+      "components": []
+    },
+    "有": {
+      "pinyin": "yǒu",
+      "indonesian": "punya",
+      "hsk": 1,
+      "components": [
+        "月",
+        "𠂉"
+      ]
+    },
+    "和": {
+      "pinyin": "hé",
+      "indonesian": "dan",
+      "hsk": 1,
+      "components": [
+        "禾",
+        "口"
+      ]
+    },
+    "这": {
+      "pinyin": "zhè",
+      "indonesian": "ini",
+      "hsk": 3,
+      "components": [
+        "辶",
+        "文"
+      ]
+    },
+    "个": {
+      "pinyin": "gè",
+      "indonesian": "sekian",
+      "hsk": 1,
+      "components": [
+        "亻",
+        "𠂉"
+      ]
+    },
+    "们": {
+      "pinyin": "men",
+      "indonesian": "们-plural",
+      "hsk": 1,
+      "components": [
+        "亻",
+        "门"
+      ]
+    },
+    "中": {
+      "pinyin": "zhōng",
+      "indonesian": "tengah",
+      "hsk": 1,
+      "components": [
+        "口",
+        "丨"
+      ]
+    },
+    "国": {
+      "pinyin": "guó",
+      "indonesian": "negara",
+      "hsk": 1,
+      "components": [
+        "囗",
+        "玉"
+      ]
+    },
+    "大": {
+      "pinyin": "dà",
+      "indonesian": "besar",
+      "hsk": 1,
+      "components": []
+    },
+    "小": {
+      "pinyin": "xiǎo",
+      "indonesian": "kecil",
+      "hsk": 1,
+      "components": []
+    },
+    "多": {
+      "pinyin": "duō",
+      "indonesian": "banyak",
+      "hsk": 1,
+      "components": []
+    },
+    "出": {
+      "pinyin": "chū",
+      "indonesian": "keluar",
+      "hsk": 5,
+      "components": []
+    },
+    "对": {
+      "pinyin": "duì",
+      "indonesian": "benar",
+      "hsk": 1,
+      "components": [
+        "又",
+        "寸"
+      ]
+    },
+    "学": {
+      "pinyin": "xué",
+      "indonesian": "belajar",
+      "hsk": 4,
+      "components": [
+        "冖",
+        "子"
+      ]
+    },
+    "习": {
+      "pinyin": "xí",
+      "indonesian": "latihan",
+      "hsk": 1,
+      "components": [
+        "丶",
+        "冋"
+      ]
+    },
+    "汉": {
+      "pinyin": "hàn",
+      "indonesian": "Tionghoa",
+      "hsk": 1,
+      "components": [
+        "氵",
+        "又"
+      ]
+    },
+    "字": {
+      "pinyin": "zì",
+      "indonesian": "karakter",
+      "hsk": 1,
+      "components": [
+        "冖",
+        "子"
+      ]
+    },
+    "文": {
+      "pinyin": "wén",
+      "indonesian": "teks",
+      "hsk": 1,
+      "components": []
+    },
+    "本": {
+      "pinyin": "běn",
+      "indonesian": "asli",
+      "hsk": 5,
+      "components": [
+        "木",
+        "一"
+      ]
+    },
+    "时": {
+      "pinyin": "shí",
+      "indonesian": "waktu",
+      "hsk": 5,
+      "components": [
+        "日",
+        "寸"
+      ]
+    },
+    "去": {
+      "pinyin": "qù",
+      "indonesian": "pergi",
+      "hsk": 1,
+      "components": [
+        "土",
+        "厶"
+      ]
+    },
+    "来": {
+      "pinyin": "lái",
+      "indonesian": "datang",
+      "hsk": 1,
+      "components": []
+    },
+    "为": {
+      "pinyin": "wèi",
+      "indonesian": "untuk",
+      "hsk": 1,
+      "components": [
+        "丶",
+        "力"
+      ]
+    },
+    "很": {
+      "pinyin": "hěn",
+      "indonesian": "sangat",
+      "hsk": 2,
+      "components": [
+        "彳",
+        "艮"
+      ]
+    },
+    "都": {
+      "pinyin": "dōu",
+      "indonesian": "semua",
+      "hsk": 2,
+      "components": [
+        "者",
+        "阝"
+      ]
+    },
+    "能": {
+      "pinyin": "néng",
+      "indonesian": "bisa",
+      "hsk": 2,
+      "components": [
+        "月",
+        "匕"
+      ]
+    },
+    "见": {
+      "pinyin": "jiàn",
+      "indonesian": "lihat",
+      "hsk": 5,
+      "components": []
+    },
+    "会": {
+      "pinyin": "huì",
+      "indonesian": "bisa/pertemuan",
+      "hsk": 2,
+      "components": [
+        "人",
+        "云"
+      ]
+    },
+    "说": {
+      "pinyin": "shuō",
+      "indonesian": "bilang",
+      "hsk": 2,
+      "components": [
+        "讠",
+        "兌"
+      ]
+    },
+    "现": {
+      "pinyin": "xiàn",
+      "indonesian": "sekarang",
+      "hsk": 2,
+      "components": [
+        "王",
+        "见"
+      ]
+    },
+    "想": {
+      "pinyin": "xiǎng",
+      "indonesian": "ingin",
+      "hsk": 2,
+      "components": [
+        "木",
+        "目"
+      ]
+    },
+    "知": {
+      "pinyin": "zhī",
+      "indonesian": "tahu",
+      "hsk": 2,
+      "components": [
+        "矢",
+        "口"
+      ]
+    },
+    "道": {
+      "pinyin": "dào",
+      "indonesian": "jalan",
+      "hsk": 2,
+      "components": [
+        "辶",
+        "首"
+      ]
+    },
+    "经": {
+      "pinyin": "jīng",
+      "indonesian": "melewati",
+      "hsk": 2,
+      "components": [
+        "纟",
+        "巛"
+      ]
+    },
+    "意": {
+      "pinyin": "yì",
+      "indonesian": "arti",
+      "hsk": 2,
+      "components": [
+        "立",
+        "日"
+      ]
+    },
+    "加": {
+      "pinyin": "jiā",
+      "indonesian": "tambah",
+      "hsk": 5,
+      "components": [
+        "力",
+        "口"
+      ]
+    },
+    "可": {
+      "pinyin": "kě",
+      "indonesian": "bisa",
+      "hsk": 2,
+      "components": [
+        "口",
+        "亅"
+      ]
+    },
+    "家": {
+      "pinyin": "jiā",
+      "indonesian": "rumah",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "豕"
+      ]
+    },
+    "那": {
+      "pinyin": "nà",
+      "indonesian": "itu",
+      "hsk": 2,
+      "components": [
+        "阝",
+        "𠂉"
+      ]
+    },
+    "把": {
+      "pinyin": "bǎ",
+      "indonesian": "pegang",
+      "hsk": 2,
+      "components": [
+        "扌",
+        "巴"
+      ]
+    },
+    "打": {
+      "pinyin": "dǎ",
+      "indonesian": "pukul",
+      "hsk": 2,
+      "components": [
+        "扌",
+        "丁"
+      ]
+    },
+    "机": {
+      "pinyin": "jī",
+      "indonesian": "mesin",
+      "hsk": 5,
+      "components": [
+        "木",
+        "几"
+      ]
+    },
+    "当": {
+      "pinyin": "dāng",
+      "indonesian": "saat",
+      "hsk": 2,
+      "components": [
+        "⺐",
+        "彐"
+      ]
+    },
+    "看": {
+      "pinyin": "kàn",
+      "indonesian": "lihat",
+      "hsk": 2,
+      "components": [
+        "龶",
+        "目"
+      ]
+    },
+    "听": {
+      "pinyin": "tīng",
+      "indonesian": "dengar",
+      "hsk": 2,
+      "components": [
+        "口",
+        "王"
+      ]
+    },
+    "回": {
+      "pinyin": "huí",
+      "indonesian": "kembali",
+      "hsk": 2,
+      "components": [
+        "囗",
+        "口"
+      ]
+    },
+    "但": {
+      "pinyin": "dàn",
+      "indonesian": "tapi",
+      "hsk": 2,
+      "components": [
+        "亻",
+        "日"
+      ]
+    },
+    "还": {
+      "pinyin": "huán",
+      "indonesian": "kembalikan",
+      "hsk": 3,
+      "components": [
+        "辶",
+        "不"
+      ]
+    },
+    "从": {
+      "pinyin": "cóng",
+      "indonesian": "dari",
+      "hsk": 2,
+      "components": []
+    },
+    "得": {
+      "pinyin": "dé",
+      "indonesian": "dapat",
+      "hsk": 2,
+      "components": [
+        "彳",
+        "日"
+      ]
+    },
+    "弟": {
+      "pinyin": "dì",
+      "indonesian": "adik",
+      "hsk": 2,
+      "components": [
+        "丷",
+        "弟"
+      ]
+    },
+    "哥": {
+      "pinyin": "gē",
+      "indonesian": "kakak",
+      "hsk": 2,
+      "components": []
+    },
+    "开": {
+      "pinyin": "kāi",
+      "indonesian": "buka",
+      "hsk": 2,
+      "components": [
+        "一",
+        "廾"
+      ]
+    },
+    "关": {
+      "pinyin": "guān",
+      "indonesian": "tutup",
+      "hsk": 2,
+      "components": [
+        "丷",
+        "天"
+      ]
+    },
+    "点": {
+      "pinyin": "diǎn",
+      "indonesian": "titik",
+      "hsk": 2,
+      "components": [
+        "占",
+        "灬"
+      ]
+    },
+    "象": {
+      "pinyin": "xiàng",
+      "indonesian": "gajah",
+      "hsk": 3,
+      "components": [
+        "⺁",
+        "象"
+      ]
+    },
+    "像": {
+      "pinyin": "xiàng",
+      "indonesian": "seperti",
+      "hsk": 3,
+      "components": [
+        "亻",
+        "象"
+      ]
+    },
+    "情": {
+      "pinyin": "qíng",
+      "indonesian": "perasaan",
+      "hsk": 3,
+      "components": [
+        "忄",
+        "青"
+      ]
+    },
+    "请": {
+      "pinyin": "qǐng",
+      "indonesian": "minta",
+      "hsk": 3,
+      "components": [
+        "讠",
+        "青"
+      ]
+    },
+    "城": {
+      "pinyin": "chéng",
+      "indonesian": "kota",
+      "hsk": 3,
+      "components": [
+        "土",
+        "成"
+      ]
+    },
+    "程": {
+      "pinyin": "chéng",
+      "indonesian": "proses",
+      "hsk": 3,
+      "components": [
+        "禾",
+        "呈"
+      ]
+    },
+    "成": {
+      "pinyin": "chéng",
+      "indonesian": "jadi",
+      "hsk": 3,
+      "components": [
+        "戈",
+        "一"
+      ]
+    },
+    "政": {
+      "pinyin": "zhèng",
+      "indonesian": "politik",
+      "hsk": 3,
+      "components": [
+        "攵",
+        "正"
+      ]
+    },
+    "正": {
+      "pinyin": "zhèng",
+      "indonesian": "benar",
+      "hsk": 3,
+      "components": [
+        "一",
+        "止"
+      ]
+    },
+    "新": {
+      "pinyin": "xīn",
+      "indonesian": "baru",
+      "hsk": 5,
+      "components": [
+        "亲",
+        "斤"
+      ]
+    },
+    "方": {
+      "pinyin": "fāng",
+      "indonesian": "arah",
+      "hsk": 5,
+      "components": []
+    },
+    "京": {
+      "pinyin": "jīng",
+      "indonesian": "ibukota",
+      "hsk": 3,
+      "components": [
+        "亠",
+        "小"
+      ]
+    },
+    "就": {
+      "pinyin": "jiù",
+      "indonesian": "langsung",
+      "hsk": 3,
+      "components": [
+        "亰",
+        "尤"
+      ]
+    },
+    "高": {
+      "pinyin": "gāo",
+      "indonesian": "tinggi",
+      "hsk": 5,
+      "components": []
+    },
+    "区": {
+      "pinyin": "qū",
+      "indonesian": "daerah",
+      "hsk": 3,
+      "components": [
+        "匚",
+        "乂"
+      ]
+    },
+    "车": {
+      "pinyin": "chē",
+      "indonesian": "mobil",
+      "hsk": 3,
+      "components": []
+    },
+    "转": {
+      "pinyin": "zhuǎn",
+      "indonesian": "putar",
+      "hsk": 3,
+      "components": [
+        "车",
+        "专"
+      ]
+    },
+    "东": {
+      "pinyin": "dōng",
+      "indonesian": "timur",
+      "hsk": 3,
+      "components": [
+        "一",
+        "日"
+      ]
+    },
+    "远": {
+      "pinyin": "yuǎn",
+      "indonesian": "jauh",
+      "hsk": 3,
+      "components": [
+        "辶",
+        "元"
+      ]
+    },
+    "连": {
+      "pinyin": "lián",
+      "indonesian": "hubungkan",
+      "hsk": 3,
+      "components": [
+        "辶",
+        "车"
+      ]
+    },
+    "进": {
+      "pinyin": "jìn",
+      "indonesian": "masuk",
+      "hsk": 3,
+      "components": [
+        "辶",
+        "井"
+      ]
+    },
+    "通": {
+      "pinyin": "tōng",
+      "indonesian": "lewat",
+      "hsk": 3,
+      "components": [
+        "辶",
+        "甬"
+      ]
+    },
+    "送": {
+      "pinyin": "sòng",
+      "indonesian": "kirim",
+      "hsk": 3,
+      "components": [
+        "辶",
+        "关"
+      ]
+    },
+    "造": {
+      "pinyin": "zào",
+      "indonesian": "buat",
+      "hsk": 3,
+      "components": [
+        "辶",
+        "告"
+      ]
+    },
+    "运": {
+      "pinyin": "yùn",
+      "indonesian": "运-angkut",
+      "hsk": 3,
+      "components": [
+        "辶",
+        "云"
+      ]
+    },
+    "近": {
+      "pinyin": "jìn",
+      "indonesian": "dekat",
+      "hsk": 3,
+      "components": [
+        "辶",
+        "斤"
+      ]
+    },
+    "返": {
+      "pinyin": "fǎn",
+      "indonesian": "kembali",
+      "hsk": 3,
+      "components": [
+        "辶",
+        "反"
+      ]
+    },
+    "迷": {
+      "pinyin": "mí",
+      "indonesian": "bingung",
+      "hsk": 3,
+      "components": [
+        "辶",
+        "米"
+      ]
+    },
+    "退": {
+      "pinyin": "tuì",
+      "indonesian": "mundur",
+      "hsk": 3,
+      "components": [
+        "辶",
+        "艮"
+      ]
+    },
+    "速": {
+      "pinyin": "sù",
+      "indonesian": "cepat",
+      "hsk": 3,
+      "components": [
+        "辶",
+        "束"
+      ]
+    },
+    "游": {
+      "pinyin": "yóu",
+      "indonesian": "berenang",
+      "hsk": 4,
+      "components": [
+        "氵",
+        "攸"
+      ]
+    },
+    "深": {
+      "pinyin": "shēn",
+      "indonesian": "dalam",
+      "hsk": 4,
+      "components": [
+        "氵",
+        "冟"
+      ]
+    },
+    "清": {
+      "pinyin": "qīng",
+      "indonesian": "jernih",
+      "hsk": 4,
+      "components": [
+        "氵",
+        "青"
+      ]
+    },
+    "温": {
+      "pinyin": "wēn",
+      "indonesian": "hangat",
+      "hsk": 4,
+      "components": [
+        "氵",
+        "昷"
+      ]
+    },
+    "满": {
+      "pinyin": "mǎn",
+      "indonesian": "penuh",
+      "hsk": 4,
+      "components": [
+        "氵",
+        "艹"
+      ]
+    },
+    "没": {
+      "pinyin": "méi",
+      "indonesian": "tidak ada",
+      "hsk": 5,
+      "components": [
+        "氵",
+        "殳"
+      ]
+    },
+    "海": {
+      "pinyin": "hǎi",
+      "indonesian": "laut",
+      "hsk": 4,
+      "components": [
+        "氵",
+        "毎"
+      ]
+    },
+    "演": {
+      "pinyin": "yǎn",
+      "indonesian": "pertunjukan",
+      "hsk": 4,
+      "components": [
+        "氵",
+        "寅"
+      ]
+    },
+    "渐": {
+      "pinyin": "jiàn",
+      "indonesian": "pelan-pelan",
+      "hsk": 4,
+      "components": [
+        "氵",
+        "斩"
+      ]
+    },
+    "河": {
+      "pinyin": "hé",
+      "indonesian": "sungai",
+      "hsk": 4,
+      "components": [
+        "氵",
+        "可"
+      ]
+    },
+    "流": {
+      "pinyin": "liú",
+      "indonesian": "alir",
+      "hsk": 4,
+      "components": [
+        "氵",
+        "㐬"
+      ]
+    },
+    "济": {
+      "pinyin": "jì",
+      "indonesian": "-tolong",
+      "hsk": 4,
+      "components": [
+        "氵",
+        "齐"
+      ]
+    },
+    "浪": {
+      "pinyin": "làng",
+      "indonesian": "gelombang",
+      "hsk": 4,
+      "components": [
+        "氵",
+        "良"
+      ]
+    },
+    "涌": {
+      "pinyin": "yǒng",
+      "indonesian": "meluap",
+      "hsk": 4,
+      "components": [
+        "氵",
+        "甬"
+      ]
+    },
+    "火": {
+      "pinyin": "huǒ",
+      "indonesian": "api",
+      "hsk": 4,
+      "components": []
+    },
+    "灯": {
+      "pinyin": "dēng",
+      "indonesian": "lampu",
+      "hsk": 4,
+      "components": [
+        "火",
+        "丁"
+      ]
+    },
+    "热": {
+      "pinyin": "rè",
+      "indonesian": "panas",
+      "hsk": 4,
+      "components": [
+        "灬",
+        "埶"
+      ]
+    },
+    "然": {
+      "pinyin": "rán",
+      "indonesian": "tentu",
+      "hsk": 4,
+      "components": [
+        "月",
+        "犬"
+      ]
+    },
+    "照": {
+      "pinyin": "zhào",
+      "indonesian": "terang",
+      "hsk": 4,
+      "components": [
+        "灬",
+        "昭"
+      ]
+    },
+    "熟": {
+      "pinyin": "shú",
+      "indonesian": "matang",
+      "hsk": 4,
+      "components": [
+        "灬",
+        "孰"
+      ]
+    },
+    "爱": {
+      "pinyin": "ài",
+      "indonesian": "cinta",
+      "hsk": 4,
+      "components": [
+        "爫",
+        "冖"
+      ]
+    },
+    "受": {
+      "pinyin": "shòu",
+      "indonesian": "terima",
+      "hsk": 5,
+      "components": [
+        "爫",
+        "又"
+      ]
+    },
+    "觉": {
+      "pinyin": "jué",
+      "indonesian": "merasa",
+      "hsk": 5,
+      "components": [
+        "冖",
+        "见"
+      ]
+    },
+    "买": {
+      "pinyin": "mǎi",
+      "indonesian": "beli",
+      "hsk": 4,
+      "components": [
+        "冖",
+        "头"
+      ]
+    },
+    "卖": {
+      "pinyin": "mài",
+      "indonesian": "jual",
+      "hsk": 4,
+      "components": [
+        "十",
+        "卖"
+      ]
+    },
+    "存": {
+      "pinyin": "cún",
+      "indonesian": "simpan",
+      "hsk": 4,
+      "components": [
+        "子",
+        "𠂉"
+      ]
+    },
+    "孙": {
+      "pinyin": "sūn",
+      "indonesian": "cucu",
+      "hsk": 4,
+      "components": [
+        "子",
+        "小"
+      ]
+    },
+    "季": {
+      "pinyin": "jì",
+      "indonesian": "musim",
+      "hsk": 4,
+      "components": [
+        "禾",
+        "子"
+      ]
+    },
+    "委": {
+      "pinyin": "wěi",
+      "indonesian": "serahkan",
+      "hsk": 4,
+      "components": [
+        "禾",
+        "女"
+      ]
+    },
+    "孤": {
+      "pinyin": "gū",
+      "indonesian": "yatim",
+      "hsk": 4,
+      "components": [
+        "子",
+        "瓜"
+      ]
+    },
+    "孩": {
+      "pinyin": "hái",
+      "indonesian": "anak",
+      "hsk": 4,
+      "components": [
+        "子",
+        "亥"
+      ]
+    },
+    "安": {
+      "pinyin": "ān",
+      "indonesian": "damai",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "女"
+      ]
+    },
+    "完": {
+      "pinyin": "wán",
+      "indonesian": "selesai",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "元"
+      ]
+    },
+    "定": {
+      "pinyin": "dìng",
+      "indonesian": "tentu",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "疋"
+      ]
+    },
+    "宝": {
+      "pinyin": "bǎo",
+      "indonesian": "harta",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "玉"
+      ]
+    },
+    "客": {
+      "pinyin": "kè",
+      "indonesian": "tamu",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "各"
+      ]
+    },
+    "害": {
+      "pinyin": "hài",
+      "indonesian": "bahaya",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "丰"
+      ]
+    },
+    "容": {
+      "pinyin": "róng",
+      "indonesian": "muat",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "谷"
+      ]
+    },
+    "寒": {
+      "pinyin": "hán",
+      "indonesian": "dingin",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "共"
+      ]
+    },
+    "审": {
+      "pinyin": "shěn",
+      "indonesian": "periksa",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "申"
+      ]
+    },
+    "宫": {
+      "pinyin": "gōng",
+      "indonesian": "istana",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "吕"
+      ]
+    },
+    "宣": {
+      "pinyin": "xuān",
+      "indonesian": "proklamasi",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "亘"
+      ]
+    },
+    "室": {
+      "pinyin": "shì",
+      "indonesian": "ruang",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "至"
+      ]
+    },
+    "宾": {
+      "pinyin": "bīn",
+      "indonesian": "tamu",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "兵"
+      ]
+    },
+    "密": {
+      "pinyin": "mì",
+      "indonesian": "rahasia",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "秘"
+      ]
+    },
+    "宁": {
+      "pinyin": "níng",
+      "indonesian": "tenang",
+      "hsk": 4,
+      "components": [
+        "宀",
+        "丁"
+      ]
+    },
+    "写": {
+      "pinyin": "xiě",
+      "indonesian": "tulis",
+      "hsk": 4,
+      "components": [
+        "冖",
+        "与"
+      ]
+    },
+    "军": {
+      "pinyin": "jūn",
+      "indonesian": "tentara",
+      "hsk": 4,
+      "components": [
+        "冖",
+        "车"
+      ]
+    },
+    "农": {
+      "pinyin": "nóng",
+      "indonesian": "petani",
+      "hsk": 4,
+      "components": []
+    },
+    "冤": {
+      "pinyin": "yuān",
+      "indonesian": "dosa",
+      "hsk": 5,
+      "components": [
+        "冖",
+        "兔"
+      ]
+    },
+    "击": {
+      "pinyin": "jī",
+      "indonesian": "pukul",
+      "hsk": 5,
+      "components": []
+    },
+    "凶": {
+      "pinyin": "xiōng",
+      "indonesian": "sial",
+      "hsk": 5,
+      "components": [
+        "凵",
+        "乩"
+      ]
+    },
+    "凹": {
+      "pinyin": "āo",
+      "indonesian": "cekung",
+      "hsk": 5,
+      "components": []
+    },
+    "凸": {
+      "pinyin": "tū",
+      "indonesian": "cembung",
+      "hsk": 5,
+      "components": []
+    },
+    "函": {
+      "pinyin": "hán",
+      "indonesian": "surat",
+      "hsk": 5,
+      "components": []
+    },
+    "刀": {
+      "pinyin": "dāo",
+      "indonesian": "pisau",
+      "hsk": 5,
+      "components": []
+    },
+    "刃": {
+      "pinyin": "rèn",
+      "indonesian": "pisau",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "丶"
+      ]
+    },
+    "切": {
+      "pinyin": "qiē",
+      "indonesian": "potong",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "七"
+      ]
+    },
+    "分": {
+      "pinyin": "fēn",
+      "indonesian": "bagi",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "八"
+      ]
+    },
+    "初": {
+      "pinyin": "chū",
+      "indonesian": "awal",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "衣"
+      ]
+    },
+    "券": {
+      "pinyin": "quàn",
+      "indonesian": "kupon",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "𥝝"
+      ]
+    },
+    "刹": {
+      "pinyin": "shā",
+      "indonesian": "rem",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "杀"
+      ]
+    },
+    "刺": {
+      "pinyin": "cì",
+      "indonesian": "tusuk",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "束"
+      ]
+    },
+    "刮": {
+      "pinyin": "guā",
+      "indonesian": "kerok",
+      "hsk": 5,
+      "components": [
+        "舌",
+        "刀"
+      ]
+    },
+    "制": {
+      "pinyin": "zhì",
+      "indonesian": "buat",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "制"
+      ]
+    },
+    "剁": {
+      "pinyin": "duò",
+      "indonesian": "potong",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "朵"
+      ]
+    },
+    "剂": {
+      "pinyin": "jì",
+      "indonesian": "dosis",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "齐"
+      ]
+    },
+    "刻": {
+      "pinyin": "kè",
+      "indonesian": "ukir",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "亥"
+      ]
+    },
+    "剃": {
+      "pinyin": "tì",
+      "indonesian": "cukur",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "弟"
+      ]
+    },
+    "削": {
+      "pinyin": "xuē",
+      "indonesian": "ketam",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "肖"
+      ]
+    },
+    "剥": {
+      "pinyin": "bō",
+      "indonesian": "kupas",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "录"
+      ]
+    },
+    "剧": {
+      "pinyin": "jù",
+      "indonesian": "drama",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "居"
+      ]
+    },
+    "剑": {
+      "pinyin": "jiàn",
+      "indonesian": "pedang",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "佥"
+      ]
+    },
+    "劈": {
+      "pinyin": "pī",
+      "indonesian": "belah",
+      "hsk": 5,
+      "components": [
+        "刀",
+        "辟"
+      ]
+    },
+    "力": {
+      "pinyin": "lì",
+      "indonesian": "kekuatan",
+      "hsk": 5,
+      "components": []
+    },
+    "办": {
+      "pinyin": "bàn",
+      "indonesian": "kerjakan",
+      "hsk": 5,
+      "components": [
+        "力",
+        "八"
+      ]
+    },
+    "劝": {
+      "pinyin": "quàn",
+      "indonesian": "劝-saran",
+      "hsk": 5,
+      "components": []
+    },
+    "功": {
+      "pinyin": "gōng",
+      "indonesian": "hasil",
+      "hsk": 5,
+      "components": [
+        "工",
+        "力"
+      ]
+    },
+    "务": {
+      "pinyin": "wù",
+      "indonesian": "pekerjaan",
+      "hsk": 5,
+      "components": [
+        "力",
+        "夨"
+      ]
+    },
+    "劣": {
+      "pinyin": "liè",
+      "indonesian": "buruk",
+      "hsk": 5,
+      "components": [
+        "力",
+        "少"
+      ]
+    },
+    "动": {
+      "pinyin": "dòng",
+      "indonesian": "bergerak",
+      "hsk": 5,
+      "components": [
+        "力",
+        "云"
+      ]
+    },
+    "助": {
+      "pinyin": "zhù",
+      "indonesian": "bantu",
+      "hsk": 5,
+      "components": [
+        "且",
+        "力"
+      ]
+    },
+    "努": {
+      "pinyin": "nǔ",
+      "indonesian": "berusaha",
+      "hsk": 5,
+      "components": [
+        "力",
+        "奴"
+      ]
+    },
+    "劫": {
+      "pinyin": "jié",
+      "indonesian": "rampok",
+      "hsk": 5,
+      "components": [
+        "力",
+        "去"
+      ]
+    },
+    "励": {
+      "pinyin": "lì",
+      "indonesian": "mendorong",
+      "hsk": 5,
+      "components": [
+        "力",
+        "厉"
+      ]
+    },
+    "劲": {
+      "pinyin": "jìn",
+      "indonesian": "kekuatan",
+      "hsk": 5,
+      "components": [
+        "力",
+        "圣"
+      ]
+    },
+    "劳": {
+      "pinyin": "láo",
+      "indonesian": "kerja",
+      "hsk": 5,
+      "components": [
+        "力",
+        "艹"
+      ]
+    },
+    "势": {
+      "pinyin": "shì",
+      "indonesian": "situasi",
+      "hsk": 5,
+      "components": [
+        "力",
+        "执"
+      ]
+    },
+    "勃": {
+      "pinyin": "bó",
+      "indonesian": "giat",
+      "hsk": 5,
+      "components": [
+        "力",
+        "孛"
+      ]
+    },
+    "勇": {
+      "pinyin": "yǒng",
+      "indonesian": "berani",
+      "hsk": 5,
+      "components": [
+        "力",
+        "甬"
+      ]
+    },
+    "勉": {
+      "pinyin": "miǎn",
+      "indonesian": "mendorong",
+      "hsk": 5,
+      "components": [
+        "力",
+        "免"
+      ]
+    },
+    "勒": {
+      "pinyin": "lè",
+      "indonesian": "kekang",
+      "hsk": 5,
+      "components": [
+        "力",
+        "革"
+      ]
+    },
+    "勤": {
+      "pinyin": "qín",
+      "indonesian": "rajin",
+      "hsk": 5,
+      "components": [
+        "力",
+        "堇"
+      ]
+    },
+    "又": {
+      "pinyin": "yòu",
+      "indonesian": "lagi",
+      "hsk": 5,
+      "components": []
+    },
+    "叉": {
+      "pinyin": "chā",
+      "indonesian": "garpu",
+      "hsk": 5,
+      "components": [
+        "又",
+        "丿"
+      ]
+    },
+    "及": {
+      "pinyin": "jí",
+      "indonesian": "sampai",
+      "hsk": 5,
+      "components": []
+    },
+    "友": {
+      "pinyin": "yǒu",
+      "indonesian": "teman",
+      "hsk": 5,
+      "components": [
+        "十",
+        "又"
+      ]
+    },
+    "反": {
+      "pinyin": "fǎn",
+      "indonesian": "balik",
+      "hsk": 5,
+      "components": [
+        "又",
+        "厂"
+      ]
+    },
+    "双": {
+      "pinyin": "shuāng",
+      "indonesian": "dua",
+      "hsk": 5,
+      "components": [
+        "又",
+        "又"
+      ]
+    },
+    "发": {
+      "pinyin": "fā",
+      "indonesian": "keluar",
+      "hsk": 5,
+      "components": [
+        "癶",
+        "又"
+      ]
+    },
+    "叔": {
+      "pinyin": "shū",
+      "indonesian": "paman",
+      "hsk": 5,
+      "components": [
+        "小",
+        "又"
+      ]
+    },
+    "取": {
+      "pinyin": "qǔ",
+      "indonesian": "ambil",
+      "hsk": 5,
+      "components": [
+        "耳",
+        "又"
+      ]
+    },
+    "变": {
+      "pinyin": "biàn",
+      "indonesian": "ubah",
+      "hsk": 5,
+      "components": [
+        "亦",
+        "夂"
+      ]
+    },
+    "叙": {
+      "pinyin": "xù",
+      "indonesian": "ceritakan",
+      "hsk": 5,
+      "components": [
+        "余",
+        "又"
+      ]
+    },
+    "叛": {
+      "pinyin": "pàn",
+      "indonesian": "murtad",
+      "hsk": 5,
+      "components": [
+        "半",
+        "又"
+      ]
+    },
+    "段": {
+      "pinyin": "duàn",
+      "indonesian": "bagian",
+      "hsk": 5,
+      "components": []
+    },
+    "殷": {
+      "pinyin": "yīn",
+      "indonesian": "banyak",
+      "hsk": 5,
+      "components": [
+        "月",
+        "殳"
+      ]
+    },
+    "殳": {
+      "pinyin": "shū",
+      "indonesian": "senjata",
+      "hsk": 5,
+      "components": []
+    },
+    "役": {
+      "pinyin": "yì",
+      "indonesian": "perang",
+      "hsk": 5,
+      "components": [
+        "彳",
+        "殳"
+      ]
+    },
+    "般": {
+      "pinyin": "bān",
+      "indonesian": "umum",
+      "hsk": 5,
+      "components": [
+        "舟",
+        "殳"
+      ]
+    },
+    "投": {
+      "pinyin": "tóu",
+      "indonesian": "lempar",
+      "hsk": 5,
+      "components": [
+        "扌",
+        "殳"
+      ]
+    },
+    "设": {
+      "pinyin": "shè",
+      "indonesian": "atur",
+      "hsk": 5,
+      "components": [
+        "讠",
+        "殳"
+      ]
+    },
+    "殻": {
+      "pinyin": "ké",
+      "indonesian": "kulit",
+      "hsk": 5,
+      "components": [
+        "壳"
+      ]
+    },
+    "教": {
+      "pinyin": "jiào",
+      "indonesian": "ajar",
+      "hsk": 5,
+      "components": [
+        "孝",
+        "攵"
+      ]
+    },
+    "救": {
+      "pinyin": "jiù",
+      "indonesian": "selamatkan",
+      "hsk": 5,
+      "components": [
+        "求",
+        "攵"
+      ]
+    },
+    "败": {
+      "pinyin": "bài",
+      "indonesian": "kalah",
+      "hsk": 5,
+      "components": [
+        "贝",
+        "攵"
+      ]
+    },
+    "敏": {
+      "pinyin": "mǐn",
+      "indonesian": "cekat",
+      "hsk": 5,
+      "components": [
+        "每",
+        "攵"
+      ]
+    },
+    "敢": {
+      "pinyin": "gǎn",
+      "indonesian": "berani",
+      "hsk": 5,
+      "components": [
+        "耳",
+        "夂"
+      ]
+    },
+    "散": {
+      "pinyin": "sàn",
+      "indonesian": "bubarkan",
+      "hsk": 5,
+      "components": [
+        "月",
+        "攵"
+      ]
+    },
+    "敬": {
+      "pinyin": "jìng",
+      "indonesian": "hormati",
+      "hsk": 5,
+      "components": [
+        "苟",
+        "攵"
+      ]
+    },
+    "数": {
+      "pinyin": "shǔ",
+      "indonesian": "hitung",
+      "hsk": 5,
+      "components": [
+        "娄",
+        "攵"
+      ]
+    },
+    "整": {
+      "pinyin": "zhěng",
+      "indonesian": "rapi",
+      "hsk": 5,
+      "components": [
+        "束",
+        "攵"
+      ]
+    },
+    "收": {
+      "pinyin": "shōu",
+      "indonesian": "terima",
+      "hsk": 5,
+      "components": [
+        "丩",
+        "攴"
+      ]
+    },
+    "改": {
+      "pinyin": "gǎi",
+      "indonesian": "ubah",
+      "hsk": 5,
+      "components": [
+        "己",
+        "攵"
+      ]
+    },
+    "攻": {
+      "pinyin": "gōng",
+      "indonesian": "serang",
+      "hsk": 5,
+      "components": [
+        "工",
+        "攵"
+      ]
+    },
+    "放": {
+      "pinyin": "fàng",
+      "indonesian": "letakkan",
+      "hsk": 5,
+      "components": [
+        "方",
+        "攵"
+      ]
+    },
+    "故": {
+      "pinyin": "gù",
+      "indonesian": "sebab",
+      "hsk": 5,
+      "components": [
+        "古",
+        "攵"
+      ]
+    },
+    "斗": {
+      "pinyin": "dòu",
+      "indonesian": "pertengkaran",
+      "hsk": 5,
+      "components": []
+    },
+    "料": {
+      "pinyin": "liào",
+      "indonesian": "bahan",
+      "hsk": 5,
+      "components": [
+        "米",
+        "斗"
+      ]
+    },
+    "斜": {
+      "pinyin": "xié",
+      "indonesian": "miring",
+      "hsk": 5,
+      "components": [
+        "余",
+        "斗"
+      ]
+    },
+    "斤": {
+      "pinyin": "jīn",
+      "indonesian": "muatan",
+      "hsk": 5,
+      "components": []
+    },
+    "斥": {
+      "pinyin": "chì",
+      "indonesian": "tolak",
+      "hsk": 5,
+      "components": [
+        "斤",
+        "丶"
+      ]
+    },
+    "斧": {
+      "pinyin": "fǔ",
+      "indonesian": "kapak",
+      "hsk": 5,
+      "components": [
+        "父",
+        "斤"
+      ]
+    },
+    "斩": {
+      "pinyin": "zhǎn",
+      "indonesian": "tebas",
+      "hsk": 5,
+      "components": [
+        "车",
+        "斤"
+      ]
+    },
+    "所": {
+      "pinyin": "suǒ",
+      "indonesian": "tempat",
+      "hsk": 5,
+      "components": [
+        "户",
+        "斤"
+      ]
+    },
+    "断": {
+      "pinyin": "duàn",
+      "indonesian": "putus",
+      "hsk": 5,
+      "components": [
+        "米",
+        "斤"
+      ]
+    },
+    "斯": {
+      "pinyin": "sī",
+      "indonesian": "ini",
+      "hsk": 5,
+      "components": [
+        "其",
+        "斤"
+      ]
+    },
+    "房": {
+      "pinyin": "fáng",
+      "indonesian": "kamar",
+      "hsk": 5,
+      "components": [
+        "户",
+        "方"
+      ]
+    },
+    "防": {
+      "pinyin": "fáng",
+      "indonesian": "perlindungan",
+      "hsk": 5,
+      "components": [
+        "阝",
+        "方"
+      ]
+    },
+    "芳": {
+      "pinyin": "fāng",
+      "indonesian": "wangi",
+      "hsk": 5,
+      "components": [
+        "艹",
+        "方"
+      ]
+    },
+    "访": {
+      "pinyin": "fǎng",
+      "indonesian": "kunjungi",
+      "hsk": 5,
+      "components": [
+        "讠",
+        "方"
+      ]
+    },
+    "仿": {
+      "pinyin": "fǎng",
+      "indonesian": "tiru",
+      "hsk": 5,
+      "components": [
+        "亻",
+        "方"
+      ]
+    },
+    "纺": {
+      "pinyin": "fǎng",
+      "indonesian": "tenun",
+      "hsk": 5,
+      "components": [
+        "纟",
+        "方"
+      ]
+    },
+    "坊": {
+      "pinyin": "fāng",
+      "indonesian": "daerah",
+      "hsk": 5,
+      "components": [
+        "土",
+        "方"
+      ]
+    },
+    "旁": {
+      "pinyin": "páng",
+      "indonesian": "samping",
+      "hsk": 5,
+      "components": [
+        "立",
+        "冖"
+      ]
+    },
+    "旅": {
+      "pinyin": "lǚ",
+      "indonesian": "perjalanan",
+      "hsk": 5,
+      "components": [
+        "方",
+        "攸"
+      ]
+    },
+    "旗": {
+      "pinyin": "qí",
+      "indonesian": "bendera",
+      "hsk": 5,
+      "components": [
+        "方",
+        "其"
+      ]
+    },
+    "施": {
+      "pinyin": "shī",
+      "indonesian": "terapkan",
+      "hsk": 5,
+      "components": [
+        "方",
+        "也"
+      ]
+    },
+    "无": {
+      "pinyin": "wú",
+      "indonesian": "tanpa",
+      "hsk": 5,
+      "components": []
+    },
+    "既": {
+      "pinyin": "jì",
+      "indonesian": "karena",
+      "hsk": 5,
+      "components": [
+        "无",
+        "艮"
+      ]
+    },
+    "日": {
+      "pinyin": "rì",
+      "indonesian": "hari",
+      "hsk": 5,
+      "components": []
+    },
+    "旦": {
+      "pinyin": "dàn",
+      "indonesian": "fajar",
+      "hsk": 5,
+      "components": [
+        "日",
+        "一"
+      ]
+    },
+    "旨": {
+      "pinyin": "zhǐ",
+      "indonesian": "tujuan",
+      "hsk": 5,
+      "components": [
+        "日",
+        "七"
+      ]
+    },
+    "早": {
+      "pinyin": "zǎo",
+      "indonesian": "pagi",
+      "hsk": 5,
+      "components": [
+        "日",
+        "十"
+      ]
+    },
+    "旬": {
+      "pinyin": "xún",
+      "indonesian": "dasawarsa",
+      "hsk": 5,
+      "components": [
+        "日",
+        "勹"
+      ]
+    },
+    "旭": {
+      "pinyin": "xù",
+      "indonesian": "matahari",
+      "hsk": 5,
+      "components": [
+        "日",
+        "九"
+      ]
+    },
+    "旱": {
+      "pinyin": "hàn",
+      "indonesian": "kekeringan",
+      "hsk": 5,
+      "components": [
+        "日",
+        "干"
+      ]
+    },
+    "旷": {
+      "pinyin": "kuàng",
+      "indonesian": "lapang",
+      "hsk": 5,
+      "components": [
+        "日",
+        "广"
+      ]
+    },
+    "旺": {
+      "pinyin": "wàng",
+      "indonesian": "subur",
+      "hsk": 5,
+      "components": [
+        "日",
+        "王"
+      ]
+    },
+    "昔": {
+      "pinyin": "xī",
+      "indonesian": "dulu",
+      "hsk": 5,
+      "components": [
+        "日",
+        "艹"
+      ]
+    },
+    "昊": {
+      "pinyin": "hào",
+      "indonesian": "langit",
+      "hsk": 5,
+      "components": [
+        "日",
+        "天"
+      ]
+    },
+    "昌": {
+      "pinyin": "chāng",
+      "indonesian": "makmur",
+      "hsk": 5,
+      "components": []
+    },
+    "明": {
+      "pinyin": "míng",
+      "indonesian": "terang",
+      "hsk": 5,
+      "components": [
+        "日",
+        "月"
+      ]
+    },
+    "昏": {
+      "pinyin": "hūn",
+      "indonesian": "senja",
+      "hsk": 5,
+      "components": [
+        "日",
+        "氏"
+      ]
+    },
+    "易": {
+      "pinyin": "yì",
+      "indonesian": "mudah",
+      "hsk": 5,
+      "components": [
+        "日",
+        "勿"
+      ]
+    },
+    "服": {
+      "pinyin": "fú",
+      "indonesian": "pakai",
+      "hsk": 5,
+      "components": [
+        "月",
+        "卩"
+      ]
+    },
+    "朋": {
+      "pinyin": "péng",
+      "indonesian": "teman",
+      "hsk": 5,
+      "components": []
+    },
+    "望": {
+      "pinyin": "wàng",
+      "indonesian": "harapan",
+      "hsk": 5,
+      "components": [
+        "王",
+        "月"
+      ]
+    },
+    "朗": {
+      "pinyin": "lǎng",
+      "indonesian": "cerah",
+      "hsk": 5,
+      "components": [
+        "月",
+        "郎"
+      ]
+    },
+    "朝": {
+      "pinyin": "cháo",
+      "indonesian": "pagi",
+      "hsk": 5,
+      "components": [
+        "月",
+        "卓"
+      ]
+    },
+    "期": {
+      "pinyin": "qī",
+      "indonesian": "periode",
+      "hsk": 5,
+      "components": [
+        "其",
+        "月"
+      ]
+    },
+    "木": {
+      "pinyin": "mù",
+      "indonesian": "kayu",
+      "hsk": 5,
+      "components": []
+    },
+    "术": {
+      "pinyin": "shù",
+      "indonesian": "seni",
+      "hsk": 5,
+      "components": [
+        "木",
+        "丶"
+      ]
+    },
+    "札": {
+      "pinyin": "zhá",
+      "indonesian": "surat",
+      "hsk": 5,
+      "components": [
+        "木",
+        "乚"
+      ]
+    },
+    "朽": {
+      "pinyin": "xiǔ",
+      "indonesian": "lapuk",
+      "hsk": 5,
+      "components": [
+        "木",
+        "一"
+      ]
+    },
+    "朴": {
+      "pinyin": "pǔ",
+      "indonesian": "sederhana",
+      "hsk": 5,
+      "components": [
+        "木",
+        "卜"
+      ]
+    },
+    "权": {
+      "pinyin": "quán",
+      "indonesian": "kekuasaan",
+      "hsk": 5,
+      "components": [
+        "木",
+        "又"
+      ]
+    },
+    "过": {
+      "pinyin": "guò",
+      "indonesian": "lewat",
+      "hsk": 5,
+      "components": [
+        "辶",
+        "咼"
+      ]
+    },
+    "亘": {
+      "pinyin": "gèn",
+      "indonesian": "mencapai",
+      "hsk": 5,
+      "components": [
+        "一",
+        "日"
+      ]
+    },
+    "吏": {
+      "pinyin": "lì",
+      "indonesian": "pejabat",
+      "hsk": 5,
+      "components": [
+        "口",
+        "又"
+      ]
+    },
+    "协": {
+      "pinyin": "xié",
+      "indonesian": "koordinasi",
+      "hsk": 5,
+      "components": [
+        "十",
+        "办"
+      ]
+    },
+    "西": {
+      "pinyin": "xī",
+      "indonesian": "barat",
+      "hsk": 5,
+      "components": []
+    },
+    "要": {
+      "pinyin": "yào",
+      "indonesian": "mau",
+      "hsk": 5,
+      "components": [
+        "西",
+        "女"
+      ]
+    },
+    "覆": {
+      "pinyin": "fù",
+      "indonesian": "tutup",
+      "hsk": 5,
+      "components": [
+        "西",
+        "复"
+      ]
+    },
+    "观": {
+      "pinyin": "guān",
+      "indonesian": "amati",
+      "hsk": 5,
+      "components": [
+        "又",
+        "见"
+      ]
+    },
+    "规": {
+      "pinyin": "guī",
+      "indonesian": "aturan",
+      "hsk": 5,
+      "components": [
+        "夫",
+        "见"
+      ]
+    },
+    "视": {
+      "pinyin": "shì",
+      "indonesian": "lihat",
+      "hsk": 5,
+      "components": [
+        "礻",
+        "见"
+      ]
+    },
+    "览": {
+      "pinyin": "lǎn",
+      "indonesian": "teropong",
+      "hsk": 5,
+      "components": [
+        "⺁",
+        "见"
+      ]
+    },
+    "亲": {
+      "pinyin": "qīn",
+      "indonesian": "kerabat",
+      "hsk": 5,
+      "components": [
+        "立",
+        "木"
+      ]
+    },
+    "童": {
+      "pinyin": "tóng",
+      "indonesian": "anak",
+      "hsk": 5,
+      "components": [
+        "立",
+        "里"
+      ]
+    },
+    "音": {
+      "pinyin": "yīn",
+      "indonesian": "suara",
+      "hsk": 5,
+      "components": [
+        "立",
+        "日"
+      ]
+    },
+    "竟": {
+      "pinyin": "jìng",
+      "indonesian": "selesai",
+      "hsk": 5,
+      "components": [
+        "立",
+        "竞"
+      ]
+    },
+    "章": {
+      "pinyin": "zhāng",
+      "indonesian": "babak",
+      "hsk": 5,
+      "components": [
+        "立",
+        "十"
+      ]
+    },
+    "产": {
+      "pinyin": "chǎn",
+      "indonesian": "produksi",
+      "hsk": 5,
+      "components": [
+        "立",
+        "生"
+      ]
+    },
+    "敌": {
+      "pinyin": "dí",
+      "indonesian": "musuh",
+      "hsk": 5,
+      "components": [
+        "舌",
+        "攴"
+      ]
+    },
+    "适": {
+      "pinyin": "shì",
+      "indonesian": "sesuai",
+      "hsk": 5,
+      "components": [
+        "辶",
+        "舌"
+      ]
+    },
+    "甜": {
+      "pinyin": "tián",
+      "indonesian": "manis",
+      "hsk": 5,
+      "components": [
+        "舌",
+        "甘"
+      ]
+    },
+    "舒": {
+      "pinyin": "shū",
+      "indonesian": "nyaman",
+      "hsk": 5,
+      "components": [
+        "舍",
+        "予"
+      ]
+    },
+    "舍": {
+      "pinyin": "shè",
+      "indonesian": "pondok",
+      "hsk": 5,
+      "components": [
+        "人",
+        "舌"
+      ]
+    },
+    "辞": {
+      "pinyin": "cí",
+      "indonesian": "kata",
+      "hsk": 5,
+      "components": [
+        "辛",
+        "舌"
+      ]
+    },
+    "页": {
+      "pinyin": "yè",
+      "indonesian": "halaman",
+      "hsk": 5,
+      "components": []
+    },
+    "顶": {
+      "pinyin": "dǐng",
+      "indonesian": "puncak",
+      "hsk": 5,
+      "components": [
+        "丁",
+        "页"
+      ]
+    },
+    "顷": {
+      "pinyin": "qǐng",
+      "indonesian": "sedikit",
+      "hsk": 5,
+      "components": [
+        "匕",
+        "页"
+      ]
+    },
+    "项": {
+      "pinyin": "xiàng",
+      "indonesian": "proyek",
+      "hsk": 5,
+      "components": [
+        "工",
+        "页"
+      ]
+    },
+    "顺": {
+      "pinyin": "shùn",
+      "indonesian": "lancar",
+      "hsk": 5,
+      "components": [
+        "川",
+        "页"
+      ]
+    },
+    "须": {
+      "pinyin": "xū",
+      "indonesian": "harus",
+      "hsk": 5,
+      "components": [
+        "彡",
+        "页"
+      ]
+    },
+    "顽": {
+      "pinyin": "wán",
+      "indonesian": "keras kepala",
+      "hsk": 5,
+      "components": [
+        "元",
+        "页"
+      ]
+    },
+    "顾": {
+      "pinyin": "gù",
+      "indonesian": "perhatikan",
+      "hsk": 5,
+      "components": [
+        "厄",
+        "页"
+      ]
+    },
+    "顿": {
+      "pinyin": "dùn",
+      "indonesian": "berhenti",
+      "hsk": 5,
+      "components": [
+        "屯",
+        "页"
+      ]
+    },
+    "预": {
+      "pinyin": "yù",
+      "indonesian": "awal",
+      "hsk": 5,
+      "components": [
+        "予",
+        "页"
+      ]
+    },
+    "领": {
+      "pinyin": "lǐng",
+      "indonesian": "pimpin",
+      "hsk": 5,
+      "components": [
+        "令",
+        "页"
+      ]
+    },
+    "颈": {
+      "pinyin": "jǐng",
+      "indonesian": "leher",
+      "hsk": 5,
+      "components": [
+        "至",
+        "页"
+      ]
+    },
+    "题": {
+      "pinyin": "tí",
+      "indonesian": "topik",
+      "hsk": 5,
+      "components": [
+        "是",
+        "页"
+      ]
+    },
+    "颜": {
+      "pinyin": "yán",
+      "indonesian": "wajah",
+      "hsk": 5,
+      "components": [
+        "彦",
+        "页"
+      ]
+    },
+    "额": {
+      "pinyin": "é",
+      "indonesian": "dahi",
+      "hsk": 5,
+      "components": [
+        "客",
+        "页"
+      ]
+    },
+    "风": {
+      "pinyin": "fēng",
+      "indonesian": "angin",
+      "hsk": 5,
+      "components": []
+    },
+    "飞": {
+      "pinyin": "fēi",
+      "indonesian": "terbang",
+      "hsk": 5,
+      "components": []
+    },
+    "飑": {
+      "pinyin": "biāo",
+      "indonesian": "badai",
+      "hsk": 5,
+      "components": [
+        "风",
+        "犬"
+      ]
+    },
+    "飓": {
+      "pinyin": "jù",
+      "indonesian": "topan",
+      "hsk": 5,
+      "components": [
+        "风",
+        "具"
+      ]
+    },
+    "飘": {
+      "pinyin": "piāo",
+      "indonesian": "melayang",
+      "hsk": 5,
+      "components": [
+        "风",
+        "票"
+      ]
+    },
+    "飨": {
+      "pinyin": "xiǎng",
+      "indonesian": "jamuan",
+      "hsk": 5,
+      "components": [
+        "丰",
+        "食"
+      ]
+    },
+    "饥": {
+      "pinyin": "jī",
+      "indonesian": "lapar",
+      "hsk": 5,
+      "components": [
+        "饣",
+        "几"
+      ]
+    },
+    "饭": {
+      "pinyin": "fàn",
+      "indonesian": "nasi",
+      "hsk": 5,
+      "components": [
+        "饣",
+        "反"
+      ]
+    },
+    "饰": {
+      "pinyin": "shì",
+      "indonesian": "hiasan",
+      "hsk": 5,
+      "components": [
+        "饣",
+        "巾"
+      ]
+    },
+    "饱": {
+      "pinyin": "bǎo",
+      "indonesian": "kenyang",
+      "hsk": 5,
+      "components": [
+        "饣",
+        "包"
+      ]
+    },
+    "饲": {
+      "pinyin": "sì",
+      "indonesian": "pakan",
+      "hsk": 5,
+      "components": [
+        "饣",
+        "司"
+      ]
+    },
+    "饼": {
+      "pinyin": "bǐng",
+      "indonesian": "kue",
+      "hsk": 5,
+      "components": [
+        "饣",
+        "并"
+      ]
+    },
+    "饵": {
+      "pinyin": "ěr",
+      "indonesian": "umpan",
+      "hsk": 5,
+      "components": [
+        "饣",
+        "耳"
+      ]
+    },
+    "饶": {
+      "pinyin": "ráo",
+      "indonesian": "melimpah",
+      "hsk": 5,
+      "components": [
+        "饣",
+        "尧"
+      ]
+    },
+    "饺": {
+      "pinyin": "jiǎo",
+      "indonesian": "pangsit",
+      "hsk": 5,
+      "components": [
+        "饣",
+        "交"
+      ]
+    },
+    "饿": {
+      "pinyin": "è",
+      "indonesian": "lapar",
+      "hsk": 5,
+      "components": [
+        "饣",
+        "我"
+      ]
+    },
+    "馆": {
+      "pinyin": "guǎn",
+      "indonesian": "gedung",
+      "hsk": 5,
+      "components": [
+        "饣",
+        "官"
+      ]
+    },
+    "首": {
+      "pinyin": "shǒu",
+      "indonesian": "kepala",
+      "hsk": 5,
+      "components": []
+    },
+    "香": {
+      "pinyin": "xiāng",
+      "indonesian": "wangi",
+      "hsk": 5,
+      "components": []
+    },
+    "马": {
+      "pinyin": "mǎ",
+      "indonesian": "kuda",
+      "hsk": 5,
+      "components": []
+    },
+    "驮": {
+      "pinyin": "tuó",
+      "indonesian": "bebani",
+      "hsk": 5,
+      "components": [
+        "马",
+        "大"
+      ]
+    },
+    "驯": {
+      "pinyin": "xùn",
+      "indonesian": "jinak",
+      "hsk": 5,
+      "components": [
+        "马",
+        "川"
+      ]
+    },
+    "驰": {
+      "pinyin": "chí",
+      "indonesian": "berlari",
+      "hsk": 5,
+      "components": [
+        "马",
+        "也"
+      ]
+    },
+    "驳": {
+      "pinyin": "bó",
+      "indonesian": "bantah",
+      "hsk": 5,
+      "components": [
+        "马",
+        "爻"
+      ]
+    },
+    "驴": {
+      "pinyin": "lǘ",
+      "indonesian": "keledai",
+      "hsk": 5,
+      "components": [
+        "马",
+        "户"
+      ]
+    },
+    "驶": {
+      "pinyin": "shǐ",
+      "indonesian": "kendarai",
+      "hsk": 5,
+      "components": [
+        "马",
+        "史"
+      ]
+    },
+    "驹": {
+      "pinyin": "jū",
+      "indonesian": "kuda muda",
+      "hsk": 5,
+      "components": [
+        "马",
+        "句"
+      ]
+    },
+    "驻": {
+      "pinyin": "zhù",
+      "indonesian": "bertahan",
+      "hsk": 5,
+      "components": [
+        "马",
+        "主"
+      ]
+    },
+    "驼": {
+      "pinyin": "tuó",
+      "indonesian": "unta",
+      "hsk": 5,
+      "components": [
+        "马",
+        "它"
+      ]
+    },
+    "驾": {
+      "pinyin": "jià",
+      "indonesian": "kendarai",
+      "hsk": 5,
+      "components": [
+        "马",
+        "加"
+      ]
+    },
+    "骁": {
+      "pinyin": "xiāo",
+      "indonesian": "gagah",
+      "hsk": 5,
+      "components": [
+        "马",
+        "尧"
+      ]
+    },
+    "验": {
+      "pinyin": "yàn",
+      "indonesian": "periksa",
+      "hsk": 5,
+      "components": [
+        "马",
+        "佥"
+      ]
+    },
+    "骏": {
+      "pinyin": "jùn",
+      "indonesian": "kuda bagus",
+      "hsk": 5,
+      "components": [
+        "马",
+        "夋"
+      ]
+    },
+    "骑": {
+      "pinyin": "qí",
+      "indonesian": "berkuda",
+      "hsk": 5,
+      "components": [
+        "马",
+        "奇"
+      ]
+    },
+    "骨": {
+      "pinyin": "gǔ",
+      "indonesian": "tulang",
+      "hsk": 5,
+      "components": []
+    },
+    "髟": {
+      "pinyin": "biāo",
+      "indonesian": "rambut panjang",
+      "hsk": 5,
+      "components": [
+        "髟"
+      ]
+    },
+    "门": {
+      "pinyin": "mén",
+      "indonesian": "pintu",
+      "hsk": 5,
+      "components": []
+    },
+    "闪": {
+      "pinyin": "shǎn",
+      "indonesian": "kilat",
+      "hsk": 5,
+      "components": [
+        "门",
+        "人"
+      ]
+    },
+    "闭": {
+      "pinyin": "bì",
+      "indonesian": "tutup",
+      "hsk": 5,
+      "components": [
+        "门",
+        "才"
+      ]
+    },
+    "问": {
+      "pinyin": "wèn",
+      "indonesian": "tanya",
+      "hsk": 5,
+      "components": [
+        "门",
+        "口"
+      ]
+    },
+    "闯": {
+      "pinyin": "chuǎng",
+      "indonesian": "menerobos",
+      "hsk": 5,
+      "components": [
+        "门",
+        "马"
+      ]
+    },
+    "闲": {
+      "pinyin": "xián",
+      "indonesian": "senggang",
+      "hsk": 5,
+      "components": [
+        "门",
+        "木"
+      ]
+    },
+    "间": {
+      "pinyin": "jiān",
+      "indonesian": "ruang",
+      "hsk": 5,
+      "components": [
+        "门",
+        "日"
+      ]
+    },
+    "闷": {
+      "pinyin": "mèn",
+      "indonesian": "penat",
+      "hsk": 5,
+      "components": [
+        "门",
+        "心"
+      ]
+    },
+    "闸": {
+      "pinyin": "zhá",
+      "indonesian": "gerbang",
+      "hsk": 5,
+      "components": [
+        "门",
+        "甲"
+      ]
+    },
+    "闹": {
+      "pinyin": "nào",
+      "indonesian": "ramai",
+      "hsk": 5,
+      "components": [
+        "门",
+        "市"
+      ]
+    },
+    "闻": {
+      "pinyin": "wén",
+      "indonesian": "dengar",
+      "hsk": 5,
+      "components": [
+        "门",
+        "耳"
+      ]
+    },
+    "闰": {
+      "pinyin": "rùn",
+      "indonesian": "kabisat",
+      "hsk": 5,
+      "components": [
+        "门",
+        "王"
+      ]
+    },
+    "阔": {
+      "pinyin": "kuò",
+      "indonesian": "lebar",
+      "hsk": 5,
+      "components": [
+        "门",
+        "活"
+      ]
+    },
+    "阖": {
+      "pinyin": "hé",
+      "indonesian": "tutup",
+      "hsk": 5,
+      "components": [
+        "门",
+        "盍"
+      ]
+    },
+    "阚": {
+      "pinyin": "kàn",
+      "indonesian": "nama keluarga",
+      "hsk": 5,
+      "components": [
+        "门",
+        "敢"
+      ]
+    },
+    "队": {
+      "pinyin": "duì",
+      "indonesian": "tim",
+      "hsk": 5,
+      "components": [
+        "阝",
+        "人"
+      ]
+    },
+    "阶": {
+      "pinyin": "jiē",
+      "indonesian": "tingkat",
+      "hsk": 5,
+      "components": [
+        "阝",
+        "介"
+      ]
+    },
+    "阱": {
+      "pinyin": "jǐng",
+      "indonesian": "jebakan",
+      "hsk": 5,
+      "components": [
+        "阝",
+        "井"
+      ]
+    },
+    "阳": {
+      "pinyin": "yáng",
+      "indonesian": "positif",
+      "hsk": 5,
+      "components": [
+        "阝",
+        "日"
+      ]
+    },
+    "阴": {
+      "pinyin": "yīn",
+      "indonesian": "negatif",
+      "hsk": 5,
+      "components": [
+        "阝",
+        "月"
+      ]
+    },
+    "阵": {
+      "pinyin": "zhèn",
+      "indonesian": "pertempuran",
+      "hsk": 5,
+      "components": [
+        "阝",
+        "车"
+      ]
+    }
   }
 }
