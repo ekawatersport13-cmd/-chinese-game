@@ -7,6 +7,16 @@
     <meta name="theme-color" content="#1e1b4b" />
     <meta name="description" content="汉字拼字 - HSK词汇学习游戏" />
     <title>汉字拼字 | HSK学习</title>
+    <style>
+      /* 联机模式响应式缩放 */
+      @media (max-width: 500px) {
+        .game-area-wrapper {
+          transform: scale(calc(100vw / 480));
+          transform-origin: top center;
+          margin-bottom: calc(-520px * (1 - 100vw / 480)) !important;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

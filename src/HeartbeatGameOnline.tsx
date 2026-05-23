@@ -886,22 +886,6 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
   const seconds = timeLeft % 60;
   const timeStr = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
-  // 响应式缩放
-  const [scale, setScale] = useState(1);
-  useEffect(() => {
-    const updateScale = () => {
-      const availableWidth = window.innerWidth - 16; // 减去padding
-      if (availableWidth < GAME_W) {
-        setScale(availableWidth / GAME_W);
-      } else {
-        setScale(1);
-      }
-    };
-    updateScale();
-    window.addEventListener('resize', updateScale);
-    return () => window.removeEventListener('resize', updateScale);
-  }, []);
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-indigo-950/60 to-gray-900 flex flex-col items-center justify-center p-2">
       {/* HUD */}
@@ -944,9 +928,8 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
       </div>
 
       {/* Game Area - 响应式缩放 */}
-      <div className="relative overflow-hidden rounded-2xl border-2 border-indigo-900/60 bg-gray-900/80 shadow-2xl"
-        style={{ width: GAME_W * scale, height: GAME_H * scale }}>
-        <div style={{ transform: `scale(${scale})`, transformOrigin: 'top left', width: GAME_W, height: GAME_H }}>
+      <div className="relative overflow-hidden rounded-2xl border-2 border-indigo-900/60 bg-gray-900/80 shadow-2xl game-area-wrapper"
+        style={{ width: GAME_W, height: GAME_H }}>
 
         {/* Lane guides */}
         {Array.from({ length: NUM_LANES }).map((_, i) => (
@@ -1010,7 +993,6 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
           <div className="text-xl">👥</div>
           <div className="text-[9px] font-bold text-cyan-100">观众</div>
         </motion.div>
-        </div>{/* end scale wrapper */}
       </div>
 
       {/* Input Area */}
