@@ -428,15 +428,19 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
 
   // ==================== 房间操作 ====================
   const createRoom = async (level: number, duration: number) => {
+    console.log('[createRoom] 开始创建房间', { level, duration });
     setError('');
 
-    // 安全检查：频率限制（10秒内最多创建1个房间）
-    if (!checkRateLimit('createRoom', 1, 10000)) {
+    // 安全检查：频率限制（10秒内最多创建3个房间）
+    const rateOk = checkRateLimit('createRoom', 3, 10000);
+    console.log('[createRoom] 频率检查:', rateOk);
+    if (!rateOk) {
       setError('创建房间太频繁，请稍后再试');
       return;
     }
 
     const newRoomId = generateRoomId();
+    console.log('[createRoom] 生成房间号:', newRoomId);
     const deviceId = getDeviceId();
     const deviceInfo = getDeviceInfo();
     const roomData = {
@@ -464,16 +468,21 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
     };
 
     try {
-      await set(ref(db, `rooms/${newRoomId}`), roomData);
+      console.log('[createRoom] 写入 Firebase...');
+      await Promise.race([
+        set(ref(db, `rooms/${newRoomId}`), roomData),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('连接超时，请检查网络')), 10000))
+      ]);
+      console.log('[createRoom] Firebase 写入成功');
     } catch (err: any) {
-      console.error('创建房间失败:', err);
-      setError(`创建房间失败: ${err.message || '网络错误，请重试'}`);
+      console.error('[createRoom] Firebase 写入失败:', err);
+      setError(`创建房间失败: ${err.message || '网络错误，请检查 Firebase 配置'}`);
       return;
     }
 
     roomRef.current = ref(db, `rooms/${newRoomId}`);
 
-    // 记录玩家到 /players/{deviceId}
+    // 记录玩家到 /players/{deviceId}（非阻塞）
     set(ref(db, `players/${deviceId}`), {
       deviceId,
       lastActive: Date.now(),
@@ -485,19 +494,22 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
       gamesPlayed: 1,
     }).catch(err => console.warn('写入玩家记录失败:', err));
 
-    // 记录这次访问到 /visits/{deviceId}/{timestamp}
+    // 记录这次访问到 /visits/{deviceId}/{timestamp}（非阻塞）
     set(ref(db, `visits/${deviceId}/${Date.now()}`), {
       roomId: newRoomId,
       role: 'host',
       timestamp: serverTimestamp(),
     }).catch(err => console.warn('写入访问记录失败:', err));
 
+    // 监听观众加入
     onValue(ref(db, `rooms/${newRoomId}/hasGuest`), (snap) => {
       setHasGuest(snap.val() === true);
     });
 
+    // 断线清理
     onDisconnect(ref(db, `rooms/${newRoomId}`)).remove();
 
+    console.log('[createRoom] 设置状态为 waiting');
     setRoomId(newRoomId);
     setRole('host');
     setDifficulty(level);
@@ -508,8 +520,8 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
   const joinRoom = async () => {
     setError('');
 
-    // 安全检查：频率限制（10秒内最多加入1个房间）
-    if (!checkRateLimit('joinRoom', 1, 10000)) {
+    // 安全检查：频率限制（10秒内最多加入3个房间）
+    if (!checkRateLimit('joinRoom', 3, 10000)) {
       setError('操作太频繁，请稍后再试');
       return;
     }
@@ -825,7 +837,13 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
               </div>
 
               <motion.button whileTap={{ scale: 0.95 }}
-                onClick={() => createRoom(difficulty, gameDuration)}
+                onClick={() => {
+                  console.log('[按钮点击] 创建房间', { difficulty, gameDuration });
+                  createRoom(difficulty, gameDuration).catch(err => {
+                    console.error('[按钮点击] 创建房间异常:', err);
+                    setError('创建房间出错: ' + (err.message || '未知错误'));
+                  });
+                }}
                 className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-bold shadow-lg mb-3">
                 🎮 创建房间
               </motion.button>
