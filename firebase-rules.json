@@ -7,34 +7,39 @@
     },
 
     "players": {
-      ".read": "auth != null",
-      ".write": "auth != null",
+      ".read": true,
+      ".write": true,
       "$deviceId": {
-        ".read": true,
-        ".write": "auth == null && $deviceId.length <= 20",
-        ".validate": "newData.hasChildren(['lastSeen', 'platform', 'isMobile'])"
+        ".validate": "newData.hasChildren(['lastActiveStr', 'platform'])",
+        "totalGames": { ".validate": "newData.isNumber()" },
+        "totalPlayTimeMinutes": { ".validate": "newData.isNumber()" },
+        "totalScore": { ".validate": "newData.isNumber()" },
+        "lastScore": { ".validate": "newData.isNumber()" },
+        "lastGameMode": { ".validate": "newData.isString()" },
+        "lastActive": {},
+        "lastActiveStr": {},
+        "lastVisitAt": {},
+        "lastVisitAtStr": {},
+        "platform": {},
+        "language": {},
+        "isMobile": {},
+        "lastVisitPlatform": {}
       }
     },
 
     "visits": {
-      ".read": "auth != null",
-      ".write": "auth != null",
+      ".read": true,
+      ".write": true,
       "$deviceId": {
-        ".read": "auth != null",
-        ".write": "auth == null && $deviceId.length <= 20",
-        ".validate": "newData.hasChildren(['timestamp', 'platform', 'isMobile', 'screenWidth', 'screenHeight'])",
-        "$timestamp": {
-          ".validate": "$timestamp.length <= 20 && newData.isNumber() || newData.hasChildren(['timestamp'])"
-        }
+        ".validate": "newData.hasChildren(['lastVisitStr', 'platform'])",
+        "$timestamp": { ".validate": "true" }
       }
     },
 
     "gameSessions": {
-      ".read": "auth != null",
-      ".write": "auth != null",
+      ".read": true,
+      ".write": true,
       "$deviceId": {
-        ".read": "auth != null",
-        ".write": "auth == null && $deviceId.length <= 20",
         "$sessionId": {
           ".validate": "newData.hasChildren(['gameMode', 'startedAt']) || newData.hasChildren(['endedAt'])"
         }

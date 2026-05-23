@@ -18,8 +18,11 @@ function App() {
       const info = getDeviceInfo();
 
       try {
+        const now = Date.now();
+        const dateStr = new Date(now).toISOString(); // e.g. "2026-05-23T05:01:00.000Z"
         await set(ref(db, `visits/${deviceId}`), {
           lastVisit: serverTimestamp(),
+          lastVisitStr: dateStr,
           platform: info.platform,
           language: info.language,
           isMobile: info.isMobile,
@@ -28,10 +31,13 @@ function App() {
 
         await set(ref(db, `players/${deviceId}`), {
           lastActive: serverTimestamp(),
+          lastActiveStr: dateStr,
+          lastVisitAt: serverTimestamp(),
+          lastVisitAtStr: dateStr,
           platform: info.platform,
           language: info.language,
           isMobile: info.isMobile,
-          lastVisitAt: serverTimestamp(),
+          lastVisitPlatform: info.platform,
         });
       } catch (e) {
         console.log('Visit recording failed:', e);

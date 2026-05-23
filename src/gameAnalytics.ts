@@ -1,4 +1,4 @@
-import { ref, push } from 'firebase/database';
+import { ref, push, update, increment } from 'firebase/database';
 import { db } from './firebase';
 import { getDeviceId, getDeviceInfo } from './deviceId';
 import { checkRateLimit } from './security';
@@ -7,6 +7,7 @@ import { checkRateLimit } from './security';
 
 let currentSessionId: string | null = null;
 let gameStartTime: number = 0;
+let gameStartMode: string = '';
 let wordLog: Array<{ word: string; correct: boolean; timestamp: number; pinyin?: string; meaning?: string }> = [];
 
 export function startSession(gameMode: string, extra?: Record<string, any>) {
@@ -15,20 +16,21 @@ export function startSession(gameMode: string, extra?: Record<string, any>) {
 
   currentSessionId = `sess_${Date.now()}`;
   gameStartTime = Date.now();
+  gameStartMode = gameMode;
   wordLog = [];
 
   const sessionId = currentSessionId;
   const deviceId = getDeviceId();
   const info = getDeviceInfo();
 
-  // Write session header
   push(ref(db, `gameSessions/${deviceId}`), {
     sessionId,
-    gameMode,         // 'compose' | 'find' | 'chain' | 'heartbeat' | 'heartbeat-online'
-    role: extra?.role || 'player',  // 'host' | 'guest' | 'player'
+    gameMode,
+    role: extra?.role || 'player',
     difficulty: extra?.difficulty || null,
-    settings: extra?.settings || null,  // e.g. { duration: 60, timed: true }
+    settings: extra?.settings || null,
     startedAt: Date.now(),
+    startedAtStr: new Date().toISOString(),
     platform: info.platform,
     isMobile: info.isMobile,
     screenWidth: info.screenWidth,
@@ -40,17 +42,16 @@ export function startSession(gameMode: string, extra?: Record<string, any>) {
 export function logWord(word: string, correct: boolean, pinyin?: string, meaning?: string) {
   if (!currentSessionId) return;
 
-  // 防刷：每秒最多记录 30 个词（正常人类打字速度上限）
+  // 防刷：每秒最多记录 30 个词
   if (!checkRateLimit('logWord', 30, 1000)) return;
 
   const entry = { word, correct, timestamp: Date.now(), pinyin, meaning };
   wordLog.push(entry);
 
-  // Real-time write each word (fire-and-forget)
   const deviceId = getDeviceId();
   push(ref(db, `gameSessions/${deviceId}/${currentSessionId}/words`), {
     ...entry,
-    elapsed: Date.now() - gameStartTime,  // seconds since game start
+    elapsed: Date.now() - gameStartTime,
   }).catch(() => {});
 }
 
@@ -65,10 +66,12 @@ export function endSession(result: {
 
   const durationMs = Date.now() - gameStartTime;
   const deviceId = getDeviceId();
+  const nowStr = new Date().toISOString();
 
   // Write session summary
   push(ref(db, `gameSessions/${deviceId}/${currentSessionId}/summary`), {
     endedAt: Date.now(),
+    endedAtStr: nowStr,
     durationSeconds: Math.round(durationMs / 1000),
     score: result.score,
     correct: result.correct ?? 0,
@@ -81,8 +84,21 @@ export function endSession(result: {
     ...result.extra,
   }).catch(() => {});
 
+  // Update /players/{deviceId} summary fields
+  const durationMins = Math.round(durationMs / 60000);
+  update(ref(db, `players/${deviceId}`), {
+    lastActive: Date.now(),
+    lastActiveStr: nowStr,
+    lastScore: result.score,
+    lastGameMode: gameStartMode,
+    totalGames: increment(1),
+    totalPlayTimeMinutes: increment(durationMins || 1),
+    totalScore: increment(result.score),
+  }).catch(() => {});
+
   // Reset
   currentSessionId = null;
   gameStartTime = 0;
+  gameStartMode = '';
   wordLog = [];
 }
