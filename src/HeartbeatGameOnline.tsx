@@ -4,6 +4,7 @@ import { ref, set, onValue, onDisconnect, remove, update, increment, serverTimes
 import { db } from './firebase';
 import chainData from './data/chain_dictionary.json';
 import { getDeviceId, getDeviceInfo } from './deviceId';
+import { startSession, logWord, endSession } from './gameAnalytics';
 
 // ==================== 类型 ====================
 interface ChainWord {
@@ -222,6 +223,7 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
       if (stone.word === trimmed) {
         matched = true;
         stone.alive = false;
+        logWord(trimmed, true, stone.pinyin, stone.meaning);
 
         const lane = stone.lane;
         const colors = LANE_COLORS[lane];
@@ -554,6 +556,11 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
   };
 
   const startGamePlay = () => {
+    startSession('heartbeat-online', {
+      role: role || 'unknown',
+      difficulty: difficultyRef.current,
+      settings: { duration: gameDuration, roomId },
+    });
     // 重置状态
     setHostScore(0);
     setGuestScore(0);
@@ -595,6 +602,11 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
     if (st.hostScore > st.guestScore) winner = 'host';
     else if (st.guestScore > st.hostScore) winner = 'guest';
     else winner = 'tie';
+
+    endSession({
+      score: role === 'host' ? st.hostScore : st.guestScore,
+      extra: { roomId, role, winner, hostScore: st.hostScore, guestScore: st.guestScore },
+    });
 
     // 记录分数到 /players/{deviceId}
     const deviceId = getDeviceId();

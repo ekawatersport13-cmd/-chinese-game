@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import chainData from './data/chain_dictionary.json';
+import { startSession, logWord, endSession } from './gameAnalytics';
 
 // ==================== 类型 ====================
 interface ChainWord {
@@ -261,6 +262,7 @@ export default function HeartbeatGame({ onExit }: { onExit: () => void }) {
             localStorage.setItem('heartbeat_hs', String(newHs));
             return newHs;
           });
+          endSession({ score, maxCombo });
         }
         return next;
       });
@@ -331,10 +333,12 @@ export default function HeartbeatGame({ onExit }: { onExit: () => void }) {
 
     // 匹配底部提示（看提示打字 → 移动到对应通道）
     let matchedLane: 'left' | 'center' | 'right' | null = null;
+    let matchedHint: LaneHint | null = null;
     for (const lane of LANES_ARR) {
       const hint = hintsRef.current[lane];
       if (hint && hint.word === val) {
         matchedLane = lane;
+        matchedHint = hint;
         break;
       }
     }
@@ -367,6 +371,7 @@ export default function HeartbeatGame({ onExit }: { onExit: () => void }) {
       const pts = 50 * difficulty * Math.max(killed, 1);
       setScore(prev => prev + pts);
       setDodgeScoreAnim({ val: pts, x: laneX + STONE_W/2, y: PLAYER_Y - 30, time: Date.now() });
+      logWord(val, true, matchedHint?.pinyin, matchedHint?.meaning);
 
       // 生成新提示替换旧的
       const newWord = getUnusedWord();
@@ -388,6 +393,7 @@ export default function HeartbeatGame({ onExit }: { onExit: () => void }) {
 
   // ==================== 游戏控制 ====================
   const startGame = (lvl: number) => {
+    startSession('heartbeat', { difficulty: lvl });
     setPhase('playing');
     setScore(0);
     setLives(3);

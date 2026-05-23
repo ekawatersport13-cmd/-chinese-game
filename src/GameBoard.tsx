@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import hskData from './data/hsk_vocabulary.json';
 import chainData from './data/chain_dictionary.json';
+import { startSession, logWord, endSession } from './gameAnalytics';
 
 // ==================== 类型 ===================
 interface VocabWord {
@@ -323,6 +324,7 @@ export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline }: 
   // ========== 开始游戏 ==========
   const startGame = useCallback((level: number) => {
     if (gameMode === 'compose') {
+      startSession('compose', { difficulty: level });
       const words = getWordsByLevel(level, 10);
       if (words.length === 0) return;
       setGameState({
@@ -334,6 +336,7 @@ export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline }: 
       setShowHint(false);
       setRadicalOptions(generateRadicalOptions(words[0].components));
     } else if (gameMode === 'find') {
+      startSession('find');
       const words = getFindWords(20);
       if (words.length === 0) return;
       setGameState({
@@ -351,6 +354,7 @@ export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline }: 
 
   // ========== 开始接龙模式 ==========
   const startChainGame = useCallback((timed: boolean) => {
+    startSession('chain', { settings: { timed } });
     const starter = getRandomStarter();
     setChainTimed(timed);
     setChainTimeLeft(180);
@@ -407,13 +411,15 @@ export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline }: 
     setChainLevel(newLevel);
     setChainInput('');
     setChainMessage('');
+    logWord(trimmed, true, info.pinyin, info.meaning);
   }, [chainActive, chainFinished, chainWords, chainScore]);
 
   // ========== 结束接龙 ==========
   const finishChain = useCallback(() => {
+    endSession({ score: chainScore, correct: chainScore, extra: { chainLength: chainWords.length, timed: chainTimed } });
     setChainFinished(true);
     setChainActive(false);
-  }, []);
+  }, [chainScore, chainWords.length, chainTimed]);
 
   // ========== 拼字模式：选择偏旁 ==========
   const selectRadical = useCallback((radical: string) => {
@@ -440,6 +446,7 @@ export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline }: 
     const correct = [...currentWord.components].sort().join('');
     const isCorrect = selected === correct;
     const bonus = isCorrect ? Math.min(gameState.combo, 5) * 2 : 0;
+    logWord(currentWord.word, isCorrect, currentWord.pinyin, currentWord.indonesian);
     setGameState((prev) => ({
       ...prev,
       showResult: true,
@@ -456,6 +463,7 @@ export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline }: 
     if (gameState.showResult) return;
     const isCorrect = word.word === currentWord?.word;
     const bonus = isCorrect ? Math.min(gameState.combo, 5) * 2 : 0;
+    logWord(word.word, isCorrect, word.pinyin, word.indonesian);
     setGameState((prev) => ({
       ...prev,
       showResult: true,
@@ -470,6 +478,7 @@ export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline }: 
   // ========== 下一题 ==========
   const nextWord = useCallback(() => {
     if (gameState.currentIndex >= gameState.words.length - 1) {
+      endSession({ score: gameState.score, correct: gameState.correct, wrong: gameState.wrong });
       setGameStarted(false);
       return;
     }
