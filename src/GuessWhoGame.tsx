@@ -62,10 +62,11 @@ const COLOR_MAP: Record<string, string> = {
 
 // ==================== SVG 头像生成 ====================
 function AvatarSVG({ params, size = 80 }: { params: AvatarParams; size?: number }) {
-  const { skinColor, hairColor, hairStyle, hasGlasses, hasHat, clothesColor, expression } = params;
+  const { skinColor, hairColor, hairStyle, hasGlasses, hasHat, clothesColor, expression, gender } = params;
   const bodyColor = COLOR_MAP[clothesColor] || '#6b7280';
   const s = size;
   const cx = s / 2;
+  const isFemale = gender === '女';
 
   // 表情
   let mouth = null;
@@ -84,17 +85,28 @@ function AvatarSVG({ params, size = 80 }: { params: AvatarParams; size?: number 
   // 发型
   let hair = null;
   if (hairStyle === 'short') {
-    hair = <ellipse cx={cx} cy={s * 0.26} rx={s * 0.22} ry={s * 0.14} fill={hairColor} />;
+    if (isFemale) {
+      // 女性短发：更圆润，带刘海
+      hair = <>
+        <ellipse cx={cx} cy={s * 0.26} rx={s * 0.24} ry={s * 0.16} fill={hairColor} />
+        <rect x={cx - s * 0.18} y={s * 0.32} width={s * 0.36} height={s * 0.04} rx="2" fill={hairColor} />
+      </>;
+    } else {
+      // 男性短发：方正
+      hair = <ellipse cx={cx} cy={s * 0.26} rx={s * 0.22} ry={s * 0.14} fill={hairColor} />;
+    }
   } else if (hairStyle === 'long') {
+    // 长发 - 明显女性特征
     hair = <>
-      <ellipse cx={cx} cy={s * 0.26} rx={s * 0.22} ry={s * 0.14} fill={hairColor} />
-      <rect x={cx - s * 0.2} y={s * 0.34} width={s * 0.1} height={s * 0.24} rx="4" fill={hairColor} />
-      <rect x={cx + s * 0.1} y={s * 0.34} width={s * 0.1} height={s * 0.24} rx="4" fill={hairColor} />
+      <ellipse cx={cx} cy={s * 0.26} rx={s * 0.24} ry={s * 0.16} fill={hairColor} />
+      <rect x={cx - s * 0.22} y={s * 0.34} width={s * 0.1} height={s * 0.28} rx="4" fill={hairColor} />
+      <rect x={cx + s * 0.12} y={s * 0.34} width={s * 0.1} height={s * 0.28} rx="4" fill={hairColor} />
     </>;
   } else if (hairStyle === 'bun') {
+    // 丸子头 - 明显女性特征
     hair = <>
-      <ellipse cx={cx} cy={s * 0.26} rx={s * 0.22} ry={s * 0.14} fill={hairColor} />
-      <circle cx={cx} cy={s * 0.15} r={s * 0.07} fill={hairColor} />
+      <ellipse cx={cx} cy={s * 0.26} rx={s * 0.24} ry={s * 0.16} fill={hairColor} />
+      <circle cx={cx} cy={s * 0.14} r={s * 0.08} fill={hairColor} />
     </>;
   } else if (hairStyle === 'curly') {
     hair = <>
@@ -103,13 +115,47 @@ function AvatarSVG({ params, size = 80 }: { params: AvatarParams; size?: number 
       <circle cx={cx + s * 0.18} cy={s * 0.28} r={s * 0.06} fill={hairColor} />
     </>;
   }
+  // bald: hair = null
+
+  // 男性眉毛（粗） / 女性睫毛
+  const facialFeatures = isFemale ? (
+    <>
+      {/* 女性睫毛 */}
+      <line x1={cx - s * 0.11} y1={s * 0.39} x2={cx - s * 0.13} y2={s * 0.37} stroke="#1a1a1a" strokeWidth="1" strokeLinecap="round" />
+      <line x1={cx + s * 0.05} y1={s * 0.39} x2={cx + s * 0.07} y2={s * 0.37} stroke="#1a1a1a" strokeWidth="1" strokeLinecap="round" />
+      <line x1={cx - s * 0.09} y1={s * 0.39} x2={cx - s * 0.10} y2={s * 0.37} stroke="#1a1a1a" strokeWidth="1" strokeLinecap="round" />
+      <line x1={cx + s * 0.11} y1={s * 0.39} x2={cx + s * 0.12} y2={s * 0.37} stroke="#1a1a1a" strokeWidth="1" strokeLinecap="round" />
+    </>
+  ) : (
+    <>
+      {/* 男性粗眉毛 */}
+      <line x1={cx - s * 0.12} y1={s * 0.37} x2={cx - s * 0.04} y2={s * 0.385} stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round" />
+      <line x1={cx + s * 0.04} y1={s * 0.385} x2={cx + s * 0.12} y2={s * 0.37} stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round" />
+    </>
+  );
+
+  // 身体：男性更宽厚（梯形），女性更窄（A字裙）
+  const bodyW = isFemale ? s * 0.24 : s * 0.3;
+  const bodyH = isFemale ? s * 0.2 : s * 0.22;
+  const bodyY = isFemale ? s * 0.84 : s * 0.85;
+
+  const body = isFemale ? (
+    // A字裙形状
+    <path d={`M ${cx - s * 0.12} ${s * 0.72} L ${cx - bodyW} ${bodyY + bodyH} Q ${cx - bodyW} ${bodyY + bodyH + s * 0.04} ${cx - bodyW + s * 0.04} ${bodyY + bodyH + s * 0.04} L ${cx + bodyW - s * 0.04} ${bodyY + bodyH + s * 0.04} Q ${cx + bodyW} ${bodyY + bodyH + s * 0.04} ${cx + bodyW} ${bodyY + bodyH} L ${cx + s * 0.12} ${s * 0.72} Z`} fill={bodyColor} />
+  ) : (
+    // 矩形身体（男性宽肩）
+    <rect x={cx - bodyW} y={s * 0.72} width={bodyW * 2} height={bodyH} rx="4" fill={bodyColor} />
+  );
+
+  // 脖子：女性更细
+  const neckW = isFemale ? s * 0.04 : s * 0.06;
 
   return (
     <svg width={s} height={s} viewBox={`0 0 ${s} ${s}`} xmlns="http://www.w3.org/2000/svg">
       {/* 身体 */}
-      <ellipse cx={cx} cy={s * 0.85} rx={s * 0.28} ry={s * 0.22} fill={bodyColor} />
+      {body}
       {/* 脖子 */}
-      <rect x={cx - s * 0.06} y={s * 0.63} width={s * 0.12} height={s * 0.12} fill={skinColor} />
+      <rect x={cx - neckW} y={s * 0.63} width={neckW * 2} height={s * 0.1} fill={skinColor} />
       {/* 头部 */}
       <ellipse cx={cx} cy={s * 0.42} rx={s * 0.22} ry={s * 0.24} fill={skinColor} />
       {/* 头发 */}
@@ -117,6 +163,8 @@ function AvatarSVG({ params, size = 80 }: { params: AvatarParams; size?: number 
       {/* 眼睛 */}
       <circle cx={cx - s * 0.08} cy={s * 0.42} r={s * 0.03} fill="#1a1a1a" />
       <circle cx={cx + s * 0.08} cy={s * 0.42} r={s * 0.03} fill="#1a1a1a" />
+      {/* 面部特征（眉毛/睫毛） */}
+      {facialFeatures}
       {/* 眼镜 */}
       {hasGlasses && (
         <g stroke="#4b5563" strokeWidth="1.2" fill="none">
@@ -134,6 +182,13 @@ function AvatarSVG({ params, size = 80 }: { params: AvatarParams; size?: number 
       )}
       {/* 嘴 */}
       {mouth}
+      {/* 腮红（女性） */}
+      {isFemale && (
+        <>
+          <ellipse cx={cx - s * 0.14} cy={s * 0.47} rx={s * 0.035} ry={s * 0.02} fill="#e8a0a0" opacity="0.5" />
+          <ellipse cx={cx + s * 0.14} cy={s * 0.47} rx={s * 0.035} ry={s * 0.02} fill="#e8a0a0" opacity="0.5" />
+        </>
+      )}
     </svg>
   );
 }
@@ -154,16 +209,72 @@ function checkBasicAttribute(card: BasicCard, attrType: string, value: string): 
   }
 }
 
+// 角色关键词 → attribute key 映射
+const ROLE_PATTERNS: [RegExp, string][] = [
+  [/学生/, '学生'], [/老师/, '老师'], [/运动员/, '运动员'],
+  [/校长/, '校长'], [/保安/, '保安'], [/清洁工/, '清洁工'],
+  [/图书管理员/, '图书管理员'], [/摄影师/, '摄影师'],
+  [/卖东西的/, '卖东西的人'], [/游客/, '游客'],
+  [/爸爸/, '爸爸'], [/妈妈/, '妈妈'], [/爷爷/, '爷爷'], [/奶奶/, '奶奶'],
+  [/哥哥/, '哥哥'], [/姐姐/, '姐姐'], [/弟弟/, '弟弟'], [/妹妹/, '妹妹'],
+  [/小朋友/, '小朋友'], [/老人/, '老人'],
+  [/小孩|儿童/, '小朋友'], [/祖母|外婆/, '奶奶'], [/祖父|外公/, '爷爷'],
+  [/父亲|爹/, '爸爸'], [/母亲|娘/, '妈妈'],
+];
+
+// 位置关键词 → attribute value 映射
+const LOCATION_PATTERNS: [RegExp, string][] = [
+  [/操场/, '操场'], [/食堂/, '食堂'], [/教室/, '教室'],
+  [/图书馆/, '图书馆'], [/卧室/, '卧室'], [/厨房/, '厨房'],
+  [/客厅/, '客厅'], [/花园/, '花园'], [/草地/, '草地'],
+  [/树下/, '树下'], [/喷泉/, '喷泉旁'], [/长椅/, '长椅上'],
+];
+
+// 动作关键词 → attribute value 映射
+const ACTION_PATTERNS: [RegExp, string][] = [
+  [/在学习|读书/, '在学习'], [/在看书|看书/, '在看书'],
+  [/在跑步|跑步/, '在跑步'], [/在做饭|做饭/, '在做饭'],
+  [/在拍照|拍照/, '在拍照'], [/在写字|写字/, '在写字'],
+  [/在吃饭|吃饭/, '在吃饭'], [/在睡觉|睡觉/, '在睡觉'],
+  [/在唱歌|唱歌/, '在唱歌'], [/在喝水|喝水/, '在喝水'],
+  [/在喝茶|喝茶/, '在喝茶'], [/在画画|画画/, '在画画'],
+  [/在看电视|看电视/, '在看电视'], [/在买东西|买东西|购物/, '在买东西'],
+  [/在休息|休息/, '在休息'], [/在打太极|打太极|太极/, '在打太极'],
+  [/在打扫|打扫|打扫卫生/, '在打扫'], [/在打电话|打电话|打电话/, '在打电话'],
+];
+
 function checkAdvancedAttribute(card: AdvancedCard, question: string): { answer: boolean; confidence: number } {
-  const q = question.toLowerCase();
+  const q = question.trim();
   const attrs = card.attributes;
 
-  const checks: [RegExp[], keyof typeof attrs | null, any][] = [
+  // 先检查角色/职业
+  for (const [pattern, roleValue] of ROLE_PATTERNS) {
+    if (pattern.test(q)) {
+      return { answer: attrs.role === roleValue, confidence: 1 };
+    }
+  }
+
+  // 检查位置
+  for (const [pattern, locValue] of LOCATION_PATTERNS) {
+    if (pattern.test(q)) {
+      return { answer: attrs.location === locValue, confidence: 1 };
+    }
+  }
+
+  // 检查动作
+  for (const [pattern, actValue] of ACTION_PATTERNS) {
+    if (pattern.test(q)) {
+      return { answer: attrs.action === actValue, confidence: 1 };
+    }
+  }
+
+  // 外观属性（从SVG可见）
+  const visualChecks: [RegExp[], string, any][] = [
     [[/男/, /男生/, /男人/, /男的/], 'gender', '男'],
     [[/女/, /女生/, /女人/, /女的/], 'gender', '女'],
     [[/年轻/, /young/], 'age', '年轻'],
     [[/中年/, /中年人/], 'age', '中年'],
-    [[/老年/, /老人/, /老/, /年纪大/], 'age', '老年'],
+    [[/老年/, /老人/, /年纪大/], 'age', '老年'],
     [[/眼镜/, /戴眼镜/], 'glasses', true],
     [[/帽子/, /戴帽/], 'hat', true],
     [[/红色/, /穿红/], 'clothesColor', 'red'],
@@ -181,24 +292,18 @@ function checkAdvancedAttribute(card: AdvancedCard, question: string): { answer:
     [[/短发/, /头发短/], 'hairStyle', 'short'],
     [[/长发/, /头发长/], 'hairStyle', 'long'],
     [[/光头/, /秃/], 'hairStyle', 'bald'],
-    [[/在学习/, /学习/], 'action', '在学习'],
-    [[/在看书/, /看书/], 'action', '在看书'],
-    [[/在跑步/, /跑步/], 'action', '在跑步'],
-    [[/在做饭/, /做饭/], 'action', '在做饭'],
-    [[/在拍照/, /拍照/], 'action', '在拍照'],
   ];
 
-  for (const [patterns, attr, expected] of checks) {
+  for (const [patterns, attr, expected] of visualChecks) {
     if (patterns.some(p => p.test(q))) {
-      if (attr === null) return { answer: false, confidence: 0 };
-      const val = attrs[attr as string];
+      const val = attrs[attr];
       return { answer: val === expected, confidence: 1 };
     }
   }
 
-  // 检查是否包含"不"的否定
-  if (/不戴眼镜/.test(q)) return { answer: !attrs.glasses, confidence: 1 };
-  if (/不戴帽/.test(q)) return { answer: !attrs.hat, confidence: 1 };
+  // 否定形式
+  if (/不戴眼镜|没眼镜/.test(q)) return { answer: !attrs.glasses, confidence: 1 };
+  if (/不戴帽|没帽/.test(q)) return { answer: !attrs.hat, confidence: 1 };
 
   return { answer: false, confidence: 0 };
 }
@@ -317,8 +422,7 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
   // ==================== 联机：创建房间 ====================
   const handleCreateRoom = useCallback(async () => {
     const id = generateRoomId();
-    setRoomId(id);
-    setRole('host');
+    setOnlineError('');
     const gameLevel = level;
     const scene = selectedScene;
     // 随机选24张卡
@@ -328,94 +432,108 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
       cards = [...allCards].sort(() => Math.random() - 0.5).slice(0, 24);
     } else {
       const sceneCards = (advancedData as any).scenes[scene]?.characters as AdvancedCard[] || [];
-      cards = [...sceneCards].sort(() => Math.random() - 0.5).slice(0, 24);
+      cards = [...sceneCards].sort(() => Math.random() - 0.5).slice(0, Math.min(24, sceneCards.length));
     }
     // 各自的目标卡是秘密，只存索引
-    const hostTargetIdx = Math.floor(Math.random() * 24);
-    const guestTargetIdx = Math.floor(Math.random() * 24);
+    const hostTargetIdx = Math.floor(Math.random() * cards.length);
+    const guestTargetIdx = Math.floor(Math.random() * cards.length);
 
-    const roomRef = ref(db, `guessWhoRooms/${id}`);
-    await set(roomRef, {
-      phase: 'waiting',
-      level: gameLevel,
-      scene,
-      cards: JSON.stringify(cards),
-      hostTargetIdx,
-      guestTargetIdx,
-      hostId: deviceId,
-      guestId: null,
-      currentTurn: 'host',
-      pendingQuestion: null,
-      hostFlipped: [],
-      guestFlipped: [],
-      winner: null,
-      createdAt: serverTimestamp(),
-    });
-    onDisconnect(roomRef).remove();
-
-    // 初始化本地状态
+    // UI-first: 立即跳转到等待房间，再异步写 Firebase
+    setRoomId(id);
+    setRole('host');
     setBoardCards(cards.map(c => ({ card: c, flipped: false })));
     setTargetCard(cards[hostTargetIdx]);
     setMyFlipped(new Set());
     setIsMyTurn(true);
     setPhase('waiting_room');
 
-    // 监听房间状态
-    onValue(roomRef, (snap) => {
-      const data = snap.val();
-      if (!data) return;
-      if (data.guestId && data.phase === 'playing') {
-        setHasGuest(true);
-        setIsMyTurn(data.currentTurn === 'host');
-        setOpponentFlipped(new Set(data.guestFlipped || []));
-        setPendingQuestion(data.pendingQuestion?.from === 'guest' ? data.pendingQuestion : null);
-        if (data.phase === 'playing') setPhase('playing');
-      }
-      if (data.winner) {
-        const won = (data.winner === 'host' && role === 'host') || (data.winner === 'guest' && role === 'guest');
-        setGameResult(won ? 'win' : 'lose');
-        setPhase('gameover');
-      }
-    });
-  }, [level, selectedScene, deviceId, role]);
+    try {
+      const roomRef = ref(db, `guessWhoRooms/${id}`);
+      await set(roomRef, {
+        phase: 'waiting',
+        level: gameLevel,
+        scene,
+        cards: JSON.stringify(cards),
+        hostTargetIdx,
+        guestTargetIdx,
+        hostId: deviceId,
+        guestId: null,
+        currentTurn: 'host',
+        pendingQuestion: null,
+        hostFlipped: [],
+        guestFlipped: [],
+        winner: null,
+        createdAt: serverTimestamp(),
+      });
+      onDisconnect(roomRef).remove();
+
+      // 监听房间状态
+      onValue(roomRef, (snap) => {
+        const data = snap.val();
+        if (!data) return;
+        if (data.guestId && data.phase === 'playing') {
+          setHasGuest(true);
+          setIsMyTurn(data.currentTurn === 'host');
+          setOpponentFlipped(new Set(data.guestFlipped || []));
+          setPendingQuestion(data.pendingQuestion?.from === 'guest' ? data.pendingQuestion : null);
+          setPhase('playing');
+        }
+        if (data.winner) {
+          const won = data.winner === 'host';
+          setGameResult(won ? 'win' : 'lose');
+          setPhase('gameover');
+        }
+      });
+    } catch (err: any) {
+      console.error('创建房间失败:', err);
+      setOnlineError('创建房间失败，请检查网络后重试');
+      setPhase('level_select');
+    }
+  }, [level, selectedScene, deviceId]);
 
   // ==================== 联机：加入房间 ====================
   const handleJoinRoom = useCallback(async () => {
     if (!joinRoomId.trim()) return;
     const id = joinRoomId.trim().toUpperCase();
-    const roomRef = ref(db, `guessWhoRooms/${id}`);
-    const snap = await get(roomRef);
-    if (!snap.exists()) { setOnlineError('房间不存在'); return; }
-    const data = snap.val();
-    if (data.phase !== 'waiting') { setOnlineError('房间已开始'); return; }
+    setOnlineError('');
+    try {
+      const roomRef = ref(db, `guessWhoRooms/${id}`);
+      const snap = await get(roomRef);
+      if (!snap.exists()) { setOnlineError('房间不存在'); return; }
+      const data = snap.val();
+      if (data.phase !== 'waiting') { setOnlineError('房间已开始'); return; }
 
-    const cards: (BasicCard | AdvancedCard)[] = JSON.parse(data.cards);
-    setRoomId(id);
-    setRole('guest');
-    setBoardCards(cards.map(c => ({ card: c, flipped: false })));
-    setTargetCard(cards[data.guestTargetIdx]);
-    setMyFlipped(new Set());
-    setLevel(data.level);
-    setSelectedScene(data.scene);
-    setIsMyTurn(false);
+      const cards: (BasicCard | AdvancedCard)[] = JSON.parse(data.cards);
+      setRoomId(id);
+      setRole('guest');
+      setBoardCards(cards.map(c => ({ card: c, flipped: false })));
+      setTargetCard(cards[data.guestTargetIdx]);
+      setMyFlipped(new Set());
+      setLevel(data.level);
+      setSelectedScene(data.scene);
+      setIsMyTurn(false);
 
-    await update(roomRef, { guestId: deviceId, phase: 'playing' });
+      await update(roomRef, { guestId: deviceId, phase: 'playing' });
 
-    // 监听
-    onValue(roomRef, (snap) => {
-      const d = snap.val();
-      if (!d) return;
-      setIsMyTurn(d.currentTurn === 'guest');
-      setOpponentFlipped(new Set(d.hostFlipped || []));
-      setPendingQuestion(d.pendingQuestion?.from === 'host' ? d.pendingQuestion : null);
-      if (d.winner) {
-        const won = d.winner === 'guest';
-        setGameResult(won ? 'win' : 'lose');
-        setPhase('gameover');
-      }
-    });
+      // 监听
+      onValue(roomRef, (snap) => {
+        const d = snap.val();
+        if (!d) return;
+        setIsMyTurn(d.currentTurn === 'guest');
+        setOpponentFlipped(new Set(d.hostFlipped || []));
+        setPendingQuestion(d.pendingQuestion?.from === 'host' ? d.pendingQuestion : null);
+        if (d.winner) {
+          const won = d.winner === 'guest';
+          setGameResult(won ? 'win' : 'lose');
+          setPhase('gameover');
+        }
+      });
 
-    setPhase('playing');
+      setPhase('playing');
+    } catch (err: any) {
+      console.error('加入房间失败:', err);
+      setOnlineError('加入房间失败，请检查网络后重试');
+    }
   }, [joinRoomId, deviceId]);
 
   // ==================== 联机：提问 ====================
@@ -490,7 +608,7 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
       <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 flex flex-col items-center justify-center p-4 text-white">
         <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
           <div className="text-6xl mb-4">🔍</div>
-          <h1 className="text-4xl font-bold mb-2">猜猜我是谁</h1>
+          <h1 className="text-4xl font-bold mb-2 whitespace-nowrap">猜猜我是谁</h1>
           <p className="text-indigo-200 text-lg">Tebak Siapa Aku</p>
         </motion.div>
 
@@ -955,9 +1073,13 @@ function BasicQuestionPanel({ onAsk, disabled }: {
 // ==================== 高级快速问题按钮 ====================
 function QuickQuestionButtons({ onAsk }: { onAsk: (q: string) => void }) {
   const quickQuestions = [
-    '他/她是男的吗？', '他/她戴眼镜吗？', '他/她戴帽子吗？',
-    '他/她穿红色衣服吗？', '他/她穿蓝色衣服吗？', '他/她很开心吗？',
-    '他/她是年轻人吗？', '他/她在看书吗？',
+    '他是男的吗？', '她是女的吗？',
+    '他是学生吗？', '他是老师吗？', '他是运动员吗？',
+    '他戴眼镜吗？', '他戴帽子吗？',
+    '他穿红色衣服吗？', '他穿蓝色衣服吗？',
+    '他很开心吗？', '他是年轻人吗？', '他是中年人吗？',
+    '他在看书吗？', '他在跑步吗？', '他在做饭吗？',
+    '他在操场上吗？', '他在教室里吗？',
   ];
   return (
     <div className="flex gap-1.5 flex-wrap">

@@ -1,1 +1,1 @@
-{"root":["./src/app.tsx","./src/gameboard.tsx","./src/heartbeatgame.tsx","./src/heartbeatgameonline.tsx","./src/pairgame.tsx","./src/deviceid.ts","./src/firebase.ts","./src/gameanalytics.ts","./src/main.tsx","./src/security.ts","./src/vite-env.d.ts"],"version":"5.9.3"}
+{"root":["./src/app.tsx","./src/gameboard.tsx","./src/guesswhogame.tsx","./src/heartbeatgame.tsx","./src/heartbeatgameonline.tsx","./src/pairgame.tsx","./src/deviceid.ts","./src/firebase.ts","./src/gameanalytics.ts","./src/main.tsx","./src/security.ts","./src/vite-env.d.ts"],"version":"5.9.3"}
