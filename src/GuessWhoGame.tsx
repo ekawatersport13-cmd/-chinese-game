@@ -822,10 +822,18 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
               </button>
             )}
             {onlineMode === 'online' && (
+            <>
               <span className={`text-xs px-3 py-1 rounded-full ${isMyTurn ? 'bg-green-600' : 'bg-gray-600'}`}>
                 {isMyTurn ? '我的回合' : '等待对方'}
               </span>
-            )}
+              {/* 显示我自己的目标卡 */}
+              {targetCard && (
+                <span className="text-xs bg-yellow-700/60 text-yellow-200 px-2 py-0.5 rounded-full truncate max-w-[140px]">
+                  我的目标：{'word' in targetCard ? (targetCard as any).word : (targetCard as any).name}
+                </span>
+              )}
+            </>
+          )}
           </div>
           <span className="text-xs text-gray-400">{isBasic ? '初级' : '高级'}</span>
         </div>
