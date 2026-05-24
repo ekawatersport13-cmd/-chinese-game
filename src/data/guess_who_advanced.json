@@ -1,0 +1,2310 @@
+{
+  "scenes": {
+    "school": {
+      "sceneId": "school",
+      "sceneName": "学校",
+      "sceneNameId": "Sekolah",
+      "bgColor": "#EFF6FF",
+      "characters": [
+        {
+          "id": "school_01",
+          "scene": "school",
+          "name": "小红",
+          "description": "她是学生。 她不戴眼镜，不戴帽子。 她穿紫色的衣服。 她在学习。 她很生气。",
+          "descriptionPinyin": "tā shì 学生. tā bù dài yǎnjìng, bù dài màozi. tā chuān 紫色 de yīfu. tā 在学习. tā hěn 生气.",
+          "attributes": {
+            "gender": "女",
+            "age": "年轻",
+            "role": "学生",
+            "action": "在学习",
+            "location": "操场",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "purple",
+            "expression": "angry",
+            "skinColor": "#C68642",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "long",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "purple",
+            "expression": "angry",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "school_02",
+          "scene": "school",
+          "name": "大强",
+          "description": "他是老师。 他戴眼镜。 他穿蓝色的衣服。 他在看书。 他很开心。",
+          "descriptionPinyin": "tā shì 老师. tā dài yǎnjìng. tā chuān 蓝色 de yīfu. tā 在看书. tā hěn 开心.",
+          "attributes": {
+            "gender": "男",
+            "age": "中年",
+            "role": "老师",
+            "action": "在看书",
+            "location": "食堂",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "blue",
+            "expression": "happy",
+            "skinColor": "#D2A679",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "bald"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "bald",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "blue",
+            "expression": "happy",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "school_03",
+          "scene": "school",
+          "name": "雪梅",
+          "description": "她是校长。 她戴帽子。 她穿白色的衣服。 她在写字。 她很开心。",
+          "descriptionPinyin": "tā shì 校长. tā dài màozi. tā chuān 白色 de yīfu. tā 在写字. tā hěn 开心.",
+          "attributes": {
+            "gender": "女",
+            "age": "中年",
+            "role": "校长",
+            "action": "在写字",
+            "location": "食堂",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "white",
+            "expression": "happy",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#c5821a",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#c5821a",
+            "hairStyle": "long",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "white",
+            "expression": "happy",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "school_04",
+          "scene": "school",
+          "name": "芳华",
+          "description": "她是老年人，是图书管理员。 她不戴眼镜，不戴帽子。 她穿白色的衣服。 她在跑步。",
+          "descriptionPinyin": "tā shì 老年rén, shì 图书管理员. tā bù dài yǎnjìng, bù dài màozi. tā chuān 白色 de yīfu. tā 在跑步.",
+          "attributes": {
+            "gender": "女",
+            "age": "老年",
+            "role": "图书管理员",
+            "action": "在跑步",
+            "location": "操场",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "white",
+            "expression": "neutral",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "white",
+            "expression": "neutral",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "school_05",
+          "scene": "school",
+          "name": "玉珍",
+          "description": "她是清洁工。 她戴眼镜。 她穿红色的衣服。 她在唱歌。 她很难过。",
+          "descriptionPinyin": "tā shì 清洁工. tā dài yǎnjìng. tā chuān 红色 de yīfu. tā 在唱歌. tā hěn 难过.",
+          "attributes": {
+            "gender": "女",
+            "age": "年轻",
+            "role": "清洁工",
+            "action": "在唱歌",
+            "location": "操场",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "red",
+            "expression": "sad",
+            "skinColor": "#D2A679",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "short",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "red",
+            "expression": "sad",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "school_06",
+          "scene": "school",
+          "name": "天宇",
+          "description": "他是老年人，是保安。 他戴帽子。 他穿紫色的衣服。 他在画画。 他很生气。",
+          "descriptionPinyin": "tā shì 老年rén, shì 保安. tā dài màozi. tā chuān 紫色 de yīfu. tā 在画画. tā hěn 生气.",
+          "attributes": {
+            "gender": "男",
+            "age": "老年",
+            "role": "保安",
+            "action": "在画画",
+            "location": "食堂",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "purple",
+            "expression": "angry",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "purple",
+            "expression": "angry",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "school_07",
+          "scene": "school",
+          "name": "婷婷",
+          "description": "她是学生。 她戴眼镜。 她穿黑色的衣服。 她在睡觉。 她很难过。",
+          "descriptionPinyin": "tā shì 学生. tā dài yǎnjìng. tā chuān 黑色 de yīfu. tā 在睡觉. tā hěn 难过.",
+          "attributes": {
+            "gender": "女",
+            "age": "中年",
+            "role": "学生",
+            "action": "在睡觉",
+            "location": "操场",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "black",
+            "expression": "sad",
+            "skinColor": "#C68642",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "long",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "black",
+            "expression": "sad",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "school_08",
+          "scene": "school",
+          "name": "文博",
+          "description": "他是老年人，是老师。 他不戴眼镜，不戴帽子。 他穿黄色的衣服。 他在吃饭。 他很难过。",
+          "descriptionPinyin": "tā shì 老年rén, shì 老师. tā bù dài yǎnjìng, bù dài màozi. tā chuān 黄色 de yīfu. tā 在吃饭. tā hěn 难过.",
+          "attributes": {
+            "gender": "男",
+            "age": "老年",
+            "role": "老师",
+            "action": "在吃饭",
+            "location": "食堂",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "yellow",
+            "expression": "sad",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "long",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "yellow",
+            "expression": "sad",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "school_09",
+          "scene": "school",
+          "name": "诗涵",
+          "description": "她是校长。 她戴帽子。 她穿黄色的衣服。 她在学习。 她很生气。",
+          "descriptionPinyin": "tā shì 校长. tā dài màozi. tā chuān 黄色 de yīfu. tā 在学习. tā hěn 生气.",
+          "attributes": {
+            "gender": "女",
+            "age": "年轻",
+            "role": "校长",
+            "action": "在学习",
+            "location": "教室",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "yellow",
+            "expression": "angry",
+            "skinColor": "#8D5524",
+            "hairColor": "#c5821a",
+            "hairStyle": "curly"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#c5821a",
+            "hairStyle": "curly",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "yellow",
+            "expression": "angry",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "school_10",
+          "scene": "school",
+          "name": "紫萱",
+          "description": "她是图书管理员。 她戴眼镜，也戴帽子。 她穿紫色的衣服。 她在看书。 她很生气。",
+          "descriptionPinyin": "tā shì 图书管理员. tā dài yǎnjìng, yě dài màozi. tā chuān 紫色 de yīfu. tā 在看书. tā hěn 生气.",
+          "attributes": {
+            "gender": "女",
+            "age": "中年",
+            "role": "图书管理员",
+            "action": "在看书",
+            "location": "教室",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "purple",
+            "expression": "angry",
+            "skinColor": "#D2A679",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "long",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "purple",
+            "expression": "angry",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "school_11",
+          "scene": "school",
+          "name": "小明",
+          "description": "他是清洁工。 他戴眼镜。 他穿黄色的衣服。 他在写字。 他很惊讶。",
+          "descriptionPinyin": "tā shì 清洁工. tā dài yǎnjìng. tā chuān 黄色 de yīfu. tā 在写字. tā hěn 惊讶.",
+          "attributes": {
+            "gender": "男",
+            "age": "年轻",
+            "role": "清洁工",
+            "action": "在写字",
+            "location": "食堂",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "yellow",
+            "expression": "surprised",
+            "skinColor": "#D2A679",
+            "hairColor": "#a0522d",
+            "hairStyle": "bald"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#a0522d",
+            "hairStyle": "bald",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "yellow",
+            "expression": "surprised",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "school_12",
+          "scene": "school",
+          "name": "美丽",
+          "description": "她是保安。 她戴眼镜，也戴帽子。 她穿绿色的衣服。 她在跑步。 她很难过。",
+          "descriptionPinyin": "tā shì 保安. tā dài yǎnjìng, yě dài màozi. tā chuān 绿色 de yīfu. tā 在跑步. tā hěn 难过.",
+          "attributes": {
+            "gender": "女",
+            "age": "年轻",
+            "role": "保安",
+            "action": "在跑步",
+            "location": "操场",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "green",
+            "expression": "sad",
+            "skinColor": "#8D5524",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "long",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "green",
+            "expression": "sad",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "school_13",
+          "scene": "school",
+          "name": "雪梅1",
+          "description": "她是老年人，是学生。 她戴眼镜。 她穿黑色的衣服。 她在唱歌。 她很难过。",
+          "descriptionPinyin": "tā shì 老年rén, shì 学生. tā dài yǎnjìng. tā chuān 黑色 de yīfu. tā 在唱歌. tā hěn 难过.",
+          "attributes": {
+            "gender": "女",
+            "age": "老年",
+            "role": "学生",
+            "action": "在唱歌",
+            "location": "图书馆",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "black",
+            "expression": "sad",
+            "skinColor": "#8D5524",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "bun"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "bun",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "black",
+            "expression": "sad",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "school_14",
+          "scene": "school",
+          "name": "志远",
+          "description": "他是老师。 他戴帽子。 他穿蓝色的衣服。 他在画画。 他很难过。",
+          "descriptionPinyin": "tā shì 老师. tā dài màozi. tā chuān 蓝色 de yīfu. tā 在画画. tā hěn 难过.",
+          "attributes": {
+            "gender": "男",
+            "age": "中年",
+            "role": "老师",
+            "action": "在画画",
+            "location": "图书馆",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "blue",
+            "expression": "sad",
+            "skinColor": "#8D5524",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "short",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "blue",
+            "expression": "sad",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "school_15",
+          "scene": "school",
+          "name": "俊杰",
+          "description": "他是老年人，是校长。 他戴眼镜。 他穿紫色的衣服。 他在睡觉。 他很惊讶。",
+          "descriptionPinyin": "tā shì 老年rén, shì 校长. tā dài yǎnjìng. tā chuān 紫色 de yīfu. tā 在睡觉. tā hěn 惊讶.",
+          "attributes": {
+            "gender": "男",
+            "age": "老年",
+            "role": "校长",
+            "action": "在睡觉",
+            "location": "食堂",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "purple",
+            "expression": "surprised",
+            "skinColor": "#8D5524",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "purple",
+            "expression": "surprised",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "school_16",
+          "scene": "school",
+          "name": "天宇1",
+          "description": "他是图书管理员。 他戴帽子。 他穿蓝色的衣服。 他在吃饭。",
+          "descriptionPinyin": "tā shì 图书管理员. tā dài màozi. tā chuān 蓝色 de yīfu. tā 在吃饭.",
+          "attributes": {
+            "gender": "男",
+            "age": "年轻",
+            "role": "图书管理员",
+            "action": "在吃饭",
+            "location": "操场",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "blue",
+            "expression": "neutral",
+            "skinColor": "#C68642",
+            "hairColor": "#a0522d",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#a0522d",
+            "hairStyle": "short",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "blue",
+            "expression": "neutral",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "school_17",
+          "scene": "school",
+          "name": "婷婷1",
+          "description": "她是老年人，是清洁工。 她戴帽子。 她穿紫色的衣服。 她在学习。 她很难过。",
+          "descriptionPinyin": "tā shì 老年rén, shì 清洁工. tā dài màozi. tā chuān 紫色 de yīfu. tā 在学习. tā hěn 难过.",
+          "attributes": {
+            "gender": "女",
+            "age": "老年",
+            "role": "清洁工",
+            "action": "在学习",
+            "location": "食堂",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "purple",
+            "expression": "sad",
+            "skinColor": "#C68642",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "long",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "purple",
+            "expression": "sad",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "school_18",
+          "scene": "school",
+          "name": "文博1",
+          "description": "他是保安。 他戴眼镜，也戴帽子。 他穿绿色的衣服。 他在看书。",
+          "descriptionPinyin": "tā shì 保安. tā dài yǎnjìng, yě dài màozi. tā chuān 绿色 de yīfu. tā 在看书.",
+          "attributes": {
+            "gender": "男",
+            "age": "中年",
+            "role": "保安",
+            "action": "在看书",
+            "location": "教室",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "green",
+            "expression": "neutral",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "bald"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "bald",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "green",
+            "expression": "neutral",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "school_19",
+          "scene": "school",
+          "name": "诗涵1",
+          "description": "她是学生。 她不戴眼镜，不戴帽子。 她穿黄色的衣服。 她在写字。 她很难过。",
+          "descriptionPinyin": "tā shì 学生. tā bù dài yǎnjìng, bù dài màozi. tā chuān 黄色 de yīfu. tā 在写字. tā hěn 难过.",
+          "attributes": {
+            "gender": "女",
+            "age": "中年",
+            "role": "学生",
+            "action": "在写字",
+            "location": "操场",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "yellow",
+            "expression": "sad",
+            "skinColor": "#C68642",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "curly"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "curly",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "yellow",
+            "expression": "sad",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "school_20",
+          "scene": "school",
+          "name": "明轩",
+          "description": "他是老师。 他不戴眼镜，不戴帽子。 他穿红色的衣服。 他在跑步。",
+          "descriptionPinyin": "tā shì 老师. tā bù dài yǎnjìng, bù dài màozi. tā chuān 红色 de yīfu. tā 在跑步.",
+          "attributes": {
+            "gender": "男",
+            "age": "中年",
+            "role": "老师",
+            "action": "在跑步",
+            "location": "操场",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "red",
+            "expression": "neutral",
+            "skinColor": "#D2A679",
+            "hairColor": "#a0522d",
+            "hairStyle": "curly"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#a0522d",
+            "hairStyle": "curly",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "red",
+            "expression": "neutral",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "school_21",
+          "scene": "school",
+          "name": "小明1",
+          "description": "他是老年人，是校长。 他戴眼镜，也戴帽子。 他穿黑色的衣服。 他在唱歌。 他很生气。",
+          "descriptionPinyin": "tā shì 老年rén, shì 校长. tā dài yǎnjìng, yě dài màozi. tā chuān 黑色 de yīfu. tā 在唱歌. tā hěn 生气.",
+          "attributes": {
+            "gender": "男",
+            "age": "老年",
+            "role": "校长",
+            "action": "在唱歌",
+            "location": "图书馆",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "black",
+            "expression": "angry",
+            "skinColor": "#8D5524",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "black",
+            "expression": "angry",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "school_22",
+          "scene": "school",
+          "name": "大强1",
+          "description": "他是图书管理员。 他戴眼镜，也戴帽子。 他穿蓝色的衣服。 他在画画。 他很开心。",
+          "descriptionPinyin": "tā shì 图书管理员. tā dài yǎnjìng, yě dài màozi. tā chuān 蓝色 de yīfu. tā 在画画. tā hěn 开心.",
+          "attributes": {
+            "gender": "男",
+            "age": "年轻",
+            "role": "图书管理员",
+            "action": "在画画",
+            "location": "食堂",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "blue",
+            "expression": "happy",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "curly"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "curly",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "blue",
+            "expression": "happy",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "school_23",
+          "scene": "school",
+          "name": "建国",
+          "description": "他是清洁工。 他不戴眼镜，不戴帽子。 他穿绿色的衣服。 他在睡觉。 他很惊讶。",
+          "descriptionPinyin": "tā shì 清洁工. tā bù dài yǎnjìng, bù dài màozi. tā chuān 绿色 de yīfu. tā 在睡觉. tā hěn 惊讶.",
+          "attributes": {
+            "gender": "男",
+            "age": "年轻",
+            "role": "清洁工",
+            "action": "在睡觉",
+            "location": "图书馆",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "green",
+            "expression": "surprised",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#a0522d",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#a0522d",
+            "hairStyle": "long",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "green",
+            "expression": "surprised",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "school_24",
+          "scene": "school",
+          "name": "芳华1",
+          "description": "她是老年人，是保安。 她戴眼镜，也戴帽子。 她穿紫色的衣服。 她在吃饭。 她很难过。",
+          "descriptionPinyin": "tā shì 老年rén, shì 保安. tā dài yǎnjìng, yě dài màozi. tā chuān 紫色 de yīfu. tā 在吃饭. tā hěn 难过.",
+          "attributes": {
+            "gender": "女",
+            "age": "老年",
+            "role": "保安",
+            "action": "在吃饭",
+            "location": "图书馆",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "purple",
+            "expression": "sad",
+            "skinColor": "#C68642",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "curly"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "curly",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "purple",
+            "expression": "sad",
+            "gender": "女"
+          }
+        }
+      ]
+    },
+    "family": {
+      "sceneId": "family",
+      "sceneName": "家庭",
+      "sceneNameId": "Keluarga",
+      "bgColor": "#FFF7ED",
+      "characters": [
+        {
+          "id": "family_01",
+          "scene": "family",
+          "name": "小红",
+          "description": "她是妈妈。 她不戴眼镜，不戴帽子。 她穿黑色的衣服。 她在做饭。 她很开心。",
+          "descriptionPinyin": "tā shì 妈妈. tā bù dài yǎnjìng, bù dài màozi. tā chuān 黑色 de yīfu. tā 在做饭. tā hěn 开心.",
+          "attributes": {
+            "gender": "女",
+            "age": "中年",
+            "role": "妈妈",
+            "action": "在做饭",
+            "location": "厨房",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "black",
+            "expression": "happy",
+            "skinColor": "#D2A679",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "short",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "black",
+            "expression": "happy",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "family_02",
+          "scene": "family",
+          "name": "大强",
+          "description": "他是哥哥。 他不戴眼镜，不戴帽子。 他穿黄色的衣服。 他在看电视。",
+          "descriptionPinyin": "tā shì 哥哥. tā bù dài yǎnjìng, bù dài màozi. tā chuān 黄色 de yīfu. tā 在看电视.",
+          "attributes": {
+            "gender": "男",
+            "age": "中年",
+            "role": "哥哥",
+            "action": "在看电视",
+            "location": "厨房",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "yellow",
+            "expression": "neutral",
+            "skinColor": "#C68642",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "bun"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "bun",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "yellow",
+            "expression": "neutral",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "family_03",
+          "scene": "family",
+          "name": "建国",
+          "description": "他是弟弟。 他戴帽子。 他穿紫色的衣服。 他在睡觉。 他很难过。",
+          "descriptionPinyin": "tā shì 弟弟. tā dài màozi. tā chuān 紫色 de yīfu. tā 在睡觉. tā hěn 难过.",
+          "attributes": {
+            "gender": "男",
+            "age": "年轻",
+            "role": "弟弟",
+            "action": "在睡觉",
+            "location": "客厅",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "purple",
+            "expression": "sad",
+            "skinColor": "#8D5524",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "bun"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "bun",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "purple",
+            "expression": "sad",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "family_04",
+          "scene": "family",
+          "name": "志远",
+          "description": "他是爷爷。 他戴帽子。 他穿黑色的衣服。 他在打电话。 他很惊讶。",
+          "descriptionPinyin": "tā shì 爷爷. tā dài màozi. tā chuān 黑色 de yīfu. tā 在打电话. tā hěn 惊讶.",
+          "attributes": {
+            "gender": "男",
+            "age": "中年",
+            "role": "爷爷",
+            "action": "在打电话",
+            "location": "花园",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "black",
+            "expression": "surprised",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "bun"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "bun",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "black",
+            "expression": "surprised",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "family_05",
+          "scene": "family",
+          "name": "俊杰",
+          "description": "他是老年人，是爸爸。 他戴帽子。 他穿蓝色的衣服。 他在打扫。 他很开心。",
+          "descriptionPinyin": "tā shì 老年rén, shì 爸爸. tā dài màozi. tā chuān 蓝色 de yīfu. tā 在打扫. tā hěn 开心.",
+          "attributes": {
+            "gender": "男",
+            "age": "老年",
+            "role": "爸爸",
+            "action": "在打扫",
+            "location": "花园",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "blue",
+            "expression": "happy",
+            "skinColor": "#8D5524",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "blue",
+            "expression": "happy",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "family_06",
+          "scene": "family",
+          "name": "晓燕",
+          "description": "她是老年人，是姐姐。 她戴眼镜。 她穿黄色的衣服。 她在喝茶。 她很难过。",
+          "descriptionPinyin": "tā shì 老年rén, shì 姐姐. tā dài yǎnjìng. tā chuān 黄色 de yīfu. tā 在喝茶. tā hěn 难过.",
+          "attributes": {
+            "gender": "女",
+            "age": "老年",
+            "role": "姐姐",
+            "action": "在喝茶",
+            "location": "花园",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "yellow",
+            "expression": "sad",
+            "skinColor": "#C68642",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "long",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "yellow",
+            "expression": "sad",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "family_07",
+          "scene": "family",
+          "name": "浩然",
+          "description": "他是弟弟。 他戴眼镜，也戴帽子。 他穿白色的衣服。 他在买东西。 他很惊讶。",
+          "descriptionPinyin": "tā shì 弟弟. tā dài yǎnjìng, yě dài màozi. tā chuān 白色 de yīfu. tā 在买东西. tā hěn 惊讶.",
+          "attributes": {
+            "gender": "男",
+            "age": "中年",
+            "role": "弟弟",
+            "action": "在买东西",
+            "location": "厨房",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "white",
+            "expression": "surprised",
+            "skinColor": "#D2A679",
+            "hairColor": "#d4c27a",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#d4c27a",
+            "hairStyle": "long",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "white",
+            "expression": "surprised",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "family_08",
+          "scene": "family",
+          "name": "佳慧",
+          "description": "她是奶奶。 她戴眼镜。 她穿蓝色的衣服。 她在唱歌。 她很开心。",
+          "descriptionPinyin": "tā shì 奶奶. tā dài yǎnjìng. tā chuān 蓝色 de yīfu. tā 在唱歌. tā hěn 开心.",
+          "attributes": {
+            "gender": "女",
+            "age": "年轻",
+            "role": "奶奶",
+            "action": "在唱歌",
+            "location": "客厅",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "blue",
+            "expression": "happy",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d4c27a",
+            "hairStyle": "curly"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d4c27a",
+            "hairStyle": "curly",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "blue",
+            "expression": "happy",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "family_09",
+          "scene": "family",
+          "name": "宇航",
+          "description": "他是老年人，是爸爸。 他戴眼镜，也戴帽子。 他穿紫色的衣服。 他在做饭。 他很惊讶。",
+          "descriptionPinyin": "tā shì 老年rén, shì 爸爸. tā dài yǎnjìng, yě dài màozi. tā chuān 紫色 de yīfu. tā 在做饭. tā hěn 惊讶.",
+          "attributes": {
+            "gender": "男",
+            "age": "老年",
+            "role": "爸爸",
+            "action": "在做饭",
+            "location": "花园",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "purple",
+            "expression": "surprised",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "long",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "purple",
+            "expression": "surprised",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "family_10",
+          "scene": "family",
+          "name": "紫萱",
+          "description": "她是老年人，是姐姐。 她不戴眼镜，不戴帽子。 她穿绿色的衣服。 她在看电视。 她很惊讶。",
+          "descriptionPinyin": "tā shì 老年rén, shì 姐姐. tā bù dài yǎnjìng, bù dài màozi. tā chuān 绿色 de yīfu. tā 在看电视. tā hěn 惊讶.",
+          "attributes": {
+            "gender": "女",
+            "age": "老年",
+            "role": "姐姐",
+            "action": "在看电视",
+            "location": "客厅",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "green",
+            "expression": "surprised",
+            "skinColor": "#D2A679",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "green",
+            "expression": "surprised",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "family_11",
+          "scene": "family",
+          "name": "小明",
+          "description": "他是弟弟。 他戴眼镜，也戴帽子。 他穿白色的衣服。 他在睡觉。 他很惊讶。",
+          "descriptionPinyin": "tā shì 弟弟. tā dài yǎnjìng, yě dài màozi. tā chuān 白色 de yīfu. tā 在睡觉. tā hěn 惊讶.",
+          "attributes": {
+            "gender": "男",
+            "age": "年轻",
+            "role": "弟弟",
+            "action": "在睡觉",
+            "location": "花园",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "white",
+            "expression": "surprised",
+            "skinColor": "#8D5524",
+            "hairColor": "#c5821a",
+            "hairStyle": "bun"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#c5821a",
+            "hairStyle": "bun",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "white",
+            "expression": "surprised",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "family_12",
+          "scene": "family",
+          "name": "大强1",
+          "description": "他是爷爷。 他戴眼镜。 他穿黄色的衣服。 他在打电话。 他很开心。",
+          "descriptionPinyin": "tā shì 爷爷. tā dài yǎnjìng. tā chuān 黄色 de yīfu. tā 在打电话. tā hěn 开心.",
+          "attributes": {
+            "gender": "男",
+            "age": "中年",
+            "role": "爷爷",
+            "action": "在打电话",
+            "location": "客厅",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "yellow",
+            "expression": "happy",
+            "skinColor": "#D2A679",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "bald"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "bald",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "yellow",
+            "expression": "happy",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "family_13",
+          "scene": "family",
+          "name": "建国1",
+          "description": "他是爸爸。 他戴眼镜。 他穿橙色的衣服。 他在打扫。",
+          "descriptionPinyin": "tā shì 爸爸. tā dài yǎnjìng. tā chuān 橙色 de yīfu. tā 在打扫.",
+          "attributes": {
+            "gender": "男",
+            "age": "年轻",
+            "role": "爸爸",
+            "action": "在打扫",
+            "location": "厨房",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "orange",
+            "expression": "neutral",
+            "skinColor": "#C68642",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "short",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "orange",
+            "expression": "neutral",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "family_14",
+          "scene": "family",
+          "name": "芳华",
+          "description": "她是姐姐。 她戴眼镜。 她穿绿色的衣服。 她在喝茶。 她很开心。",
+          "descriptionPinyin": "tā shì 姐姐. tā dài yǎnjìng. tā chuān 绿色 de yīfu. tā 在喝茶. tā hěn 开心.",
+          "attributes": {
+            "gender": "女",
+            "age": "中年",
+            "role": "姐姐",
+            "action": "在喝茶",
+            "location": "客厅",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "green",
+            "expression": "happy",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#a0522d",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#a0522d",
+            "hairStyle": "short",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "green",
+            "expression": "happy",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "family_15",
+          "scene": "family",
+          "name": "玉珍",
+          "description": "她是妹妹。 她不戴眼镜，不戴帽子。 她穿黄色的衣服。 她在买东西。",
+          "descriptionPinyin": "tā shì 妹妹. tā bù dài yǎnjìng, bù dài màozi. tā chuān 黄色 de yīfu. tā 在买东西.",
+          "attributes": {
+            "gender": "女",
+            "age": "年轻",
+            "role": "妹妹",
+            "action": "在买东西",
+            "location": "客厅",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "yellow",
+            "expression": "neutral",
+            "skinColor": "#D2A679",
+            "hairColor": "#d4c27a",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#d4c27a",
+            "hairStyle": "short",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "yellow",
+            "expression": "neutral",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "family_16",
+          "scene": "family",
+          "name": "天宇",
+          "description": "他是爷爷。 他不戴眼镜，不戴帽子。 他穿黑色的衣服。 他在唱歌。 他很生气。",
+          "descriptionPinyin": "tā shì 爷爷. tā bù dài yǎnjìng, bù dài màozi. tā chuān 黑色 de yīfu. tā 在唱歌. tā hěn 生气.",
+          "attributes": {
+            "gender": "男",
+            "age": "年轻",
+            "role": "爷爷",
+            "action": "在唱歌",
+            "location": "厨房",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "black",
+            "expression": "angry",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d4c27a",
+            "hairStyle": "curly"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d4c27a",
+            "hairStyle": "curly",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "black",
+            "expression": "angry",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "family_17",
+          "scene": "family",
+          "name": "婷婷",
+          "description": "她是妈妈。 她戴帽子。 她穿紫色的衣服。 她在做饭。 她很难过。",
+          "descriptionPinyin": "tā shì 妈妈. tā dài màozi. tā chuān 紫色 de yīfu. tā 在做饭. tā hěn 难过.",
+          "attributes": {
+            "gender": "女",
+            "age": "中年",
+            "role": "妈妈",
+            "action": "在做饭",
+            "location": "卧室",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "purple",
+            "expression": "sad",
+            "skinColor": "#C68642",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "long",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "purple",
+            "expression": "sad",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "family_18",
+          "scene": "family",
+          "name": "佳慧1",
+          "description": "她是姐姐。 她戴眼镜，也戴帽子。 她穿红色的衣服。 她在看电视。 她很惊讶。",
+          "descriptionPinyin": "tā shì 姐姐. tā dài yǎnjìng, yě dài màozi. tā chuān 红色 de yīfu. tā 在看电视. tā hěn 惊讶.",
+          "attributes": {
+            "gender": "女",
+            "age": "中年",
+            "role": "姐姐",
+            "action": "在看电视",
+            "location": "客厅",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "red",
+            "expression": "surprised",
+            "skinColor": "#8D5524",
+            "hairColor": "#c5821a",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#c5821a",
+            "hairStyle": "short",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "red",
+            "expression": "surprised",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "family_19",
+          "scene": "family",
+          "name": "诗涵",
+          "description": "她是妹妹。 她戴帽子。 她穿白色的衣服。 她在睡觉。 她很难过。",
+          "descriptionPinyin": "tā shì 妹妹. tā dài màozi. tā chuān 白色 de yīfu. tā 在睡觉. tā hěn 难过.",
+          "attributes": {
+            "gender": "女",
+            "age": "年轻",
+            "role": "妹妹",
+            "action": "在睡觉",
+            "location": "卧室",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "white",
+            "expression": "sad",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#a0522d",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#a0522d",
+            "hairStyle": "long",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "white",
+            "expression": "sad",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "family_20",
+          "scene": "family",
+          "name": "明轩",
+          "description": "他是老年人，是爷爷。 他不戴眼镜，不戴帽子。 他穿白色的衣服。 他在打电话。 他很难过。",
+          "descriptionPinyin": "tā shì 老年rén, shì 爷爷. tā bù dài yǎnjìng, bù dài màozi. tā chuān 白色 de yīfu. tā 在打电话. tā hěn 难过.",
+          "attributes": {
+            "gender": "男",
+            "age": "老年",
+            "role": "爷爷",
+            "action": "在打电话",
+            "location": "花园",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "white",
+            "expression": "sad",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "bald"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "bald",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "white",
+            "expression": "sad",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "family_21",
+          "scene": "family",
+          "name": "小红1",
+          "description": "她是老年人，是妈妈。 她戴眼镜，也戴帽子。 她穿红色的衣服。 她在打扫。",
+          "descriptionPinyin": "tā shì 老年rén, shì 妈妈. tā dài yǎnjìng, yě dài màozi. tā chuān 红色 de yīfu. tā 在打扫.",
+          "attributes": {
+            "gender": "女",
+            "age": "老年",
+            "role": "妈妈",
+            "action": "在打扫",
+            "location": "卧室",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "red",
+            "expression": "neutral",
+            "skinColor": "#C68642",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "curly"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "curly",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "red",
+            "expression": "neutral",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "family_22",
+          "scene": "family",
+          "name": "美丽",
+          "description": "她是姐姐。 她戴眼镜，也戴帽子。 她穿蓝色的衣服。 她在喝茶。 她很开心。",
+          "descriptionPinyin": "tā shì 姐姐. tā dài yǎnjìng, yě dài màozi. tā chuān 蓝色 de yīfu. tā 在喝茶. tā hěn 开心.",
+          "attributes": {
+            "gender": "女",
+            "age": "年轻",
+            "role": "姐姐",
+            "action": "在喝茶",
+            "location": "厨房",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "blue",
+            "expression": "happy",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "long",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "blue",
+            "expression": "happy",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "family_23",
+          "scene": "family",
+          "name": "建国2",
+          "description": "他是老年人，是弟弟。 他戴眼镜。 他穿黄色的衣服。 他在买东西。 他很生气。",
+          "descriptionPinyin": "tā shì 老年rén, shì 弟弟. tā dài yǎnjìng. tā chuān 黄色 de yīfu. tā 在买东西. tā hěn 生气.",
+          "attributes": {
+            "gender": "男",
+            "age": "老年",
+            "role": "弟弟",
+            "action": "在买东西",
+            "location": "厨房",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "yellow",
+            "expression": "angry",
+            "skinColor": "#C68642",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "curly"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "curly",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "yellow",
+            "expression": "angry",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "family_24",
+          "scene": "family",
+          "name": "芳华1",
+          "description": "她是老年人，是奶奶。 她戴帽子。 她穿白色的衣服。 她在唱歌。 她很开心。",
+          "descriptionPinyin": "tā shì 老年rén, shì 奶奶. tā dài màozi. tā chuān 白色 de yīfu. tā 在唱歌. tā hěn 开心.",
+          "attributes": {
+            "gender": "女",
+            "age": "老年",
+            "role": "奶奶",
+            "action": "在唱歌",
+            "location": "客厅",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "white",
+            "expression": "happy",
+            "skinColor": "#C68642",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "bun"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "bun",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "white",
+            "expression": "happy",
+            "gender": "女"
+          }
+        }
+      ]
+    },
+    "park": {
+      "sceneId": "park",
+      "sceneName": "公园",
+      "sceneNameId": "Taman",
+      "bgColor": "#F0FDF4",
+      "characters": [
+        {
+          "id": "park_01",
+          "scene": "park",
+          "name": "小明",
+          "description": "他是游客。 他戴帽子。 他穿白色的衣服。 他在跑步。 他很生气。",
+          "descriptionPinyin": "tā shì 游客. tā dài màozi. tā chuān 白色 de yīfu. tā 在跑步. tā hěn 生气.",
+          "attributes": {
+            "gender": "男",
+            "age": "年轻",
+            "role": "游客",
+            "action": "在跑步",
+            "location": "草地",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "white",
+            "expression": "angry",
+            "skinColor": "#8D5524",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "short",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "white",
+            "expression": "angry",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "park_02",
+          "scene": "park",
+          "name": "大强",
+          "description": "他是摄影师。 他不戴眼镜，不戴帽子。 他穿蓝色的衣服。 他在拍照。 他很生气。",
+          "descriptionPinyin": "tā shì 摄影师. tā bù dài yǎnjìng, bù dài màozi. tā chuān 蓝色 de yīfu. tā 在拍照. tā hěn 生气.",
+          "attributes": {
+            "gender": "男",
+            "age": "年轻",
+            "role": "摄影师",
+            "action": "在拍照",
+            "location": "树下",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "blue",
+            "expression": "angry",
+            "skinColor": "#C68642",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "long",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "blue",
+            "expression": "angry",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "park_03",
+          "scene": "park",
+          "name": "雪梅",
+          "description": "她是运动员。 她戴眼镜。 她穿绿色的衣服。 她在喝水。 她很惊讶。",
+          "descriptionPinyin": "tā shì 运动员. tā dài yǎnjìng. tā chuān 绿色 de yīfu. tā 在喝水. tā hěn 惊讶.",
+          "attributes": {
+            "gender": "女",
+            "age": "中年",
+            "role": "运动员",
+            "action": "在喝水",
+            "location": "草地",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "green",
+            "expression": "surprised",
+            "skinColor": "#D2A679",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "long",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "green",
+            "expression": "surprised",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "park_04",
+          "scene": "park",
+          "name": "芳华",
+          "description": "她是卖东西的人。 她戴帽子。 她穿紫色的衣服。 她在休息。 她很难过。",
+          "descriptionPinyin": "tā shì 卖东西的人. tā dài màozi. tā chuān 紫色 de yīfu. tā 在休息. tā hěn 难过.",
+          "attributes": {
+            "gender": "女",
+            "age": "中年",
+            "role": "卖东西的人",
+            "action": "在休息",
+            "location": "长椅上",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "purple",
+            "expression": "sad",
+            "skinColor": "#D2A679",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "long",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "purple",
+            "expression": "sad",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "park_05",
+          "scene": "park",
+          "name": "玉珍",
+          "description": "她是老年人，是小朋友。 她戴帽子。 她穿紫色的衣服。 她在打电话。 她很开心。",
+          "descriptionPinyin": "tā shì 老年rén, shì 小朋友. tā dài màozi. tā chuān 紫色 de yīfu. tā 在打电话. tā hěn 开心.",
+          "attributes": {
+            "gender": "女",
+            "age": "老年",
+            "role": "小朋友",
+            "action": "在打电话",
+            "location": "树下",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "purple",
+            "expression": "happy",
+            "skinColor": "#D2A679",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "purple",
+            "expression": "happy",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "park_06",
+          "scene": "park",
+          "name": "晓燕",
+          "description": "她是老人。 她不戴眼镜，不戴帽子。 她穿黑色的衣服。 她在看书。 她很生气。",
+          "descriptionPinyin": "tā shì 老人. tā bù dài yǎnjìng, bù dài màozi. tā chuān 黑色 de yīfu. tā 在看书. tā hěn 生气.",
+          "attributes": {
+            "gender": "女",
+            "age": "年轻",
+            "role": "老人",
+            "action": "在看书",
+            "location": "喷泉旁",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "black",
+            "expression": "angry",
+            "skinColor": "#D2A679",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "bun"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "bun",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "black",
+            "expression": "angry",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "park_07",
+          "scene": "park",
+          "name": "浩然",
+          "description": "他是老年人，是游客。 他戴眼镜。 他穿紫色的衣服。 他在唱歌。 他很生气。",
+          "descriptionPinyin": "tā shì 老年rén, shì 游客. tā dài yǎnjìng. tā chuān 紫色 de yīfu. tā 在唱歌. tā hěn 生气.",
+          "attributes": {
+            "gender": "男",
+            "age": "老年",
+            "role": "游客",
+            "action": "在唱歌",
+            "location": "长椅上",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "purple",
+            "expression": "angry",
+            "skinColor": "#D2A679",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "long",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "purple",
+            "expression": "angry",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "park_08",
+          "scene": "park",
+          "name": "佳慧",
+          "description": "她是老年人，是摄影师。 她不戴眼镜，不戴帽子。 她穿紫色的衣服。 她在打太极。",
+          "descriptionPinyin": "tā shì 老年rén, shì 摄影师. tā bù dài yǎnjìng, bù dài màozi. tā chuān 紫色 de yīfu. tā 在打太极.",
+          "attributes": {
+            "gender": "女",
+            "age": "老年",
+            "role": "摄影师",
+            "action": "在打太极",
+            "location": "长椅上",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "purple",
+            "expression": "neutral",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "long",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "purple",
+            "expression": "neutral",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "park_09",
+          "scene": "park",
+          "name": "诗涵",
+          "description": "她是运动员。 她不戴眼镜，不戴帽子。 她穿绿色的衣服。 她在跑步。",
+          "descriptionPinyin": "tā shì 运动员. tā bù dài yǎnjìng, bù dài màozi. tā chuān 绿色 de yīfu. tā 在跑步.",
+          "attributes": {
+            "gender": "女",
+            "age": "中年",
+            "role": "运动员",
+            "action": "在跑步",
+            "location": "长椅上",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "green",
+            "expression": "neutral",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "long",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "green",
+            "expression": "neutral",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "park_10",
+          "scene": "park",
+          "name": "紫萱",
+          "description": "她是卖东西的人。 她戴眼镜，也戴帽子。 她穿紫色的衣服。 她在拍照。 她很生气。",
+          "descriptionPinyin": "tā shì 卖东西的人. tā dài yǎnjìng, yě dài màozi. tā chuān 紫色 de yīfu. tā 在拍照. tā hěn 生气.",
+          "attributes": {
+            "gender": "女",
+            "age": "年轻",
+            "role": "卖东西的人",
+            "action": "在拍照",
+            "location": "长椅上",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "purple",
+            "expression": "angry",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "curly"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "curly",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "purple",
+            "expression": "angry",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "park_11",
+          "scene": "park",
+          "name": "小明1",
+          "description": "他是小朋友。 他戴帽子。 他穿蓝色的衣服。 他在喝水。 他很惊讶。",
+          "descriptionPinyin": "tā shì 小朋友. tā dài màozi. tā chuān 蓝色 de yīfu. tā 在喝水. tā hěn 惊讶.",
+          "attributes": {
+            "gender": "男",
+            "age": "中年",
+            "role": "小朋友",
+            "action": "在喝水",
+            "location": "喷泉旁",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "blue",
+            "expression": "surprised",
+            "skinColor": "#8D5524",
+            "hairColor": "#a0522d",
+            "hairStyle": "curly"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#a0522d",
+            "hairStyle": "curly",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "blue",
+            "expression": "surprised",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "park_12",
+          "scene": "park",
+          "name": "美丽",
+          "description": "她是老人。 她戴帽子。 她穿红色的衣服。 她在休息。",
+          "descriptionPinyin": "tā shì 老人. tā dài màozi. tā chuān 红色 de yīfu. tā 在休息.",
+          "attributes": {
+            "gender": "女",
+            "age": "年轻",
+            "role": "老人",
+            "action": "在休息",
+            "location": "喷泉旁",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "red",
+            "expression": "neutral",
+            "skinColor": "#C68642",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "bun"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "bun",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "red",
+            "expression": "neutral",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "park_13",
+          "scene": "park",
+          "name": "雪梅1",
+          "description": "她是游客。 她戴眼镜，也戴帽子。 她穿黑色的衣服。 她在打电话。",
+          "descriptionPinyin": "tā shì 游客. tā dài yǎnjìng, yě dài màozi. tā chuān 黑色 de yīfu. tā 在打电话.",
+          "attributes": {
+            "gender": "女",
+            "age": "中年",
+            "role": "游客",
+            "action": "在打电话",
+            "location": "长椅上",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "black",
+            "expression": "neutral",
+            "skinColor": "#C68642",
+            "hairColor": "#d4c27a",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#d4c27a",
+            "hairStyle": "short",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "black",
+            "expression": "neutral",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "park_14",
+          "scene": "park",
+          "name": "志远",
+          "description": "他是摄影师。 他不戴眼镜，不戴帽子。 他穿白色的衣服。 他在看书。 他很惊讶。",
+          "descriptionPinyin": "tā shì 摄影师. tā bù dài yǎnjìng, bù dài màozi. tā chuān 白色 de yīfu. tā 在看书. tā hěn 惊讶.",
+          "attributes": {
+            "gender": "男",
+            "age": "中年",
+            "role": "摄影师",
+            "action": "在看书",
+            "location": "长椅上",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "white",
+            "expression": "surprised",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "bald"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "bald",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "white",
+            "expression": "surprised",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "park_15",
+          "scene": "park",
+          "name": "俊杰",
+          "description": "他是老年人，是运动员。 他不戴眼镜，不戴帽子。 他穿绿色的衣服。 他在唱歌。 他很难过。",
+          "descriptionPinyin": "tā shì 老年rén, shì 运动员. tā bù dài yǎnjìng, bù dài màozi. tā chuān 绿色 de yīfu. tā 在唱歌. tā hěn 难过.",
+          "attributes": {
+            "gender": "男",
+            "age": "老年",
+            "role": "运动员",
+            "action": "在唱歌",
+            "location": "树下",
+            "glasses": false,
+            "hat": false,
+            "clothesColor": "green",
+            "expression": "sad",
+            "skinColor": "#8D5524",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "bald"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "bald",
+            "hasGlasses": false,
+            "hasHat": false,
+            "clothesColor": "green",
+            "expression": "sad",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "park_16",
+          "scene": "park",
+          "name": "天宇",
+          "description": "他是卖东西的人。 他戴眼镜。 他穿白色的衣服。 他在打太极。 他很惊讶。",
+          "descriptionPinyin": "tā shì 卖东西的人. tā dài yǎnjìng. tā chuān 白色 de yīfu. tā 在打太极. tā hěn 惊讶.",
+          "attributes": {
+            "gender": "男",
+            "age": "中年",
+            "role": "卖东西的人",
+            "action": "在打太极",
+            "location": "草地",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "white",
+            "expression": "surprised",
+            "skinColor": "#8D5524",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#f0e0b0",
+            "hairStyle": "long",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "white",
+            "expression": "surprised",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "park_17",
+          "scene": "park",
+          "name": "婷婷",
+          "description": "她是老年人，是小朋友。 她戴眼镜。 她穿紫色的衣服。 她在跑步。",
+          "descriptionPinyin": "tā shì 老年rén, shì 小朋友. tā dài yǎnjìng. tā chuān 紫色 de yīfu. tā 在跑步.",
+          "attributes": {
+            "gender": "女",
+            "age": "老年",
+            "role": "小朋友",
+            "action": "在跑步",
+            "location": "长椅上",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "purple",
+            "expression": "neutral",
+            "skinColor": "#C68642",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#C68642",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "long",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "purple",
+            "expression": "neutral",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "park_18",
+          "scene": "park",
+          "name": "文博",
+          "description": "他是老人。 他戴眼镜，也戴帽子。 他穿黄色的衣服。 他在拍照。",
+          "descriptionPinyin": "tā shì 老人. tā dài yǎnjìng, yě dài màozi. tā chuān 黄色 de yīfu. tā 在拍照.",
+          "attributes": {
+            "gender": "男",
+            "age": "中年",
+            "role": "老人",
+            "action": "在拍照",
+            "location": "树下",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "yellow",
+            "expression": "neutral",
+            "skinColor": "#8D5524",
+            "hairColor": "#d4c27a",
+            "hairStyle": "bun"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#d4c27a",
+            "hairStyle": "bun",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "yellow",
+            "expression": "neutral",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "park_19",
+          "scene": "park",
+          "name": "宇航",
+          "description": "他是老年人，是游客。 他戴帽子。 他穿白色的衣服。 他在喝水。",
+          "descriptionPinyin": "tā shì 老年rén, shì 游客. tā dài màozi. tā chuān 白色 de yīfu. tā 在喝水.",
+          "attributes": {
+            "gender": "男",
+            "age": "老年",
+            "role": "游客",
+            "action": "在喝水",
+            "location": "长椅上",
+            "glasses": false,
+            "hat": true,
+            "clothesColor": "white",
+            "expression": "neutral",
+            "skinColor": "#D2A679",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "short",
+            "hasGlasses": false,
+            "hasHat": true,
+            "clothesColor": "white",
+            "expression": "neutral",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "park_20",
+          "scene": "park",
+          "name": "明轩",
+          "description": "他是摄影师。 他戴眼镜，也戴帽子。 他穿黄色的衣服。 他在休息。 他很难过。",
+          "descriptionPinyin": "tā shì 摄影师. tā dài yǎnjìng, yě dài màozi. tā chuān 黄色 de yīfu. tā 在休息. tā hěn 难过.",
+          "attributes": {
+            "gender": "男",
+            "age": "年轻",
+            "role": "摄影师",
+            "action": "在休息",
+            "location": "喷泉旁",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "yellow",
+            "expression": "sad",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "bald"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "bald",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "yellow",
+            "expression": "sad",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "park_21",
+          "scene": "park",
+          "name": "小明2",
+          "description": "他是运动员。 他戴眼镜。 他穿橙色的衣服。 他在打电话。",
+          "descriptionPinyin": "tā shì 运动员. tā dài yǎnjìng. tā chuān 橙色 de yīfu. tā 在打电话.",
+          "attributes": {
+            "gender": "男",
+            "age": "年轻",
+            "role": "运动员",
+            "action": "在打电话",
+            "location": "草地",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "orange",
+            "expression": "neutral",
+            "skinColor": "#FFDAB9",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#FFDAB9",
+            "hairColor": "#1a1a1a",
+            "hairStyle": "long",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "orange",
+            "expression": "neutral",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "park_22",
+          "scene": "park",
+          "name": "大强1",
+          "description": "他是老年人，是卖东西的人。 他戴眼镜，也戴帽子。 他穿黄色的衣服。 他在看书。 他很惊讶。",
+          "descriptionPinyin": "tā shì 老年rén, shì 卖东西的人. tā dài yǎnjìng, yě dài màozi. tā chuān 黄色 de yīfu. tā 在看书. tā hěn 惊讶.",
+          "attributes": {
+            "gender": "男",
+            "age": "老年",
+            "role": "卖东西的人",
+            "action": "在看书",
+            "location": "树下",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "yellow",
+            "expression": "surprised",
+            "skinColor": "#8D5524",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "curly"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "curly",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "yellow",
+            "expression": "surprised",
+            "gender": "男"
+          }
+        },
+        {
+          "id": "park_23",
+          "scene": "park",
+          "name": "雪梅2",
+          "description": "她是小朋友。 她戴眼镜。 她穿红色的衣服。 她在唱歌。 她很开心。",
+          "descriptionPinyin": "tā shì 小朋友. tā dài yǎnjìng. tā chuān 红色 de yīfu. tā 在唱歌. tā hěn 开心.",
+          "attributes": {
+            "gender": "女",
+            "age": "年轻",
+            "role": "小朋友",
+            "action": "在唱歌",
+            "location": "树下",
+            "glasses": true,
+            "hat": false,
+            "clothesColor": "red",
+            "expression": "happy",
+            "skinColor": "#8D5524",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "long"
+          },
+          "avatarParams": {
+            "skinColor": "#8D5524",
+            "hairColor": "#3b1f0d",
+            "hairStyle": "long",
+            "hasGlasses": true,
+            "hasHat": false,
+            "clothesColor": "red",
+            "expression": "happy",
+            "gender": "女"
+          }
+        },
+        {
+          "id": "park_24",
+          "scene": "park",
+          "name": "芳华1",
+          "description": "她是老年人，是老人。 她戴眼镜，也戴帽子。 她穿橙色的衣服。 她在打太极。 她很开心。",
+          "descriptionPinyin": "tā shì 老年rén, shì 老人. tā dài yǎnjìng, yě dài màozi. tā chuān 橙色 de yīfu. tā 在打太极. tā hěn 开心.",
+          "attributes": {
+            "gender": "女",
+            "age": "老年",
+            "role": "老人",
+            "action": "在打太极",
+            "location": "喷泉旁",
+            "glasses": true,
+            "hat": true,
+            "clothesColor": "orange",
+            "expression": "happy",
+            "skinColor": "#D2A679",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "curly"
+          },
+          "avatarParams": {
+            "skinColor": "#D2A679",
+            "hairColor": "#d0d0d0",
+            "hairStyle": "curly",
+            "hasGlasses": true,
+            "hasHat": true,
+            "clothesColor": "orange",
+            "expression": "happy",
+            "gender": "女"
+          }
+        }
+      ]
+    }
+  },
+  "questionTemplates": [
+    {
+      "id": "gender",
+      "zh": "是{男/女}吗？",
+      "attr": "gender",
+      "type": "exact"
+    },
+    {
+      "id": "age",
+      "zh": "是{年轻/中年/老年}吗？",
+      "attr": "age",
+      "type": "exact"
+    },
+    {
+      "id": "glasses",
+      "zh": "戴眼镜吗？",
+      "attr": "glasses",
+      "type": "bool"
+    },
+    {
+      "id": "hat",
+      "zh": "戴帽子吗？",
+      "attr": "hat",
+      "type": "bool"
+    },
+    {
+      "id": "clothesColor",
+      "zh": "穿{颜色}衣服吗？",
+      "attr": "clothesColor",
+      "type": "exact"
+    },
+    {
+      "id": "hairStyle",
+      "zh": "是{短/长}发吗？",
+      "attr": "hairStyle",
+      "type": "exact"
+    },
+    {
+      "id": "expression",
+      "zh": "很{开心/难过}吗？",
+      "attr": "expression",
+      "type": "exact"
+    },
+    {
+      "id": "action",
+      "zh": "在{动作}吗？",
+      "attr": "action",
+      "type": "contains"
+    }
+  ]
+}

@@ -276,7 +276,7 @@ const getFindWords = (count = 20): VocabWord[] => {
 };
 
 // ==================== 组件 ===================
-export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline, onEnterPair }: { onEnterHeartbeat?: () => void; onEnterHeartbeatOnline?: () => void; onEnterPair?: () => void }) {
+export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline, onEnterPair, onEnterGuessWho }: { onEnterHeartbeat?: () => void; onEnterHeartbeatOnline?: () => void; onEnterPair?: () => void; onEnterGuessWho?: () => void }) {
   const [gameState, setGameState] = useState<GameState>({
     level: 1,
     words: [],
@@ -680,6 +680,14 @@ export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline, on
               >
                 🎯 配对模式
                 <div className="text-xs font-normal mt-1 opacity-90">拼音·汉字·印尼语</div>
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                onClick={onEnterGuessWho}
+                className="py-3 px-4 rounded-xl font-bold transition-all shadow-lg bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:from-indigo-600 hover:to-purple-700"
+              >
+                🔍 猜猜我是谁
+                <div className="text-xs font-normal mt-1 opacity-90">汉字猜谜·人物描述</div>
               </motion.button>
             </div>
           </div>

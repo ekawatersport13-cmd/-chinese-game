@@ -3,13 +3,14 @@ import GameBoard from './GameBoard'
 import HeartbeatGame from './HeartbeatGame'
 import HeartbeatGameOnline from './HeartbeatGameOnline'
 import PairGame from './PairGame'
+import GuessWhoGame from './GuessWhoGame'
 import { getDeviceId, getDeviceInfo } from './deviceId';
 import { db } from './firebase';
 import { ref, set, serverTimestamp } from 'firebase/database';
 import { getApp } from 'firebase/app';
 
 function App() {
-  const [mode, setMode] = useState<'main' | 'heartbeat' | 'heartbeat-on-line' | 'pair'>('main');
+  const [mode, setMode] = useState<'main' | 'heartbeat' | 'heartbeat-on-line' | 'pair' | 'guess-who'>('main');
 
   // 初始化：记录设备访问 + Firebase Analytics
   useEffect(() => {
@@ -76,7 +77,11 @@ function App() {
     return <PairGame onExit={() => setMode('main')} />;
   }
 
-  return <GameBoard onEnterHeartbeat={() => setMode('heartbeat')} onEnterHeartbeatOnline={() => setMode('heartbeat-on-line')} onEnterPair={() => setMode('pair')} />;
+  if (mode === 'guess-who') {
+    return <GuessWhoGame onExit={() => setMode('main')} />;
+  }
+
+  return <GameBoard onEnterHeartbeat={() => setMode('heartbeat')} onEnterHeartbeatOnline={() => setMode('heartbeat-on-line')} onEnterPair={() => setMode('pair')} onEnterGuessWho={() => setMode('guess-who')} />;
 }
 
 export default App;
