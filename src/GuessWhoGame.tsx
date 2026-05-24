@@ -486,7 +486,12 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
       });
     } catch (err: any) {
       console.error('创建房间失败:', err);
-      setOnlineError('创建房间失败，请检查网络后重试');
+      const errMsg = err?.message || '';
+      if (errMsg.includes('permission') || errMsg.includes('Permission')) {
+        setOnlineError('创建房间失败：服务器权限错误，请联系管理员');
+      } else {
+        setOnlineError('创建房间失败，请检查网络后重试');
+      }
       setPhase('level_select');
     }
   }, [level, selectedScene, deviceId]);
