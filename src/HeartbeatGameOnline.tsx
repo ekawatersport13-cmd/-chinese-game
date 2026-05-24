@@ -101,10 +101,10 @@ const generateRoomId = (): string => {
 };
 
 // ==================== 主组件 ====================
-export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) {
+export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit: () => void; initialRoomId?: string }) {
   const [role, setRole] = useState<'host' | 'guest' | null>(null);
   const [roomId, setRoomId] = useState('');
-  const [joinRoomId, setJoinRoomId] = useState('');
+  const [joinRoomId, setJoinRoomId] = useState(initialRoomId || '');
   const [input, setInput] = useState('');
   const [error, setError] = useState('');
   const [hasGuest, setHasGuest] = useState(false);
@@ -151,6 +151,18 @@ export default function HeartbeatGameOnline({ onExit }: { onExit: () => void }) 
   useEffect(() => { inputRef.current = input; }, [input]);
   useEffect(() => { phaseRef.current = phase; }, [phase]);
   useEffect(() => { difficultyRef.current = difficulty; }, [difficulty]);
+
+  // URL 自动加入：如果提供了 initialRoomId，自动设置为观众并加入
+  useEffect(() => {
+    if (initialRoomId && phase === 'menu' && !role) {
+      setRole('guest');
+      // 延迟一点加入，等组件完全挂载
+      const timer = setTimeout(() => {
+        joinRoom();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [initialRoomId]);
 
   // ==================== 粒子效果 ====================
   const spawnParticles = useCallback((x: number, y: number, color: string, count: number) => {

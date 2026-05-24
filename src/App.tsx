@@ -11,9 +11,20 @@ import { getApp } from 'firebase/app';
 
 function App() {
   const [mode, setMode] = useState<'main' | 'heartbeat' | 'heartbeat-on-line' | 'pair' | 'guess-who'>('main');
+  const [initialRoomId, setInitialRoomId] = useState<string>('');
 
-  // 初始化：记录设备访问 + Firebase Analytics
+  // 初始化：检测 URL 房间号参数 + 记录设备访问 + Firebase Analytics
   useEffect(() => {
+    // 检测 URL 中的房间号参数
+    const params = new URLSearchParams(window.location.search);
+    const roomFromUrl = params.get('room');
+    if (roomFromUrl) {
+      setInitialRoomId(roomFromUrl.toUpperCase());
+      setMode('heartbeat-on-line');
+      // 清理 URL（移除 room 参数，避免刷新时重复处理）
+      const newUrl = window.location.pathname + window.location.hash;
+      window.history.replaceState({}, '', newUrl);
+    }
     // 记录设备访问
     const recordVisit = async () => {
       const deviceId = getDeviceId();
@@ -70,7 +81,7 @@ function App() {
   }
 
   if (mode === 'heartbeat-on-line') {
-    return <HeartbeatGameOnline onExit={() => setMode('main')} />;
+    return <HeartbeatGameOnline onExit={() => setMode('main')} initialRoomId={initialRoomId} />;
   }
 
   if (mode === 'pair') {
