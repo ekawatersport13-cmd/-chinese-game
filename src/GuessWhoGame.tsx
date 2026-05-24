@@ -839,17 +839,17 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
                       </div>
                     ) : (
                       // 高级卡面
-                      <div className="flex flex-col items-center justify-center h-full p-1">
+                      <div className="flex flex-col items-center justify-start h-full p-1.5 pt-2">
                         <AvatarSVG params={(card as AdvancedCard).avatarParams} size={56} />
-                        <div className="text-xs font-bold text-white mt-0.5">{(card as AdvancedCard).name}</div>
+                        <div className="text-xs font-bold text-white mt-1">{(card as AdvancedCard).name}</div>
                         {showPinyin && (
-                          <div className="text-xs text-indigo-300 leading-tight text-center px-1" style={{ fontSize: '0.55rem' }}>
-                            {(card as AdvancedCard).descriptionPinyin.slice(0, 30)}...
+                          <div className="text-indigo-300 leading-snug text-center px-0.5 mt-1 text-[0.6rem] sm:text-xs break-words w-full">
+                            {(card as AdvancedCard).descriptionPinyin}
                           </div>
                         )}
                         {!showPinyin && (
-                          <div className="text-xs text-gray-300 leading-tight text-center px-1" style={{ fontSize: '0.6rem' }}>
-                            {(card as AdvancedCard).description.slice(0, 18)}...
+                          <div className="text-gray-300 leading-snug text-center px-0.5 mt-1 text-[0.65rem] sm:text-sm break-words w-full">
+                            {(card as AdvancedCard).description}
                           </div>
                         )}
                       </div>
@@ -955,8 +955,8 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
               <>
                 <AvatarSVG params={(targetCard as AdvancedCard).avatarParams} size={80} />
                 <div className="text-2xl font-bold mt-2 mb-1">{(targetCard as AdvancedCard).name}</div>
-                {showPinyin && <div className="text-xs text-indigo-300">{(targetCard as AdvancedCard).descriptionPinyin}</div>}
-                <div className="text-sm text-gray-300">{(targetCard as AdvancedCard).description}</div>
+                {showPinyin && <div className="text-xs sm:text-sm text-indigo-300 text-center max-w-md">{(targetCard as AdvancedCard).descriptionPinyin}</div>}
+                <div className="text-sm sm:text-base text-gray-300 text-center max-w-md">{(targetCard as AdvancedCard).description}</div>
               </>
             )}
           </div>
