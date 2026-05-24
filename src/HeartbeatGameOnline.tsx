@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ref, set, onValue, onDisconnect, remove, update, increment, serverTimestamp, get } from 'firebase/database';
 import { db } from './firebase';
 import chainData from './data/chain_dictionary.json';
@@ -299,6 +299,8 @@ export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit:
   }, [role, roomId, processAnswer]);
 
   // ==================== 游戏循环（主播端） ====================
+  const lastSyncRef = useRef(0);
+
   const gameLoop = useCallback((ts: number) => {
     if (phaseRef.current !== 'playing') return;
 
@@ -322,7 +324,12 @@ export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit:
       .filter(s => s.y < GAME_H + 50);
 
     setStones([...state.stones]);
-    syncToFirebaseRef.current();
+
+    // 降低 Firebase 同步频率：每 100ms 同步一次
+    if (ts - lastSyncRef.current > 100) {
+      lastSyncRef.current = ts;
+      syncToFirebaseRef.current();
+    }
 
     frameRef.current = requestAnimationFrame(gameLoop);
   }, []);
@@ -378,6 +385,11 @@ export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit:
   }, [phase, role]);
 
   // ==================== 观众端同步 ====================
+  // 使用本地动画循环平滑插值，减少 Firebase 同步频率
+  const guestAnimFrameRef = useRef<number>(0);
+  const guestStonesRef = useRef<Stone[]>([]);
+  const guestLastSyncRef = useRef<number>(0);
+
   useEffect(() => {
     if (role !== 'guest' || !roomId) return;
 
@@ -391,21 +403,55 @@ export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit:
       setHostLane(state.hostLane ?? 0);
       setGuestLane(state.guestLane ?? 7);
       setDifficulty(state.difficulty ?? 1);
-      setStones(state.stones ?? []);
       setTimeLeft(state.timeLeft ?? 0);
       setGameDuration(state.gameDuration ?? 60);
+
+      // 合并同步：保留本地 y 位置，更新其他属性
+      const syncedStones = (state.stones ?? []) as Stone[];
+      const localStones = guestStonesRef.current;
+      const merged = syncedStones.map((s: Stone) => {
+        const local = localStones.find(ls => ls.id === s.id);
+        return local ? { ...s, y: local.y } : s;
+      });
+      guestStonesRef.current = merged;
+      setStones(merged);
       animRef.current = {
-        stones: state.stones ?? [],
+        stones: merged,
         hostLane: state.hostLane ?? 0,
         guestLane: state.guestLane ?? 7,
         hostScore: state.hostScore ?? 0,
         guestScore: state.guestScore ?? 0,
         timeLeft: state.timeLeft ?? 0,
       };
+      guestLastSyncRef.current = Date.now();
     });
 
     return () => unsub();
   }, [role, roomId]);
+
+  // 观众端本地动画循环（平滑石头下落）
+  useEffect(() => {
+    if (role !== 'guest' || phase !== 'playing') return;
+
+    const loop = () => {
+      const now = Date.now();
+      const dt = Math.min((now - guestLastSyncRef.current) / 16, 3); // 限制最大帧跳变
+      guestLastSyncRef.current = now;
+
+      guestStonesRef.current = guestStonesRef.current
+        .map(s => {
+          if (!s.alive) return s;
+          return { ...s, y: s.y + s.speed * dt };
+        })
+        .filter(s => s.y < GAME_H + 50);
+
+      setStones([...guestStonesRef.current]);
+      guestAnimFrameRef.current = requestAnimationFrame(loop);
+    };
+
+    guestAnimFrameRef.current = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(guestAnimFrameRef.current);
+  }, [role, phase]);
 
   // ==================== 观众端监听房间关闭/被踢 ====================
   useEffect(() => {
@@ -709,24 +755,44 @@ export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit:
   };
 
   // ==================== 输入处理 ====================
+  const [isComposing, setIsComposing] = useState(false);
+
   const handleInputChange = (val: string) => {
     setInput(val);
+  };
+
+  const handleCompositionStart = () => setIsComposing(true);
+  const handleCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
+    setIsComposing(false);
+    const val = e.currentTarget.value;
+    setInput(val);
+    // 输入法完成后再检查答案
     if (!val.trim() || phase !== 'playing') return;
+    checkAnswer(val.trim());
+  };
+
+  const checkAnswer = (val: string) => {
     if (role === 'host') {
       if (processAnswer(val, 'host')) {
         setInput('');
       }
     } else if (role === 'guest') {
       const state = animRef.current;
-      const matched = state.stones.some(s => s.alive && s.word === val.trim());
+      const matched = state.stones.some(s => s.alive && s.word === val);
       if (matched) {
-        sendGuestInput(val.trim());
+        sendGuestInput(val);
         setInput('');
       }
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (!isComposing && input.trim() && phase === 'playing') {
+        checkAnswer(input.trim());
+      }
+    }
     if (e.key === 'Escape') {
       if (role === 'host') {
         cancelAnimationFrame(frameRef.current);
@@ -1034,9 +1100,9 @@ export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit:
         <div className="flex items-center gap-2 bg-purple-900/40 rounded-lg px-3 py-1 border border-purple-700/40">
           <span className="text-lg">🎙️</span>
           <span className="text-purple-300 font-bold text-sm">主播</span>
-          <motion.span key={hostScore} animate={{ scale: [1, 1.3, 1] }} className="text-yellow-400 font-black text-lg">
+          <span className="text-yellow-400 font-black text-lg">
             {hostScore}
-          </motion.span>
+          </span>
         </div>
 
         {/* 倒计时 */}
@@ -1048,9 +1114,9 @@ export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit:
         <div className="flex items-center gap-2 bg-cyan-900/40 rounded-lg px-3 py-1 border border-cyan-700/40">
           <span className="text-lg">👥</span>
           <span className="text-cyan-300 font-bold text-sm">观众</span>
-          <motion.span key={guestScore} animate={{ scale: [1, 1.3, 1] }} className="text-yellow-400 font-black text-lg">
+          <span className="text-yellow-400 font-black text-lg">
             {guestScore}
-          </motion.span>
+          </span>
         </div>
       </div>
 
@@ -1078,28 +1144,29 @@ export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit:
           </div>
         ))}
 
-        {/* Falling Stones */}
-        <AnimatePresence>
-          {activeStones.map(s => {
-            const colors = LANE_COLORS[s.lane];
-            return (
-              <motion.div key={s.id}
-                initial={{ opacity: 0, scale: 0.5, y: -20 }}
-                animate={{ opacity: 1, scale: 1, y: s.y }}
-                exit={{ opacity: 0, scale: 0.5 }}
-                transition={{ type: 'linear' }}
-                className={`absolute flex flex-col items-center justify-center rounded-lg shadow-lg bg-gradient-to-br ${colors.bg} ${colors.border} border-2`}
-                style={{ width: STONE_W, height: STONE_H, left: LANES[s.lane] }}>
-                <div className={`text-[10px] font-bold ${colors.text} leading-tight text-center px-1`}>
-                  {s.pinyin}
-                </div>
-                <div className="text-[8px] opacity-80 text-white mt-0.5 leading-tight text-center px-0.5">
-                  {s.meaning}
-                </div>
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
+        {/* Falling Stones - 使用 CSS transform 而非 motion.div 提高性能 */}
+        {activeStones.map(s => {
+          const colors = LANE_COLORS[s.lane];
+          return (
+            <div key={s.id}
+              className={`absolute flex flex-col items-center justify-center rounded-lg shadow-lg bg-gradient-to-br ${colors.bg} ${colors.border} border-2 will-change-transform`}
+              style={{
+                width: STONE_W,
+                height: STONE_H,
+                left: LANES[s.lane],
+                transform: `translateY(${s.y}px)`,
+                opacity: s.y < -STONE_H ? 0 : 1,
+                transition: role === 'guest' ? 'none' : 'transform 0.05s linear',
+              }}>
+              <div className={`text-[10px] font-bold ${colors.text} leading-tight text-center px-1`}>
+                {s.pinyin}
+              </div>
+              <div className="text-[8px] opacity-80 text-white mt-0.5 leading-tight text-center px-0.5">
+                {s.meaning}
+              </div>
+            </div>
+          );
+        })}
 
         {/* Particles */}
         {particles.map(p => (
@@ -1107,25 +1174,33 @@ export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit:
             style={{ left: p.x, top: p.y, width: p.size, height: p.size, background: p.color, opacity: p.life, boxShadow: `0 0 ${p.size * 2}px ${p.color}` }} />
         ))}
 
-        {/* Host Character */}
-        <motion.div
-          animate={{ x: LANES[hostLane] + (STONE_W - PLAYER_W) / 2, y: PLAYER_Y }}
-          transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-          className="absolute flex flex-col items-center justify-center rounded-xl shadow-xl border-2 bg-gradient-to-br from-purple-500 to-pink-600 border-purple-300"
-          style={{ width: PLAYER_W, height: PLAYER_H }}>
+        {/* Host Character - CSS transform 替代 motion.div */}
+        <div
+          className="absolute flex flex-col items-center justify-center rounded-xl shadow-xl border-2 bg-gradient-to-br from-purple-500 to-pink-600 border-purple-300 will-change-transform"
+          style={{
+            width: PLAYER_W,
+            height: PLAYER_H,
+            left: LANES[hostLane] + (STONE_W - PLAYER_W) / 2,
+            top: PLAYER_Y,
+            transition: 'left 0.2s ease-out',
+          }}>
           <div className="text-xl">🎙️</div>
           <div className="text-[9px] font-bold text-purple-100">主播</div>
-        </motion.div>
+        </div>
 
-        {/* Guest Character */}
-        <motion.div
-          animate={{ x: LANES[guestLane] + (STONE_W - PLAYER_W) / 2, y: PLAYER_Y }}
-          transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-          className="absolute flex flex-col items-center justify-center rounded-xl shadow-xl border-2 bg-gradient-to-br from-cyan-500 to-blue-600 border-cyan-300"
-          style={{ width: PLAYER_W, height: PLAYER_H }}>
+        {/* Guest Character - CSS transform 替代 motion.div */}
+        <div
+          className="absolute flex flex-col items-center justify-center rounded-xl shadow-xl border-2 bg-gradient-to-br from-cyan-500 to-blue-600 border-cyan-300 will-change-transform"
+          style={{
+            width: PLAYER_W,
+            height: PLAYER_H,
+            left: LANES[guestLane] + (STONE_W - PLAYER_W) / 2,
+            top: PLAYER_Y,
+            transition: 'left 0.2s ease-out',
+          }}>
           <div className="text-xl">👥</div>
           <div className="text-[9px] font-bold text-cyan-100">观众</div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Input Area */}
@@ -1147,6 +1222,8 @@ export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit:
               value={input}
               onChange={e => handleInputChange(e.target.value)}
               onKeyDown={handleKeyDown}
+              onCompositionStart={handleCompositionStart}
+              onCompositionEnd={handleCompositionEnd}
               placeholder="输入汉字..."
               autoComplete="off"
               autoCorrect="off"
