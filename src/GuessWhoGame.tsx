@@ -341,6 +341,7 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
   const [isMyTurn, setIsMyTurn] = useState(false);
   const [_opponentFlipped, setOpponentFlipped] = useState<Set<string>>(new Set());
   const [pendingQuestion, setPendingQuestion] = useState<{ from: string; question: string } | null>(null);
+  const [pendingGuess, setPendingGuess] = useState<{ from: string; guess: string } | null>(null);
   // opponentName reserved for future UI display
   void '对方'; // placeholder for opponentName
   const deviceId = getDeviceId();
@@ -476,6 +477,13 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
           setIsMyTurn(data.currentTurn === 'host');
           setOpponentFlipped(new Set(data.guestFlipped || []));
           setPendingQuestion(data.pendingQuestion?.from === 'guest' ? data.pendingQuestion : null);
+          // 处理对方的猜测
+          if (data.pendingGuess?.from === 'guest') {
+            setPendingGuess(data.pendingGuess);
+            setPhase('answering');
+          } else {
+            setPendingGuess(null);
+          }
           setPhase('playing');
         }
         if (data.winner) {
@@ -527,6 +535,13 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
         setIsMyTurn(d.currentTurn === 'guest');
         setOpponentFlipped(new Set(d.hostFlipped || []));
         setPendingQuestion(d.pendingQuestion?.from === 'host' ? d.pendingQuestion : null);
+        // 处理对方的猜测
+        if (d.pendingGuess?.from === 'host') {
+          setPendingGuess(d.pendingGuess);
+          setPhase('answering');
+        } else {
+          setPendingGuess(null);
+        }
         if (d.winner) {
           const won = d.winner === 'guest';
           setGameResult(won ? 'win' : 'lose');
@@ -571,21 +586,43 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
   }, [roomId, pendingQuestion, role]);
 
   // ==================== 联机：猜答 ====================
+  // 猜答案流程：猜的人把答案发到 Firebase → 对方验证 → 写回结果
   const handleOnlineGuess = useCallback(async (guess: string) => {
-    if (!targetCard || !roomId) return;
-    const isChar = 'word' in targetCard;
-    const target = isChar ? (targetCard as BasicCard).word : (targetCard as AdvancedCard).name;
-    const isCorrect = guess.trim() === target;
+    if (!roomId || !isMyTurn) return;
+    const roomRef = ref(db, `guessWhoRooms/${roomId}`);
+    // 写入我的猜测，等待对方验证
+    await update(roomRef, {
+      pendingGuess: { from: role, guess: guess.trim(), timestamp: Date.now() },
+      currentTurn: role === 'host' ? 'guest' : 'host', // 猜完交给对方验证
+    });
+    setPhase('answering'); // 等待对方回答
+  }, [roomId, isMyTurn, role]);
+
+  // 验证对方的猜测
+  const handleVerifyGuess = useCallback(async (isCorrect: boolean) => {
+    if (!roomId || !pendingGuess) return;
     const roomRef = ref(db, `guessWhoRooms/${roomId}`);
     if (isCorrect) {
-      await update(roomRef, { winner: role, phase: 'gameover' });
-      setGameResult('win');
+      // 对方猜对了，我输了
+      await update(roomRef, {
+        winner: pendingGuess.from,
+        phase: 'gameover',
+        pendingGuess: null,
+      });
+      setGameResult('lose');
+      setPhase('gameover');
     } else {
-      setFeedback('❌ 猜错了！对方继续。');
+      // 对方猜错了，继续游戏
+      await update(roomRef, {
+        pendingGuess: null,
+        currentTurn: role, // 验证完后，轮到我提问/猜
+      });
+      setPendingQuestion(null);
+      setPhase('playing');
+      setFeedback(`❌ "${pendingGuess.guess}" 猜错了！你继续。`);
       setTimeout(() => setFeedback(''), 2500);
     }
-    setPhase('gameover');
-  }, [targetCard, roomId, role]);
+  }, [roomId, pendingGuess, role]);
 
   // ==================== 工具函数 ====================
   const getActiveCount = () => boardCards.filter(bc => !bc.flipped).length;
@@ -804,6 +841,23 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
               <div className="flex gap-3 justify-center">
                 <button className="bg-green-500 rounded-lg px-5 py-2 font-bold" onClick={() => handleOnlineAnswer(true)}>✓ 是</button>
                 <button className="bg-red-500 rounded-lg px-5 py-2 font-bold" onClick={() => handleOnlineAnswer(false)}>✗ 不是</button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* 联机：对方猜答案要我验证 */}
+        <AnimatePresence>
+          {onlineMode === 'online' && pendingGuess && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
+              className="mx-4 mb-2 bg-purple-600 rounded-xl p-3 text-center"
+            >
+              <p className="font-bold mb-2">对方猜：<span className="text-yellow-300 text-lg">"{pendingGuess.guess}"</span></p>
+              <p className="text-sm mb-2">是对方要找的答案吗？</p>
+              <div className="flex gap-3 justify-center">
+                <button className="bg-green-500 rounded-lg px-5 py-2 font-bold" onClick={() => handleVerifyGuess(true)}>✓ 猜对了！</button>
+                <button className="bg-red-500 rounded-lg px-5 py-2 font-bold" onClick={() => handleVerifyGuess(false)}>✗ 猜错了</button>
               </div>
             </motion.div>
           )}
