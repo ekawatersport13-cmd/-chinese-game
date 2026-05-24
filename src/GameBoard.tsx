@@ -49,7 +49,7 @@ const getAllWords = (): VocabWord[] => {
   return all;
 };
 
-// 独体字/自引用字：没有真正的偏旁拆分，不适合拼字模式
+// 独体字/自引用字/拆分错误的字：不适合拼字和找字模式
 const COMPOSE_BLACKLIST = new Set([
   // HSK1 独体字
   '不','人','大','小','了','文','来','多',
@@ -65,6 +65,8 @@ const COMPOSE_BLACKLIST = new Set([
   '击','殳','段','劝','昌','朋',
   // 原有黑名单
   '需','象','卖','制','弟',
+  // 部件拆分错误/过于复杂，不适合找字模式
+  '微','幕','膝',
 ]);
 
 // 上下结构的字：显示时改为纵向排列
@@ -91,11 +93,12 @@ const VERTICAL_LAYOUT_WORDS = new Set([
   '务','条','先','光','元','兄','充','党','坐','是','学',
 ]);
 
-const isValidWord = (w: VocabWord, mode: GameMode = 'compose'): boolean => {
+const isValidWord = (w: VocabWord): boolean => {
   const c = w.components || [];
   if (c.length < 2) return false;
   if (c.some((x) => x === w.word)) return false;
-  if (mode === 'compose' && COMPOSE_BLACKLIST.has(w.word)) return false;
+  // 黑名单：拆分错误/过于复杂/独体字的字，不用于拼字和找字模式
+  if (COMPOSE_BLACKLIST.has(w.word)) return false;
   return true;
 };
 
@@ -264,13 +267,13 @@ const getWordsByLevel = (level: number, count = 10): VocabWord[] => {
   const words = ((hskData as any)[key] || []) as any[];
   const valid = words
     .map((w: any) => ({ ...w, level }))
-    .filter((w: VocabWord) => isValidWord(w, 'compose'));
+    .filter((w: VocabWord) => isValidWord(w));
   if (valid.length === 0) return [];
   return [...valid].sort(() => Math.random() - 0.5).slice(0, Math.min(count, valid.length));
 };
 
 const getFindWords = (count = 20): VocabWord[] => {
-  const all = getAllWords().filter((w) => isValidWord(w, 'find'));
+  const all = getAllWords().filter((w) => isValidWord(w));
   const valid = all.filter((w) => hasEnoughDistractors(w, all, 3));
   return [...valid].sort(() => Math.random() - 0.5).slice(0, Math.min(count, valid.length));
 };
@@ -325,7 +328,7 @@ export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline, on
 
   // ========== 找字模式：生成汉字选项 ==========
   const generateWordOptions = useCallback((target: VocabWord): { options: VocabWord[]; knownComps: string[]; missingComp: string } => {
-    const pool = getAllWords().filter((w) => isValidWord(w, 'find'));
+    const pool = getAllWords().filter((w) => isValidWord(w));
     const { known, missing } = getBestKnownComps(target, pool);
     const distractors = generateFindDistractors(target, pool, 3, known);
     return {
