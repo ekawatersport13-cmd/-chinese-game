@@ -164,6 +164,81 @@ export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit:
     }
   }, [initialRoomId]);
 
+  // 刷新恢复：从 sessionStorage 恢复之前的房间
+  useEffect(() => {
+    if (phase !== 'menu' || role || initialRoomId) return; // 已有角色或URL参数时不恢复
+
+    try {
+      const saved = sessionStorage.getItem('hb_online_session');
+      if (!saved) return;
+      const { roomId: savedRoomId, role: savedRole } = JSON.parse(saved);
+
+      // 验证房间是否还存在
+      get(ref(db, `rooms/${savedRoomId}`)).then(snap => {
+        if (!snap.exists()) {
+          sessionStorage.removeItem('hb_online_session');
+          return;
+        }
+        const data = snap.val();
+        if (data.hostKicked) {
+          sessionStorage.removeItem('hb_online_session');
+          return;
+        }
+
+        if (savedRole === 'host') {
+          // 主播恢复
+          roomRef.current = ref(db, `rooms/${savedRoomId}`);
+          setRoomId(savedRoomId);
+          setRole('host');
+          setDifficulty(data.difficultyLevel ?? 1);
+          setGameDuration(data.gameDuration ?? 60);
+
+          // 监听观众状态
+          onValue(ref(db, `rooms/${savedRoomId}/hasGuest`), (snap) => {
+            setHasGuest(snap.val() === true);
+          });
+
+          // 如果游戏正在进行，同步状态
+          if (data.state && data.state.phase === 'playing') {
+            setPhase('playing');
+            setHostScore(data.state.hostScore ?? 0);
+            setGuestScore(data.state.guestScore ?? 0);
+            setHostLane(data.state.hostLane ?? 0);
+            setGuestLane(data.state.guestLane ?? 7);
+            setStones(data.state.stones ?? []);
+            setTimeLeft(data.state.timeLeft ?? 0);
+            setGameDuration(data.state.gameDuration ?? 60);
+            animRef.current = {
+              stones: data.state.stones ?? [],
+              hostLane: data.state.hostLane ?? 0,
+              guestLane: data.state.guestLane ?? 7,
+              hostScore: data.state.hostScore ?? 0,
+              guestScore: data.state.guestScore ?? 0,
+              timeLeft: data.state.timeLeft ?? 0,
+            };
+          } else {
+            setPhase('waiting');
+          }
+        } else if (savedRole === 'guest') {
+          // 观众恢复
+          const myId = getDeviceId();
+          if (data.guestId !== myId) {
+            sessionStorage.removeItem('hb_online_session');
+            return;
+          }
+          roomRef.current = ref(db, `rooms/${savedRoomId}`);
+          setRoomId(savedRoomId);
+          setRole('guest');
+          // Firebase onValue 监听会自动同步状态（已有的观众端同步 useEffect）
+        }
+      }).catch(() => {
+        sessionStorage.removeItem('hb_online_session');
+      });
+    } catch {
+      sessionStorage.removeItem('hb_online_session');
+    }
+  }, []);
+
   // ==================== 粒子效果 ====================
   const spawnParticles = useCallback((x: number, y: number, color: string, count: number) => {
     const newParts: typeof particles = [];
@@ -542,6 +617,8 @@ export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit:
         });
         // 断线清理
         onDisconnect(ref(db, `rooms/${newRoomId}`)).remove();
+        // 保存到 sessionStorage，支持刷新恢复
+        sessionStorage.setItem('hb_online_session', JSON.stringify({ roomId: newRoomId, role: 'host' }));
       })
       .catch((err) => {
         console.error('[createRoom] Firebase 写入失败:', err);
@@ -620,6 +697,8 @@ export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit:
             setRoomId(roomCode);
             setRole('guest');
             setError('');
+            // 保存到 sessionStorage，支持刷新恢复
+            sessionStorage.setItem('hb_online_session', JSON.stringify({ roomId: roomCode, role: 'guest' }));
           });
       })
       .catch((err) => {
@@ -637,6 +716,8 @@ export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit:
   };
 
   const leaveRoom = async () => {
+    // 清除 sessionStorage
+    sessionStorage.removeItem('hb_online_session');
     if (roomId) {
       if (role === 'host') {
         await remove(ref(db, `rooms/${roomId}`)).catch(err => console.warn('删除房间失败:', err));
@@ -698,6 +779,7 @@ export default function HeartbeatGameOnline({ onExit, initialRoomId }: { onExit:
 
   const endGame = () => {
     setPhase('gameover');
+    sessionStorage.removeItem('hb_online_session');
     cancelAnimationFrame(frameRef.current);
     clearInterval(timerRef.current);
 

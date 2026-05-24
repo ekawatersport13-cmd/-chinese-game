@@ -4,6 +4,7 @@ import HeartbeatGame from './HeartbeatGame'
 import HeartbeatGameOnline from './HeartbeatGameOnline'
 import PairGame from './PairGame'
 import GuessWhoGame from './GuessWhoGame'
+import BackgroundMusic from './BackgroundMusic'
 import { getDeviceId, getDeviceInfo } from './deviceId';
 import { db } from './firebase';
 import { ref, set, serverTimestamp } from 'firebase/database';
@@ -13,7 +14,7 @@ function App() {
   const [mode, setMode] = useState<'main' | 'heartbeat' | 'heartbeat-on-line' | 'pair' | 'guess-who'>('main');
   const [initialRoomId, setInitialRoomId] = useState<string>('');
 
-  // 初始化：检测 URL 房间号参数 + 记录设备访问 + Firebase Analytics
+  // 初始化：检测 URL 房间号参数 + sessionStorage 恢复 + 记录设备访问
   useEffect(() => {
     // 检测 URL 中的房间号参数
     const params = new URLSearchParams(window.location.search);
@@ -24,6 +25,18 @@ function App() {
       // 清理 URL（移除 room 参数，避免刷新时重复处理）
       const newUrl = window.location.pathname + window.location.hash;
       window.history.replaceState({}, '', newUrl);
+    } else {
+      // 没有URL参数时，检查 sessionStorage 是否有联机房间
+      try {
+        const saved = sessionStorage.getItem('hb_online_session');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed.roomId) {
+            setInitialRoomId('');
+            setMode('heartbeat-on-line');
+          }
+        }
+      } catch {}
     }
     // 记录设备访问
     const recordVisit = async () => {
@@ -77,22 +90,22 @@ function App() {
   }, []);
 
   if (mode === 'heartbeat') {
-    return <HeartbeatGame onExit={() => setMode('main')} />;
+    return <><HeartbeatGame onExit={() => setMode('main')} /><BackgroundMusic style="chinese" /></>;
   }
 
   if (mode === 'heartbeat-on-line') {
-    return <HeartbeatGameOnline onExit={() => setMode('main')} initialRoomId={initialRoomId} />;
+    return <><HeartbeatGameOnline onExit={() => setMode('main')} initialRoomId={initialRoomId} /><BackgroundMusic style="celtic" /></>;
   }
 
   if (mode === 'pair') {
-    return <PairGame onExit={() => setMode('main')} />;
+    return <><PairGame onExit={() => setMode('main')} /><BackgroundMusic style="soft" /></>;
   }
 
   if (mode === 'guess-who') {
-    return <GuessWhoGame onExit={() => setMode('main')} />;
+    return <><GuessWhoGame onExit={() => setMode('main')} /><BackgroundMusic style="soft" /></>;
   }
 
-  return <GameBoard onEnterHeartbeat={() => setMode('heartbeat')} onEnterHeartbeatOnline={() => setMode('heartbeat-on-line')} onEnterPair={() => setMode('pair')} onEnterGuessWho={() => setMode('guess-who')} />;
+  return <><GameBoard onEnterHeartbeat={() => setMode('heartbeat')} onEnterHeartbeatOnline={() => setMode('heartbeat-on-line')} onEnterPair={() => setMode('pair')} onEnterGuessWho={() => setMode('guess-who')} /><BackgroundMusic style="soft" defaultEnabled /></>;
 }
 
 export default App;
