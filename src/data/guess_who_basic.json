@@ -7261,8 +7261,11 @@
       "pinyin": "yīdiǎnr",
       "indonesian": "sedikit",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "灬",
+        "占"
+      ],
+      "componentCount": 2,
       "firstChar": "一",
       "lastChar": "儿",
       "charCount": 3,
@@ -7295,8 +7298,11 @@
       "pinyin": "shàngxué",
       "indonesian": "sekolah",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "子",
+        "冖"
+      ],
+      "componentCount": 2,
       "firstChar": "上",
       "lastChar": "学",
       "charCount": 2,
@@ -7499,8 +7505,11 @@
       "pinyin": "búhuì",
       "indonesian": "tidak bisa",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "人",
+        "云"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "会",
       "charCount": 2,
@@ -7533,8 +7542,11 @@
       "pinyin": "bùhǎo",
       "indonesian": "tidak baik",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "子",
+        "女"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "好",
       "charCount": 2,
@@ -7550,8 +7562,11 @@
       "pinyin": "bùkèqi",
       "indonesian": "tidak",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "各",
+        "宀"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "气",
       "charCount": 3,
@@ -7567,8 +7582,11 @@
       "pinyin": "bùduì",
       "indonesian": "tidak",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "又",
+        "寸"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "对",
       "charCount": 2,
@@ -7584,8 +7602,11 @@
       "pinyin": "búshì",
       "indonesian": "bukan",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "疋",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "是",
       "charCount": 2,
@@ -7618,8 +7639,11 @@
       "pinyin": "búyào",
       "indonesian": "tidak mau",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "女",
+        "西"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "要",
       "charCount": 2,
@@ -7635,8 +7659,11 @@
       "pinyin": "dōngxī",
       "indonesian": "barang",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "一",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "东",
       "lastChar": "西",
       "charCount": 2,
@@ -7652,8 +7679,11 @@
       "pinyin": "dōngbian",
       "indonesian": "timur",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "一",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "东",
       "lastChar": "边",
       "charCount": 2,
@@ -7669,8 +7699,11 @@
       "pinyin": "zhōngwǔ",
       "indonesian": "siang",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "午",
       "charCount": 2,
@@ -7686,8 +7719,13 @@
       "pinyin": "zhōngguó",
       "indonesian": "Tiongkok",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "玉",
+        "口",
+        "囗",
+        "丨"
+      ],
+      "componentCount": 4,
       "firstChar": "中",
       "lastChar": "国",
       "charCount": 2,
@@ -7703,8 +7741,13 @@
       "pinyin": "zhōngxué",
       "indonesian": "sekolah menengah",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "子",
+        "冖",
+        "丨"
+      ],
+      "componentCount": 4,
       "firstChar": "中",
       "lastChar": "学",
       "charCount": 2,
@@ -7720,8 +7763,13 @@
       "pinyin": "zhōngxuéshēng",
       "indonesian": "sekolah menengah",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "子",
+        "冖",
+        "丨"
+      ],
+      "componentCount": 4,
       "firstChar": "中",
       "lastChar": "生",
       "charCount": 3,
@@ -7822,8 +7870,12 @@
       "pinyin": "tāmen",
       "indonesian": "mereka",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亻",
+        "也",
+        "门"
+      ],
+      "componentCount": 3,
       "firstChar": "他",
       "lastChar": "们",
       "charCount": 2,
@@ -7839,8 +7891,12 @@
       "pinyin": "nǐmen",
       "indonesian": "kalian",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亻",
+        "尔",
+        "门"
+      ],
+      "componentCount": 3,
       "firstChar": "你",
       "lastChar": "们",
       "charCount": 2,
@@ -7890,8 +7946,11 @@
       "pinyin": "guānshàng",
       "indonesian": "dekat",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "天",
+        "丷"
+      ],
+      "componentCount": 2,
       "firstChar": "关",
       "lastChar": "上",
       "charCount": 2,
@@ -7958,8 +8017,11 @@
       "pinyin": "běijīng",
       "indonesian": "Beijing",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亠",
+        "小"
+      ],
+      "componentCount": 2,
       "firstChar": "北",
       "lastChar": "京",
       "charCount": 2,
@@ -8026,8 +8088,11 @@
       "pinyin": "wǔfàn",
       "indonesian": "makan siang",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "反",
+        "饣"
+      ],
+      "componentCount": 2,
       "firstChar": "午",
       "lastChar": "饭",
       "charCount": 2,
@@ -8094,8 +8159,11 @@
       "pinyin": "chīfàn",
       "indonesian": "Makan",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "反",
+        "饣"
+      ],
+      "componentCount": 2,
       "firstChar": "吃",
       "lastChar": "饭",
       "charCount": 2,
@@ -8111,8 +8179,11 @@
       "pinyin": "tóngxué",
       "indonesian": "teman sekelas",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "子",
+        "冖"
+      ],
+      "componentCount": 2,
       "firstChar": "同",
       "lastChar": "学",
       "charCount": 2,
@@ -8128,8 +8199,11 @@
       "pinyin": "míngzi",
       "indonesian": "nama",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "子",
+        "冖"
+      ],
+      "componentCount": 2,
       "firstChar": "名",
       "lastChar": "字",
       "charCount": 2,
@@ -8179,8 +8253,13 @@
       "pinyin": "tīngxiě",
       "indonesian": "mendikte",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "与",
+        "冖",
+        "王"
+      ],
+      "componentCount": 4,
       "firstChar": "听",
       "lastChar": "写",
       "charCount": 2,
@@ -8196,8 +8275,11 @@
       "pinyin": "tīngdào",
       "indonesian": "mendengar",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "王"
+      ],
+      "componentCount": 2,
       "firstChar": "听",
       "lastChar": "到",
       "charCount": 2,
@@ -8213,8 +8295,11 @@
       "pinyin": "tīngjiàn",
       "indonesian": "mendengar",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "王"
+      ],
+      "componentCount": 2,
       "firstChar": "听",
       "lastChar": "见",
       "charCount": 2,
@@ -8298,8 +8383,11 @@
       "pinyin": "huídào",
       "indonesian": "kembali",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "囗"
+      ],
+      "componentCount": 2,
       "firstChar": "回",
       "lastChar": "到",
       "charCount": 2,
@@ -8315,8 +8403,13 @@
       "pinyin": "huíqu",
       "indonesian": "kembali",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "土",
+        "厶",
+        "囗"
+      ],
+      "componentCount": 4,
       "firstChar": "回",
       "lastChar": "去",
       "charCount": 2,
@@ -8332,8 +8425,13 @@
       "pinyin": "huíjiā",
       "indonesian": "pulang",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "囗",
+        "宀",
+        "豕"
+      ],
+      "componentCount": 4,
       "firstChar": "回",
       "lastChar": "家",
       "charCount": 2,
@@ -8349,8 +8447,11 @@
       "pinyin": "huílai",
       "indonesian": "kembali",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "囗"
+      ],
+      "componentCount": 2,
       "firstChar": "回",
       "lastChar": "来",
       "charCount": 2,
@@ -8366,8 +8467,11 @@
       "pinyin": "guówài",
       "indonesian": "asing",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "玉",
+        "囗"
+      ],
+      "componentCount": 2,
       "firstChar": "国",
       "lastChar": "外",
       "charCount": 2,
@@ -8400,8 +8504,11 @@
       "pinyin": "wàiguó",
       "indonesian": "asing",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "玉",
+        "囗"
+      ],
+      "componentCount": 2,
       "firstChar": "外",
       "lastChar": "国",
       "charCount": 2,
@@ -8468,8 +8575,11 @@
       "pinyin": "Dàxué",
       "indonesian": "perguruan tinggi",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "子",
+        "冖"
+      ],
+      "componentCount": 2,
       "firstChar": "大",
       "lastChar": "学",
       "charCount": 2,
@@ -8485,8 +8595,11 @@
       "pinyin": "dàxuéshēng",
       "indonesian": "mahasiswa",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "子",
+        "冖"
+      ],
+      "componentCount": 2,
       "firstChar": "大",
       "lastChar": "生",
       "charCount": 3,
@@ -8536,8 +8649,11 @@
       "pinyin": "nǚháir",
       "indonesian": "gadis",
       "hsk": 1,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "子",
+        "亥"
+      ],
+      "componentCount": 2,
       "firstChar": "女",
       "lastChar": "儿",
       "charCount": 3,
@@ -8570,8 +8686,11 @@
       "pinyin": "yīdiǎndiǎn",
       "indonesian": "sedikit demi sedikit",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "灬",
+        "占"
+      ],
+      "componentCount": 2,
       "firstChar": "一",
       "lastChar": "点",
       "charCount": 3,
@@ -8621,8 +8740,11 @@
       "pinyin": "yībùfen",
       "indonesian": "bagian",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "八",
+        "刀"
+      ],
+      "componentCount": 2,
       "firstChar": "一",
       "lastChar": "分",
       "charCount": 3,
@@ -8723,8 +8845,11 @@
       "pinyin": "bùyīdìng",
       "indonesian": "belum tentu",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "疋",
+        "宀"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "定",
       "charCount": 3,
@@ -8757,8 +8882,11 @@
       "pinyin": "bùdàn",
       "indonesian": "tidak hanya",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亻",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "但",
       "charCount": 2,
@@ -8842,8 +8970,11 @@
       "pinyin": "bùmǎn",
       "indonesian": "tidak puas",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "艹",
+        "氵"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "满",
       "charCount": 2,
@@ -8893,8 +9024,11 @@
       "pinyin": "Dōngběi",
       "indonesian": "timur laut",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "一",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "东",
       "lastChar": "北",
       "charCount": 2,
@@ -8910,8 +9044,11 @@
       "pinyin": "dōngnán",
       "indonesian": "tenggara",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "一",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "东",
       "lastChar": "南",
       "charCount": 2,
@@ -8927,8 +9064,11 @@
       "pinyin": "Dōngfāng",
       "indonesian": "timur",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "一",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "东",
       "lastChar": "方",
       "charCount": 2,
@@ -8944,8 +9084,11 @@
       "pinyin": "Zhōngyī",
       "indonesian": "TCM",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "医",
       "charCount": 2,
@@ -8961,8 +9104,13 @@
       "pinyin": "zhōngxiǎoxué",
       "indonesian": "sekolah dasar dan menengah",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "子",
+        "冖",
+        "丨"
+      ],
+      "componentCount": 4,
       "firstChar": "中",
       "lastChar": "学",
       "charCount": 3,
@@ -8978,8 +9126,11 @@
       "pinyin": "zhōngnián",
       "indonesian": "setengah baya",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "年",
       "charCount": 2,
@@ -8995,8 +9146,11 @@
       "pinyin": "zhōngjí",
       "indonesian": "menengah",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "级",
       "charCount": 2,
@@ -9012,8 +9166,11 @@
       "pinyin": "zhōngcān",
       "indonesian": "makanan Cina",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "餐",
       "charCount": 2,
@@ -9029,8 +9186,11 @@
       "pinyin": "wèishénme",
       "indonesian": "mengapa",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "丶",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "为",
       "lastChar": "么",
       "charCount": 3,
@@ -9063,8 +9223,11 @@
       "pinyin": "shìqing",
       "indonesian": "hal",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "忄",
+        "青"
+      ],
+      "componentCount": 2,
       "firstChar": "事",
       "lastChar": "情",
       "charCount": 2,
@@ -9080,8 +9243,11 @@
       "pinyin": "jiāopéngyou",
       "indonesian": "berteman",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "又",
+        "十"
+      ],
+      "componentCount": 2,
       "firstChar": "交",
       "lastChar": "友",
       "charCount": 3,
@@ -9114,8 +9280,11 @@
       "pinyin": "rénmen",
       "indonesian": "orang",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亻",
+        "门"
+      ],
+      "componentCount": 2,
       "firstChar": "人",
       "lastChar": "们",
       "charCount": 2,
@@ -9131,8 +9300,11 @@
       "pinyin": "rénshù",
       "indonesian": "nomor",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "攵",
+        "娄"
+      ],
+      "componentCount": 2,
       "firstChar": "人",
       "lastChar": "数",
       "charCount": 2,
@@ -9318,8 +9490,12 @@
       "pinyin": "dànshì",
       "indonesian": "tetapi",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亻",
+        "疋",
+        "日"
+      ],
+      "componentCount": 3,
       "firstChar": "但",
       "lastChar": "是",
       "charCount": 2,
@@ -9335,8 +9511,11 @@
       "pinyin": "zhùfáng",
       "indonesian": "perumahan",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "户",
+        "方"
+      ],
+      "componentCount": 2,
       "firstChar": "住",
       "lastChar": "房",
       "charCount": 2,
@@ -9386,8 +9565,11 @@
       "pinyin": "tǐyùguǎn",
       "indonesian": "gimnasium",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "饣",
+        "官"
+      ],
+      "componentCount": 2,
       "firstChar": "体",
       "lastChar": "馆",
       "charCount": 3,
@@ -9437,8 +9619,11 @@
       "pinyin": "jiàqī",
       "indonesian": "liburan",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "其",
+        "月"
+      ],
+      "componentCount": 2,
       "firstChar": "假",
       "lastChar": "期",
       "charCount": 2,
@@ -9488,8 +9673,11 @@
       "pinyin": "zuòfàn",
       "indonesian": "masak",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "反",
+        "饣"
+      ],
+      "componentCount": 2,
       "firstChar": "做",
       "lastChar": "饭",
       "charCount": 2,
@@ -9556,8 +9744,11 @@
       "pinyin": "quánguó",
       "indonesian": "nasional",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "玉",
+        "囗"
+      ],
+      "componentCount": 2,
       "firstChar": "全",
       "lastChar": "国",
       "charCount": 2,
@@ -9573,8 +9764,11 @@
       "pinyin": "quánjiā",
       "indonesian": "seluruh keluarga",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "宀",
+        "豕"
+      ],
+      "componentCount": 2,
       "firstChar": "全",
       "lastChar": "家",
       "charCount": 2,
@@ -9675,8 +9869,13 @@
       "pinyin": "guānjī",
       "indonesian": "shutdown",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "天",
+        "木",
+        "丷",
+        "几"
+      ],
+      "componentCount": 4,
       "firstChar": "关",
       "lastChar": "机",
       "charCount": 2,
@@ -9726,8 +9925,11 @@
       "pinyin": "chūguó",
       "indonesian": "go abroad",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "玉",
+        "囗"
+      ],
+      "componentCount": 2,
       "firstChar": "出",
       "lastChar": "国",
       "charCount": 2,
@@ -9811,8 +10013,13 @@
       "pinyin": "fēnkāi",
       "indonesian": "terpisah",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "一",
+        "八",
+        "廾",
+        "刀"
+      ],
+      "componentCount": 4,
       "firstChar": "分",
       "lastChar": "开",
       "charCount": 2,
@@ -9828,8 +10035,13 @@
       "pinyin": "fēnshù",
       "indonesian": "skor",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "攵",
+        "八",
+        "娄",
+        "刀"
+      ],
+      "componentCount": 4,
       "firstChar": "分",
       "lastChar": "数",
       "charCount": 2,
@@ -9862,8 +10074,11 @@
       "pinyin": "jiāyóu",
       "indonesian": "pengisian bahan bakar",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "加",
       "lastChar": "油",
       "charCount": 2,
@@ -9879,8 +10094,11 @@
       "pinyin": "dòngwùyuán",
       "indonesian": "kebun binatang",
       "hsk": 2,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "云",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "动",
       "lastChar": "园",
       "charCount": 3,
@@ -9913,8 +10131,11 @@
       "pinyin": "yīhuìr",
       "indonesian": "sebentar",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "人",
+        "云"
+      ],
+      "componentCount": 2,
       "firstChar": "一",
       "lastChar": "儿",
       "charCount": 3,
@@ -9947,8 +10168,11 @@
       "pinyin": "yīdìng",
       "indonesian": "pasti",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "疋",
+        "宀"
+      ],
+      "componentCount": 2,
       "firstChar": "一",
       "lastChar": "定",
       "charCount": 2,
@@ -10015,8 +10239,11 @@
       "pinyin": "yībānyī",
       "indonesian": "biasa",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "舟",
+        "殳"
+      ],
+      "componentCount": 2,
       "firstChar": "一",
       "lastChar": "般",
       "charCount": 2,
@@ -10066,8 +10293,11 @@
       "pinyin": "shàngqù",
       "indonesian": "naik",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "土",
+        "厶"
+      ],
+      "componentCount": 2,
       "firstChar": "上",
       "lastChar": "去",
       "charCount": 2,
@@ -10151,8 +10381,11 @@
       "pinyin": "xiàqù",
       "indonesian": "down",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "土",
+        "厶"
+      ],
+      "componentCount": 2,
       "firstChar": "下",
       "lastChar": "去",
       "charCount": 2,
@@ -10253,8 +10486,11 @@
       "pinyin": "zhuāntí",
       "indonesian": "topic",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "页",
+        "是"
+      ],
+      "componentCount": 2,
       "firstChar": "专",
       "lastChar": "题",
       "charCount": 2,
@@ -10304,8 +10540,11 @@
       "pinyin": "dōngbù",
       "indonesian": "timur",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "一",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "东",
       "lastChar": "部",
       "charCount": 2,
@@ -10321,8 +10560,11 @@
       "pinyin": "gèzi",
       "indonesian": "tinggi badan",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亻",
+        "𠂉"
+      ],
+      "componentCount": 2,
       "firstChar": "个",
       "lastChar": "子",
       "charCount": 2,
@@ -10338,8 +10580,11 @@
       "pinyin": "zhōngwén",
       "indonesian": "Bahasa Tionghoa",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "文",
       "charCount": 2,
@@ -10355,8 +10600,11 @@
       "pinyin": "zhōngbù",
       "indonesian": "pusat",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "部",
       "charCount": 2,
@@ -10372,8 +10620,13 @@
       "pinyin": "zhōngjiān",
       "indonesian": "tengah",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "门",
+        "口",
+        "日",
+        "丨"
+      ],
+      "componentCount": 4,
       "firstChar": "中",
       "lastChar": "间",
       "charCount": 2,
@@ -10389,8 +10642,11 @@
       "pinyin": "wèile",
       "indonesian": "untuk",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "丶",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "为",
       "lastChar": "了",
       "charCount": 2,
@@ -10406,8 +10662,11 @@
       "pinyin": "zhǔyào",
       "indonesian": "utama",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "女",
+        "西"
+      ],
+      "componentCount": 2,
       "firstChar": "主",
       "lastChar": "要",
       "charCount": 2,
@@ -10423,8 +10682,11 @@
       "pinyin": "yuèduì",
       "indonesian": "band",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "人",
+        "阝"
+      ],
+      "componentCount": 2,
       "firstChar": "乐",
       "lastChar": "队",
       "charCount": 2,
@@ -10440,8 +10702,11 @@
       "pinyin": "xíguàn",
       "indonesian": "kebiasaan",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "丶",
+        "冋"
+      ],
+      "componentCount": 2,
       "firstChar": "习",
       "lastChar": "惯",
       "charCount": 2,
@@ -10525,8 +10790,11 @@
       "pinyin": "shìgù",
       "indonesian": "kecelakaan",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "攵",
+        "古"
+      ],
+      "componentCount": 2,
       "firstChar": "事",
       "lastChar": "故",
       "charCount": 2,
@@ -10542,8 +10810,11 @@
       "pinyin": "jiāoyì",
       "indonesian": "perdagangan",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "勿",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "交",
       "lastChar": "易",
       "charCount": 2,
@@ -10593,8 +10864,11 @@
       "pinyin": "qīnrén",
       "indonesian": "orang yang dicintai",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "木",
+        "立"
+      ],
+      "componentCount": 2,
       "firstChar": "亲",
       "lastChar": "人",
       "charCount": 2,
@@ -10729,8 +11003,11 @@
       "pinyin": "huìyuán",
       "indonesian": "anggota",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "人",
+        "云"
+      ],
+      "componentCount": 2,
       "firstChar": "会",
       "lastChar": "员",
       "charCount": 2,
@@ -10746,8 +11023,11 @@
       "pinyin": "huìyì",
       "indonesian": "rapat",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "人",
+        "云"
+      ],
+      "componentCount": 2,
       "firstChar": "会",
       "lastChar": "议",
       "charCount": 2,
@@ -10814,8 +11094,11 @@
       "pinyin": "bǎoān",
       "indonesian": "keamanan",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "女",
+        "宀"
+      ],
+      "componentCount": 2,
       "firstChar": "保",
       "lastChar": "安",
       "charCount": 2,
@@ -10848,8 +11131,11 @@
       "pinyin": "zuòkè",
       "indonesian": "tamu",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "各",
+        "宀"
+      ],
+      "componentCount": 2,
       "firstChar": "做",
       "lastChar": "客",
       "charCount": 2,
@@ -10899,8 +11185,11 @@
       "pinyin": "xiānjìn",
       "indonesian": "advanced",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "辶",
+        "井"
+      ],
+      "componentCount": 2,
       "firstChar": "先",
       "lastChar": "进",
       "charCount": 2,
@@ -10967,8 +11256,11 @@
       "pinyin": "gōngwùyuán",
       "indonesian": "civil servant",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "夨",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "公",
       "lastChar": "员",
       "charCount": 3,
@@ -11035,8 +11327,11 @@
       "pinyin": "gòngyǒu",
       "indonesian": "common",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "月",
+        "𠂉"
+      ],
+      "componentCount": 2,
       "firstChar": "共",
       "lastChar": "有",
       "charCount": 2,
@@ -11052,8 +11347,11 @@
       "pinyin": "guānyú",
       "indonesian": "tentang",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "天",
+        "丷"
+      ],
+      "componentCount": 2,
       "firstChar": "关",
       "lastChar": "于",
       "charCount": 2,
@@ -11069,8 +11367,11 @@
       "pinyin": "guānxīn",
       "indonesian": "memperhatikan",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "天",
+        "丷"
+      ],
+      "componentCount": 2,
       "firstChar": "关",
       "lastChar": "心",
       "charCount": 2,
@@ -11086,8 +11387,11 @@
       "pinyin": "guānzhù",
       "indonesian": "concern",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "天",
+        "丷"
+      ],
+      "componentCount": 2,
       "firstChar": "关",
       "lastChar": "注",
       "charCount": 2,
@@ -11103,8 +11407,11 @@
       "pinyin": "guānxi",
       "indonesian": "hubungan",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "天",
+        "丷"
+      ],
+      "componentCount": 2,
       "firstChar": "关",
       "lastChar": "系",
       "charCount": 2,
@@ -11120,8 +11427,11 @@
       "pinyin": "qítā",
       "indonesian": "lain",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亻",
+        "也"
+      ],
+      "componentCount": 2,
       "firstChar": "其",
       "lastChar": "他",
       "charCount": 2,
@@ -11154,8 +11464,11 @@
       "pinyin": "jùyǒu",
       "indonesian": "memiliki",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "月",
+        "𠂉"
+      ],
+      "componentCount": 2,
       "firstChar": "具",
       "lastChar": "有",
       "charCount": 2,
@@ -11205,8 +11518,11 @@
       "pinyin": "juédìng",
       "indonesian": "memutuskan",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "疋",
+        "宀"
+      ],
+      "componentCount": 2,
       "firstChar": "决",
       "lastChar": "定",
       "charCount": 2,
@@ -11256,8 +11572,11 @@
       "pinyin": "fēnzǔ",
       "indonesian": "pengelompokan",
       "hsk": 3,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "八",
+        "刀"
+      ],
+      "componentCount": 2,
       "firstChar": "分",
       "lastChar": "组",
       "charCount": 2,
@@ -11273,8 +11592,11 @@
       "pinyin": "yīqiè",
       "indonesian": "semua",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "七",
+        "刀"
+      ],
+      "componentCount": 2,
       "firstChar": "一",
       "lastChar": "切",
       "charCount": 2,
@@ -11290,8 +11612,11 @@
       "pinyin": "shànggèyuè",
       "indonesian": "bulan lalu",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亻",
+        "𠂉"
+      ],
+      "componentCount": 2,
       "firstChar": "上",
       "lastChar": "月",
       "charCount": 3,
@@ -11341,8 +11666,11 @@
       "pinyin": "xiàgèyuè",
       "indonesian": "bulan depan",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亻",
+        "𠂉"
+      ],
+      "componentCount": 2,
       "firstChar": "下",
       "lastChar": "月",
       "charCount": 3,
@@ -11409,8 +11737,11 @@
       "pinyin": "bùzàihu",
       "indonesian": "tidak peduli",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "土",
+        "𠂉"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "乎",
       "charCount": 3,
@@ -11426,8 +11757,11 @@
       "pinyin": "bùdébù",
       "indonesian": "harus",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "彳",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "不",
       "charCount": 3,
@@ -11460,8 +11794,11 @@
       "pinyin": "búguò",
       "indonesian": "tetapi",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "咼",
+        "辶"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "过",
       "charCount": 2,
@@ -11579,8 +11916,11 @@
       "pinyin": "gètǐ",
       "indonesian": "individu",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亻",
+        "𠂉"
+      ],
+      "componentCount": 2,
       "firstChar": "个",
       "lastChar": "体",
       "charCount": 2,
@@ -11596,8 +11936,11 @@
       "pinyin": "zhòngjiǎng",
       "indonesian": "menang",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "奖",
       "charCount": 2,
@@ -11630,8 +11973,11 @@
       "pinyin": "zhǔyi",
       "indonesian": "ide",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "立",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "主",
       "lastChar": "意",
       "charCount": 2,
@@ -11647,8 +11993,11 @@
       "pinyin": "jǔbàn",
       "indonesian": "menyelenggarakan",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "八",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "举",
       "lastChar": "办",
       "charCount": 2,
@@ -11732,8 +12081,11 @@
       "pinyin": "zhījiān",
       "indonesian": "antara",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "门",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "之",
       "lastChar": "间",
       "charCount": 2,
@@ -11817,8 +12169,11 @@
       "pinyin": "yúshì",
       "indonesian": "于是",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "疋",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "于",
       "lastChar": "是",
       "charCount": 2,
@@ -11885,8 +12240,12 @@
       "pinyin": "Yàyùnhuì",
       "indonesian": "Asian Games",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "云",
+        "辶",
+        "人"
+      ],
+      "componentCount": 3,
       "firstChar": "亚",
       "lastChar": "会",
       "charCount": 3,
@@ -11902,8 +12261,11 @@
       "pinyin": "jiāoliú",
       "indonesian": "berkomunikasi",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "㐬",
+        "氵"
+      ],
+      "componentCount": 2,
       "firstChar": "交",
       "lastChar": "流",
       "charCount": 2,
@@ -11919,8 +12281,11 @@
       "pinyin": "jiāotōng",
       "indonesian": "lalu lintas",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "甬",
+        "辶"
+      ],
+      "componentCount": 2,
       "firstChar": "交",
       "lastChar": "通",
       "charCount": 2,
@@ -11936,8 +12301,13 @@
       "pinyin": "jīngjù",
       "indonesian": "opera Beijing",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亠",
+        "居",
+        "刀",
+        "小"
+      ],
+      "componentCount": 4,
       "firstChar": "京",
       "lastChar": "剧",
       "charCount": 2,
@@ -11953,8 +12323,13 @@
       "pinyin": "qīnmì",
       "indonesian": "intim",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "木",
+        "秘",
+        "立",
+        "宀"
+      ],
+      "componentCount": 4,
       "firstChar": "亲",
       "lastChar": "密",
       "charCount": 2,
@@ -11970,8 +12345,11 @@
       "pinyin": "qīnqi",
       "indonesian": "kerabat",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "木",
+        "立"
+      ],
+      "componentCount": 2,
       "firstChar": "亲",
       "lastChar": "戚",
       "charCount": 2,
@@ -11987,8 +12365,11 @@
       "pinyin": "rénjiā",
       "indonesian": "orang",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "宀",
+        "豕"
+      ],
+      "componentCount": 2,
       "firstChar": "人",
       "lastChar": "家",
       "charCount": 2,
@@ -12004,8 +12385,11 @@
       "pinyin": "réngrán",
       "indonesian": "masih",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "月",
+        "犬"
+      ],
+      "componentCount": 2,
       "firstChar": "仍",
       "lastChar": "然",
       "charCount": 2,
@@ -12089,8 +12473,11 @@
       "pinyin": "yǐwéi",
       "indonesian": "mengira",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "丶",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "以",
       "lastChar": "为",
       "charCount": 2,
@@ -12157,8 +12544,11 @@
       "pinyin": "rènwu",
       "indonesian": "tugas",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "夨",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "任",
       "lastChar": "务",
       "charCount": 2,
@@ -12174,8 +12564,11 @@
       "pinyin": "yōudiǎn",
       "indonesian": "kelebihan",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "灬",
+        "占"
+      ],
+      "componentCount": 2,
       "firstChar": "优",
       "lastChar": "点",
       "charCount": 2,
@@ -12344,8 +12737,11 @@
       "pinyin": "zuòjiā",
       "indonesian": "penulis",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "宀",
+        "豕"
+      ],
+      "componentCount": 2,
       "firstChar": "作",
       "lastChar": "家",
       "charCount": 2,
@@ -12395,8 +12791,11 @@
       "pinyin": "shǐjìn",
       "indonesian": "keras",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "圣",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "使",
       "lastChar": "劲",
       "charCount": 2,
@@ -12514,8 +12913,11 @@
       "pinyin": "bǎomì",
       "indonesian": "kerahasiaan",
       "hsk": 4,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "秘",
+        "宀"
+      ],
+      "componentCount": 2,
       "firstChar": "保",
       "lastChar": "密",
       "charCount": 2,
@@ -12752,8 +13154,11 @@
       "pinyin": "yīdàn",
       "indonesian": "jika",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "一",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "一",
       "lastChar": "旦",
       "charCount": 2,
@@ -12769,8 +13174,11 @@
       "pinyin": "yīliú",
       "indonesian": "Kelas satu",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "㐬",
+        "氵"
+      ],
+      "componentCount": 2,
       "firstChar": "一",
       "lastChar": "流",
       "charCount": 2,
@@ -12888,8 +13296,11 @@
       "pinyin": "shàngdàng",
       "indonesian": "tertipu",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "彐",
+        "⺐"
+      ],
+      "componentCount": 2,
       "firstChar": "上",
       "lastChar": "当",
       "charCount": 2,
@@ -13024,8 +13435,11 @@
       "pinyin": "bù'ān",
       "indonesian": "tidak tenang",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "女",
+        "宀"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "安",
       "charCount": 2,
@@ -13058,8 +13472,11 @@
       "pinyin": "bùdéliǎo",
       "indonesian": "sangat parah",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "彳",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "了",
       "charCount": 3,
@@ -13075,8 +13492,13 @@
       "pinyin": "bùgǎndāng",
       "indonesian": "tidak berani",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "彐",
+        "夂",
+        "耳",
+        "⺐"
+      ],
+      "componentCount": 4,
       "firstChar": "不",
       "lastChar": "当",
       "charCount": 3,
@@ -13092,8 +13514,11 @@
       "pinyin": "bùshí",
       "indonesian": "dari waktu ke waktu",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "寸",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "时",
       "charCount": 2,
@@ -13109,8 +13534,11 @@
       "pinyin": "bùyì",
       "indonesian": "tidak mudah",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "勿",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "易",
       "charCount": 2,
@@ -13160,8 +13588,11 @@
       "pinyin": "bùnéngbù",
       "indonesian": "tidak dapat dihindari",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "月",
+        "匕"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "不",
       "charCount": 3,
@@ -13194,8 +13625,11 @@
       "pinyin": "bùyàojǐn",
       "indonesian": "tidak penting",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "女",
+        "西"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "紧",
       "charCount": 3,
@@ -13228,8 +13662,11 @@
       "pinyin": "bùgù",
       "indonesian": "mengabaikan",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "厄",
+        "页"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "顾",
       "charCount": 2,
@@ -13279,8 +13716,11 @@
       "pinyin": "zhuānjiā",
       "indonesian": "ahli",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "宀",
+        "豕"
+      ],
+      "componentCount": 2,
       "firstChar": "专",
       "lastChar": "家",
       "charCount": 2,
@@ -13347,8 +13787,11 @@
       "pinyin": "yèwù",
       "indonesian": "bisnis",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "夨",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "业",
       "lastChar": "务",
       "charCount": 2,
@@ -13449,8 +13892,11 @@
       "pinyin": "gèrén",
       "indonesian": "individu",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亻",
+        "𠂉"
+      ],
+      "componentCount": 2,
       "firstChar": "个",
       "lastChar": "人",
       "charCount": 2,
@@ -13466,8 +13912,11 @@
       "pinyin": "gèr",
       "indonesian": "orang",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亻",
+        "𠂉"
+      ],
+      "componentCount": 2,
       "firstChar": "个",
       "lastChar": "儿",
       "charCount": 2,
@@ -13483,8 +13932,11 @@
       "pinyin": "gèbié",
       "indonesian": "terpisah",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亻",
+        "𠂉"
+      ],
+      "componentCount": 2,
       "firstChar": "个",
       "lastChar": "别",
       "charCount": 2,
@@ -13500,8 +13952,11 @@
       "pinyin": "gèxìng",
       "indonesian": "karakter",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "亻",
+        "𠂉"
+      ],
+      "componentCount": 2,
       "firstChar": "个",
       "lastChar": "性",
       "charCount": 2,
@@ -13517,8 +13972,11 @@
       "pinyin": "zhōngjiè",
       "indonesian": "perantara",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "介",
       "charCount": 2,
@@ -13534,8 +13992,11 @@
       "pinyin": "zhōngyāng",
       "indonesian": "pusat",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "央",
       "charCount": 2,
@@ -13551,8 +14012,11 @@
       "pinyin": "zhōngxīn",
       "indonesian": "pusat",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "心",
       "charCount": 2,
@@ -13568,8 +14032,13 @@
       "pinyin": "zhōngduàn",
       "indonesian": "gangguan",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "米",
+        "斤",
+        "丨"
+      ],
+      "componentCount": 4,
       "firstChar": "中",
       "lastChar": "断",
       "charCount": 2,
@@ -13585,8 +14054,13 @@
       "pinyin": "zhōngxún",
       "indonesian": "pertengahan bulan",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "勹",
+        "日",
+        "丨"
+      ],
+      "componentCount": 4,
       "firstChar": "中",
       "lastChar": "旬",
       "charCount": 2,
@@ -13602,8 +14076,11 @@
       "pinyin": "zhòngdú",
       "indonesian": "keracunan",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "毒",
       "charCount": 2,
@@ -13619,8 +14096,11 @@
       "pinyin": "Zhōngqiūjié",
       "indonesian": "Festival Pertengahan Musim Gugur",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "节",
       "charCount": 3,
@@ -13636,8 +14116,11 @@
       "pinyin": "zhōngyào",
       "indonesian": "jamu",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "药",
       "charCount": 2,
@@ -13653,8 +14136,11 @@
       "pinyin": "fēngshōu",
       "indonesian": "panen",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "丩",
+        "攴"
+      ],
+      "componentCount": 2,
       "firstChar": "丰",
       "lastChar": "收",
       "charCount": 2,
@@ -13670,8 +14156,11 @@
       "pinyin": "línshí",
       "indonesian": "sementara",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "寸",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "临",
       "lastChar": "时",
       "charCount": 2,
@@ -13687,8 +14176,11 @@
       "pinyin": "wéizhǔ",
       "indonesian": "primer",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "丶",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "为",
       "lastChar": "主",
       "charCount": 2,
@@ -13704,8 +14196,13 @@
       "pinyin": "wéiqī",
       "indonesian": "durasi",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "其",
+        "月",
+        "丶",
+        "力"
+      ],
+      "componentCount": 4,
       "firstChar": "为",
       "lastChar": "期",
       "charCount": 2,
@@ -13721,8 +14218,11 @@
       "pinyin": "wéizhǐ",
       "indonesian": "akhir",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "丶",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "为",
       "lastChar": "止",
       "charCount": 2,
@@ -13738,8 +14238,11 @@
       "pinyin": "wéinán",
       "indonesian": "malu",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "丶",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "为",
       "lastChar": "难",
       "charCount": 2,
@@ -13806,8 +14309,11 @@
       "pinyin": "zhǔbàn",
       "indonesian": "tuan rumah",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "八",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "主",
       "lastChar": "办",
       "charCount": 2,
@@ -13823,8 +14329,11 @@
       "pinyin": "zhǔdòng",
       "indonesian": "aktif",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "云",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "主",
       "lastChar": "动",
       "charCount": 2,
@@ -13925,8 +14434,11 @@
       "pinyin": "zhǔguān",
       "indonesian": "subjektif",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "又",
+        "见"
+      ],
+      "componentCount": 2,
       "firstChar": "主",
       "lastChar": "观",
       "charCount": 2,
@@ -13942,8 +14454,11 @@
       "pinyin": "zhǔtí",
       "indonesian": "tema",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "页",
+        "是"
+      ],
+      "componentCount": 2,
       "firstChar": "主",
       "lastChar": "题",
       "charCount": 2,
@@ -13959,8 +14474,11 @@
       "pinyin": "jǔdòng",
       "indonesian": "bergerak",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "云",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "举",
       "lastChar": "动",
       "charCount": 2,
@@ -13976,8 +14494,11 @@
       "pinyin": "yìwù",
       "indonesian": "kewajiban",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "夨",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "义",
       "lastChar": "务",
       "charCount": 2,
@@ -14010,8 +14531,11 @@
       "pinyin": "zhīzhōng",
       "indonesian": "inside",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "之",
       "lastChar": "中",
       "charCount": 2,
@@ -14078,8 +14602,11 @@
       "pinyin": "lèguān",
       "indonesian": "optimis",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "又",
+        "见"
+      ],
+      "componentCount": 2,
       "firstChar": "乐",
       "lastChar": "观",
       "charCount": 2,
@@ -14095,8 +14622,11 @@
       "pinyin": "chéngkè",
       "indonesian": "penumpang",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "各",
+        "宀"
+      ],
+      "componentCount": 2,
       "firstChar": "乘",
       "lastChar": "客",
       "charCount": 2,
@@ -14129,8 +14659,11 @@
       "pinyin": "yěhǎo",
       "indonesian": "baik",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "子",
+        "女"
+      ],
+      "componentCount": 2,
       "firstChar": "也",
       "lastChar": "好",
       "charCount": 2,
@@ -14231,8 +14764,13 @@
       "pinyin": "mǎimài",
       "indonesian": "membeli dan menjual",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "十",
+        "卖",
+        "头",
+        "冖"
+      ],
+      "componentCount": 4,
       "firstChar": "买",
       "lastChar": "卖",
       "charCount": 2,
@@ -14265,8 +14803,11 @@
       "pinyin": "zhēngqǔ",
       "indonesian": "berusaha mendapatkan",
       "hsk": 5,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "又",
+        "耳"
+      ],
+      "componentCount": 2,
       "firstChar": "争",
       "lastChar": "取",
       "charCount": 2,
@@ -14367,8 +14908,11 @@
       "pinyin": "yīshí",
       "indonesian": "satu waktu",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "寸",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "一",
       "lastChar": "时",
       "charCount": 2,
@@ -14469,8 +15013,11 @@
       "pinyin": "yīdào",
       "indonesian": "bersama",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "辶",
+        "首"
+      ],
+      "componentCount": 2,
       "firstChar": "一",
       "lastChar": "道",
       "charCount": 2,
@@ -14503,8 +15050,11 @@
       "pinyin": "sānmíngzhì",
       "indonesian": "sandwich",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "月",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "三",
       "lastChar": "治",
       "charCount": 3,
@@ -14571,8 +15121,11 @@
       "pinyin": "shàngyǎn",
       "indonesian": "pementasan",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "寅",
+        "氵"
+      ],
+      "componentCount": 2,
       "firstChar": "上",
       "lastChar": "演",
       "charCount": 2,
@@ -14690,8 +15243,11 @@
       "pinyin": "bùchéng",
       "indonesian": "gagal",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "一",
+        "戈"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "成",
       "charCount": 2,
@@ -14707,8 +15263,11 @@
       "pinyin": "bùliào",
       "indonesian": "tiba - tiba",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "米",
+        "斗"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "料",
       "charCount": 2,
@@ -14724,8 +15283,11 @@
       "pinyin": "bùduàn",
       "indonesian": "terus menerus",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "米",
+        "斤"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "断",
       "charCount": 2,
@@ -14741,8 +15303,11 @@
       "pinyin": "bùrán",
       "indonesian": "jika tidak",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "月",
+        "犬"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "然",
       "charCount": 2,
@@ -14826,8 +15391,11 @@
       "pinyin": "bùjiànde",
       "indonesian": "tidak pasti",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "彳",
+        "日"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "得",
       "charCount": 3,
@@ -14860,8 +15428,11 @@
       "pinyin": "bùtōng",
       "indonesian": "tidak melalui",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "甬",
+        "辶"
+      ],
+      "componentCount": 2,
       "firstChar": "不",
       "lastChar": "通",
       "charCount": 2,
@@ -14945,8 +15516,11 @@
       "pinyin": "Zhōnghuá",
       "indonesian": "Cina",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "华",
       "charCount": 2,
@@ -14962,8 +15536,11 @@
       "pinyin": "zhōngwài",
       "indonesian": "Cina dan asing",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "外",
       "charCount": 2,
@@ -14979,8 +15556,13 @@
       "pinyin": "zhōngqī",
       "indonesian": "pertengahan",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "月",
+        "其",
+        "丨"
+      ],
+      "componentCount": 4,
       "firstChar": "中",
       "lastChar": "期",
       "charCount": 2,
@@ -14996,8 +15578,11 @@
       "pinyin": "zhōngděng",
       "indonesian": "sedang",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "口",
+        "丨"
+      ],
+      "componentCount": 2,
       "firstChar": "中",
       "lastChar": "等",
       "charCount": 2,
@@ -15013,8 +15598,11 @@
       "pinyin": "wèihé",
       "indonesian": "mengapa",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "丶",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "为",
       "lastChar": "何",
       "charCount": 2,
@@ -15030,8 +15618,11 @@
       "pinyin": "wèicǐ",
       "indonesian": "untuk",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "丶",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "为",
       "lastChar": "此",
       "charCount": 2,
@@ -15064,8 +15655,11 @@
       "pinyin": "zhǔliú",
       "indonesian": "arus utama",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "㐬",
+        "氵"
+      ],
+      "componentCount": 2,
       "firstChar": "主",
       "lastChar": "流",
       "charCount": 2,
@@ -15149,8 +15743,11 @@
       "pinyin": "shūfáng",
       "indonesian": "studi",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "户",
+        "方"
+      ],
+      "componentCount": 2,
       "firstChar": "书",
       "lastChar": "房",
       "charCount": 2,
@@ -15200,8 +15797,11 @@
       "pinyin": "hùdòng",
       "indonesian": "interaksi",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "云",
+        "力"
+      ],
+      "componentCount": 2,
       "firstChar": "互",
       "lastChar": "动",
       "charCount": 2,
@@ -15217,8 +15817,11 @@
       "pinyin": "chǎnshēng",
       "indonesian": "menghasilkan",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "生",
+        "立"
+      ],
+      "componentCount": 2,
       "firstChar": "产",
       "lastChar": "生",
       "charCount": 2,
@@ -15234,8 +15837,11 @@
       "pinyin": "chǎnliàng",
       "indonesian": "produksi",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "生",
+        "立"
+      ],
+      "componentCount": 2,
       "firstChar": "产",
       "lastChar": "量",
       "charCount": 2,
@@ -15251,8 +15857,11 @@
       "pinyin": "qīnshǔ",
       "indonesian": "kerabat",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "木",
+        "立"
+      ],
+      "componentCount": 2,
       "firstChar": "亲",
       "lastChar": "属",
       "charCount": 2,
@@ -15268,8 +15877,11 @@
       "pinyin": "qīnyǎn",
       "indonesian": "mata",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "木",
+        "立"
+      ],
+      "componentCount": 2,
       "firstChar": "亲",
       "lastChar": "眼",
       "charCount": 2,
@@ -15285,8 +15897,11 @@
       "pinyin": "rénquán",
       "indonesian": "hak asasi manusia",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "又",
+        "木"
+      ],
+      "componentCount": 2,
       "firstChar": "人",
       "lastChar": "权",
       "charCount": 2,
@@ -15319,8 +15934,11 @@
       "pinyin": "cóngméi",
       "indonesian": "tidak pernah",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "殳",
+        "氵"
+      ],
+      "componentCount": 2,
       "firstChar": "从",
       "lastChar": "没",
       "charCount": 2,
@@ -15421,8 +16039,11 @@
       "pinyin": "huìjiàn",
       "indonesian": "meet",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "人",
+        "云"
+      ],
+      "componentCount": 2,
       "firstChar": "会",
       "lastChar": "见",
       "charCount": 2,
@@ -15438,8 +16059,11 @@
       "pinyin": "huìzhǎng",
       "indonesian": "president",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "人",
+        "云"
+      ],
+      "componentCount": 2,
       "firstChar": "会",
       "lastChar": "长",
       "charCount": 2,
@@ -15591,8 +16215,11 @@
       "pinyin": "dīwēn",
       "indonesian": "suhu rendah",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "昷",
+        "氵"
+      ],
+      "componentCount": 2,
       "firstChar": "低",
       "lastChar": "温",
       "charCount": 2,
@@ -15625,8 +16252,11 @@
       "pinyin": "Fójiào",
       "indonesian": "buddha",
       "hsk": 6,
-      "components": [],
-      "componentCount": 0,
+      "components": [
+        "攵",
+        "孝"
+      ],
+      "componentCount": 2,
       "firstChar": "佛",
       "lastChar": "教",
       "charCount": 2,

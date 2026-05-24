@@ -356,13 +356,13 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
     if (gameLevel === 'basic') {
       const allCards = (basicData as any).cards as BasicCard[];
       const shuffled = [...allCards].sort(() => Math.random() - 0.5);
-      cards = shuffled.slice(0, 24);
+      cards = shuffled.slice(0, 12);
       target = cards[Math.floor(Math.random() * cards.length)];
     } else {
       const scenes = (advancedData as any).scenes;
       const sceneCards = scenes[scene]?.characters as AdvancedCard[] || [];
       const shuffled = [...sceneCards].sort(() => Math.random() - 0.5);
-      cards = shuffled.slice(0, 24);
+      cards = shuffled.slice(0, 12);
       target = cards[Math.floor(Math.random() * cards.length)];
     }
 
@@ -426,14 +426,14 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
     setOnlineError('');
     const gameLevel = level;
     const scene = selectedScene;
-    // 随机选24张卡
+    // 随机选12张卡
     let cards: (BasicCard | AdvancedCard)[];
     if (gameLevel === 'basic') {
       const allCards = (basicData as any).cards as BasicCard[];
-      cards = [...allCards].sort(() => Math.random() - 0.5).slice(0, 24);
+      cards = [...allCards].sort(() => Math.random() - 0.5).slice(0, 12);
     } else {
       const sceneCards = (advancedData as any).scenes[scene]?.characters as AdvancedCard[] || [];
-      cards = [...sceneCards].sort(() => Math.random() - 0.5).slice(0, Math.min(24, sceneCards.length));
+      cards = [...sceneCards].sort(() => Math.random() - 0.5).slice(0, Math.min(12, sceneCards.length));
     }
     // 各自的目标卡是秘密，只存索引
     const hostTargetIdx = Math.floor(Math.random() * cards.length);
@@ -873,7 +873,7 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
 
         {/* 卡牌网格 */}
         <div className="flex-1 overflow-y-auto px-3 py-2">
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
             <AnimatePresence>
               {boardCards.map((bc, idx) => {
                 const card = bc.card;
@@ -950,7 +950,7 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
           )}
 
           {isBasic ? (
-            <BasicQuestionPanel targetCard={targetCard as BasicCard} onAsk={handleBasicQuestion} disabled={onlineMode === 'online' && !isMyTurn} />
+            <BasicQuestionPanel targetCard={targetCard as BasicCard} onAsk={handleBasicQuestion} disabled={onlineMode === 'online' && !isMyTurn} boardCards={boardCards} />
           ) : (
             // 高级：文字输入
             <div className="space-y-2">
@@ -1052,13 +1052,16 @@ export default function GuessWhoGame({ onExit }: { onExit: () => void }) {
 }
 
 // ==================== 初级属性问题面板 ====================
-function BasicQuestionPanel({ onAsk, disabled }: {
+function BasicQuestionPanel({ onAsk, disabled, boardCards }: {
   targetCard?: BasicCard | null;
   onAsk: (attrType: string, value: string) => void;
   disabled: boolean;
+  boardCards: BoardCard[];
 }) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const allCards = (basicData as any).cards as BasicCard[];
+
+  // 从当前场上的卡中动态统计属性
+  const activeCards = boardCards.filter(bc => !bc.flipped).map(bc => bc.card as BasicCard);
 
   const categories = [
     { id: 'type',      label: '类型',   icon: '📝' },
@@ -1071,25 +1074,40 @@ function BasicQuestionPanel({ onAsk, disabled }: {
 
   const getOptions = (cat: string): { label: string; value: string }[] => {
     switch (cat) {
-      case 'type': return [{ label: '单字', value: 'char' }, { label: '词语', value: 'word' }];
-      case 'hsk': return [1,2,3,4,5,6].map(n => ({ label: `HSK${n}`, value: String(n) }));
+      case 'type': {
+        const hasChar = activeCards.some(c => c.type === 'char');
+        const hasWord = activeCards.some(c => c.type === 'word');
+        const opts = [];
+        if (hasChar) opts.push({ label: '单字', value: 'char' });
+        if (hasWord) opts.push({ label: '词语', value: 'word' });
+        return opts;
+      }
+      case 'hsk': {
+        const hsks = [...new Set(activeCards.map(c => c.hsk))].sort();
+        return hsks.map(n => ({ label: `HSK${n}`, value: String(n) }));
+      }
       case 'tone': return [
-        { label: '第一声 (āēīōū)', value: '1' },
-        { label: '第二声 (áéíóú)', value: '2' },
-        { label: '第三声 (ǎěǐǒǔ)', value: '3' },
-        { label: '第四声 (àèìòù)', value: '4' },
+        { label: '第一声 (ā)', value: '1' },
+        { label: '第二声 (á)', value: '2' },
+        { label: '第三声 (ǎ)', value: '3' },
+        { label: '第四声 (à)', value: '4' },
         { label: '轻声', value: '5' },
-      ];
-      case 'charCount': return [1,2,3].map(n => ({ label: `${n}个字`, value: String(n) }));
+      ].filter(o => activeCards.some(c => c.firstTone === o.value));
+      case 'charCount': {
+        const counts = [...new Set(activeCards.map(c => c.charCount))].sort();
+        return counts.map(n => ({ label: `${n}个字`, value: String(n) }));
+      }
       case 'radical': {
-        // 只取有偏旁的字，统计出现次数最多的前16个
+        // 统计当前场上卡实际拥有的偏旁，按出现次数排序
         const counts: Record<string, number> = {};
-        allCards.filter(c => c.type === 'char').forEach(c => c.components.forEach(r => { counts[r] = (counts[r] || 0) + 1; }));
-        return Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0, 20).map(([r]) => ({ label: r, value: r }));
+        activeCards.forEach(c => c.components.forEach(r => { counts[r] = (counts[r] || 0) + 1; }));
+        return Object.entries(counts)
+          .sort((a, b) => b[1] - a[1])
+          .map(([r, cnt]) => ({ label: `${r} (${cnt})`, value: r }));
       }
       case 'firstChar': {
-        const chars = [...new Set(allCards.map(c => c.firstChar))].sort();
-        return chars.slice(0, 24).map(c => ({ label: c, value: c }));
+        const chars = [...new Set(activeCards.map(c => c.firstChar))].sort();
+        return chars.map(c => ({ label: c, value: c }));
       }
       default: return [];
     }
