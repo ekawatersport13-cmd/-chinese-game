@@ -279,7 +279,7 @@ const getFindWords = (count = 20): VocabWord[] => {
 };
 
 // ==================== 组件 ===================
-export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline, onEnterPair, onEnterGuessWho }: { onEnterHeartbeat?: () => void; onEnterHeartbeatOnline?: () => void; onEnterPair?: () => void; onEnterGuessWho?: () => void }) {
+export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline, onEnterPair, onEnterGuessWho, onEnterRingBell, onEnterRingBellOnline }: { onEnterHeartbeat?: () => void; onEnterHeartbeatOnline?: () => void; onEnterPair?: () => void; onEnterGuessWho?: () => void; onEnterRingBell?: () => void; onEnterRingBellOnline?: () => void }) {
   const [gameState, setGameState] = useState<GameState>({
     level: 1,
     words: [],
@@ -691,6 +691,22 @@ export default function GameBoard({ onEnterHeartbeat, onEnterHeartbeatOnline, on
               >
                 🔍 猜猜我是谁
                 <div className="text-xs font-normal mt-1 opacity-90">汉字猜谜·人物描述</div>
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                onClick={onEnterRingBell}
+                className="py-3 px-4 rounded-xl font-bold transition-all shadow-lg bg-gradient-to-r from-amber-500 to-yellow-500 text-white hover:from-amber-600 hover:to-yellow-600"
+              >
+                🔔 按铃同反
+                <div className="text-xs font-normal mt-1 opacity-90">同义·反义抢答</div>
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                onClick={onEnterRingBellOnline}
+                className="py-3 px-4 rounded-xl font-bold transition-all shadow-lg bg-gradient-to-r from-amber-600 to-orange-500 text-white hover:from-amber-700 hover:to-orange-600"
+              >
+                🔔 按铃联机
+                <div className="text-xs font-normal mt-1 opacity-90">双人PK抢答</div>
               </motion.button>
             </div>
           </div>

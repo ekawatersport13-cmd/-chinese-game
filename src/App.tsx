@@ -4,6 +4,8 @@ import HeartbeatGame from './HeartbeatGame'
 import HeartbeatGameOnline from './HeartbeatGameOnline'
 import PairGame from './PairGame'
 import GuessWhoGame from './GuessWhoGame'
+import RingBellGame from './RingBellGame'
+import RingBellGameOnline from './RingBellGameOnline'
 import BackgroundMusic from './BackgroundMusic'
 import { getDeviceId, getDeviceInfo } from './deviceId';
 import { db } from './firebase';
@@ -11,7 +13,7 @@ import { ref, set, serverTimestamp } from 'firebase/database';
 import { getApp } from 'firebase/app';
 
 function App() {
-  const [mode, setMode] = useState<'main' | 'heartbeat' | 'heartbeat-on-line' | 'pair' | 'guess-who'>('main');
+  const [mode, setMode] = useState<'main' | 'heartbeat' | 'heartbeat-on-line' | 'pair' | 'guess-who' | 'ringbell' | 'ringbell-online'>('main');
   const [initialRoomId, setInitialRoomId] = useState<string>('');
 
   // 初始化：检测 URL 房间号参数 + sessionStorage 恢复 + 记录设备访问
@@ -105,7 +107,15 @@ function App() {
     return <><GuessWhoGame onExit={() => setMode('main')} /><BackgroundMusic style="soft" /></>;
   }
 
-  return <><GameBoard onEnterHeartbeat={() => setMode('heartbeat')} onEnterHeartbeatOnline={() => setMode('heartbeat-on-line')} onEnterPair={() => setMode('pair')} onEnterGuessWho={() => setMode('guess-who')} /><BackgroundMusic style="soft" defaultEnabled /></>;
+  if (mode === 'ringbell') {
+    return <><RingBellGame onExit={() => setMode('main')} /><BackgroundMusic style="chinese" /></>;
+  }
+
+  if (mode === 'ringbell-online') {
+    return <><RingBellGameOnline onExit={() => setMode('main')} initialRoomId={initialRoomId} /><BackgroundMusic style="chinese" /></>;
+  }
+
+  return <><GameBoard onEnterHeartbeat={() => setMode('heartbeat')} onEnterHeartbeatOnline={() => setMode('heartbeat-on-line')} onEnterPair={() => setMode('pair')} onEnterGuessWho={() => setMode('guess-who')} onEnterRingBell={() => setMode('ringbell')} onEnterRingBellOnline={() => setMode('ringbell-online')} /><BackgroundMusic style="soft" defaultEnabled /></>;
 }
 
 export default App;
